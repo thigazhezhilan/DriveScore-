@@ -1,0 +1,97 @@
+subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
+Biology,Human Reproduction,Male Gamete,Easy,45,"The male gamete in humans is the:",sperm,ovum,zygote,embryo,A
+Biology,Human Reproduction,Female Gamete,Easy,45,"The female gamete in humans is the:",ovum,sperm,zygote,embryo,A
+Biology,Human Reproduction,Testes,Easy,45,"The male reproductive organs that produce sperm are the:",testes,ovaries,uterus,kidneys,A
+Biology,Human Reproduction,Uterus,Easy,45,"The female reproductive organ in which the foetus develops is the:",uterus,ovary,oviduct,vagina,A
+Biology,Human Reproduction,Fertilization Site,Medium,55,"In humans, fertilization normally takes place in the:",fallopian tube,uterus,ovary,vagina,A
+Biology,Human Reproduction,Ovulation,Medium,55,"The release of a mature egg from the ovary is called:",ovulation,menstruation,implantation,gestation,A
+Biology,Human Reproduction,Ovaries,Medium,55,"In the human female, the gametes are produced in the:",ovaries,testes,uterus,oviduct,A
+Biology,Human Reproduction,Placenta,Medium,55,"The structure that nourishes the developing foetus in the uterus is the:",placenta,amnion,navel,ovary,A
+Biology,Human Reproduction,Progesterone,Hard,80,"The hormone that maintains pregnancy is:",progesterone,adrenaline,insulin,thyroxine,A
+Biology,Human Reproduction,Gamete Chromosomes,Hard,80,"The number of chromosomes present in a normal human gamete is:",23,46,22,44,A
+Biology,Human Reproduction,Spermatogenesis,Hard,80,"The process by which sperm are formed in the testes is called:",spermatogenesis,oogenesis,ovulation,fertilization,A
+Biology,Human Reproduction,Gestation,Hard,80,"The normal gestation (pregnancy) period in humans is approximately:",9 months,3 months,12 months,6 weeks,A
+Biology,Reproductive Health,STD,Easy,45,"The abbreviation STD stands for:",Sexually Transmitted Disease,Standard Test Dose,Surface Tension Density,Soil Test Data,A
+Biology,Reproductive Health,Contraception,Easy,45,"Methods used to prevent unwanted pregnancy are called:",contraceptive methods,fertility methods,assisted reproduction,prenatal tests,A
+Biology,Reproductive Health,AIDS,Easy,45,"AIDS in humans is caused by:",HIV,a bacterium,a fungus,a protozoan,A
+Biology,Reproductive Health,Family Planning,Easy,45,"The programme aimed at controlling population growth is called:",family planning,vaccination,immunization,sanitation,A
+Biology,Reproductive Health,Barrier Method,Medium,55,"A common barrier method of contraception is the:",condom,oral pill,intrauterine device,surgery,A
+Biology,Reproductive Health,IVF,Medium,55,"The technique in which fertilization occurs outside the body (the test-tube baby technique) is:",IVF (in vitro fertilization),amniocentesis,ovulation,lactation,A
+Biology,Reproductive Health,MTP,Medium,55,"Medical termination of pregnancy is also known as:",induced abortion,contraception,ovulation,implantation,A
+Biology,Reproductive Health,Amniocentesis,Medium,55,"A serious misuse of the amniocentesis technique is for:",illegal determination of the sex of the foetus,blood transfusion,vaccination,organ transplant,A
+Biology,Reproductive Health,RCH,Hard,80,"The abbreviation RCH stands for:",Reproductive and Child Health,Rapid Cell Healing,Red Cell Haemoglobin,Renal Care Hospital,A
+Biology,Reproductive Health,Hormonal Contraceptive,Hard,80,"An example of a hormonal method of contraception is the:",oral contraceptive pill,condom,vasectomy,copper-T,A
+Biology,Reproductive Health,Vasectomy,Hard,80,"The surgical method of contraception in males is called:",vasectomy,tubectomy,IVF,laparoscopy,A
+Biology,Reproductive Health,Bacterial STD,Hard,80,"Among the following, the sexually transmitted disease caused by a bacterium is:",syphilis,AIDS,hepatitis B,dengue,A
+Biology,Principles of Inheritance and Variation,Mendel,Easy,45,"The scientist regarded as the father of genetics is:",Gregor Mendel,Charles Darwin,James Watson,Thomas Morgan,A
+Biology,Principles of Inheritance and Variation,Genes,Easy,45,"The hereditary units that determine the traits of an organism are called:",genes,hormones,enzymes,vitamins,A
+Biology,Principles of Inheritance and Variation,Mendel's Material,Easy,45,"Mendel carried out his famous experiments on:",pea plants,maize,fruit flies,mice,A
+Biology,Principles of Inheritance and Variation,Alleles,Easy,45,"The different forms of the same gene are called:",alleles,chromosomes,ribosomes,codons,A
+Biology,Principles of Inheritance and Variation,Dominant Trait,Medium,55,"A trait that is expressed in the F1 generation of a cross is said to be:",dominant,recessive,codominant,lethal,A
+Biology,Principles of Inheritance and Variation,Genotype,Medium,55,"The genetic constitution of an organism is called its:",genotype,phenotype,karyotype,pedigree,A
+Biology,Principles of Inheritance and Variation,Phenotype,Medium,55,"The observable characteristics of an organism constitute its:",phenotype,genotype,allele,locus,A
+Biology,Principles of Inheritance and Variation,Monohybrid Cross,Medium,55,"In a Mendelian monohybrid cross, the F2 phenotypic ratio is:",3:1,1:1,9:3:3:1,1:2:1,A
+Biology,Principles of Inheritance and Variation,Dihybrid Cross,Hard,80,"In a Mendelian dihybrid cross, the F2 phenotypic ratio is:",9:3:3:1,3:1,1:1,1:2:1,A
+Biology,Principles of Inheritance and Variation,Homozygous,Hard,80,"An organism carrying two identical alleles for a particular trait is said to be:",homozygous,heterozygous,hemizygous,polyploid,A
+Biology,Principles of Inheritance and Variation,Codominance,Hard,80,"The condition in which both alleles are fully expressed, as in the AB blood group, is called:",codominance,complete dominance,recessiveness,epistasis,A
+Biology,Principles of Inheritance and Variation,Sex Chromosomes,Hard,80,"The sex chromosomes present in a normal human female are:",XX,XY,YY,XO,A
+Biology,Molecular Basis of Inheritance,Genetic Material,Easy,45,"The genetic material in most living organisms is:",DNA,protein,carbohydrate,lipid,A
+Biology,Molecular Basis of Inheritance,DNA,Easy,45,"The full form of DNA is:",deoxyribonucleic acid,diribonucleic acid,deoxyribose nucleotide,dinucleic acid,A
+Biology,Molecular Basis of Inheritance,Double Helix,Easy,45,"The double-helix model of DNA was proposed by:",Watson and Crick,Gregor Mendel,Charles Darwin,Thomas Morgan,A
+Biology,Molecular Basis of Inheritance,Base Pairing,Easy,45,"In DNA, the base that pairs with adenine is:",thymine,guanine,cytosine,uracil,A
+Biology,Molecular Basis of Inheritance,Base Pairing,Medium,55,"In DNA, the base guanine pairs with:",cytosine,thymine,adenine,uracil,A
+Biology,Molecular Basis of Inheritance,Transcription,Medium,55,"The synthesis of RNA using a DNA template is called:",transcription,translation,replication,mutation,A
+Biology,Molecular Basis of Inheritance,Translation,Medium,55,"The synthesis of a protein from the information in mRNA is called:",translation,transcription,replication,duplication,A
+Biology,Molecular Basis of Inheritance,RNA Sugar,Medium,55,"The five-carbon sugar present in RNA is:",ribose,deoxyribose,glucose,fructose,A
+Biology,Molecular Basis of Inheritance,Codon,Hard,80,"A sequence of three nitrogenous bases on mRNA that codes for one amino acid is called a:",codon,gene,allele,operon,A
+Biology,Molecular Basis of Inheritance,RNA Bases,Hard,80,"In RNA, the base uracil takes the place of:",thymine,adenine,guanine,cytosine,A
+Biology,Molecular Basis of Inheritance,Ribosome,Hard,80,"The cellular structure that reads mRNA and assembles proteins is the:",ribosome,nucleus,mitochondrion,lysosome,A
+Biology,Molecular Basis of Inheritance,DNA Replication,Hard,80,"The semi-conservative nature of DNA replication was experimentally demonstrated by:",Meselson and Stahl,Watson and Crick,Hershey and Chase,Frederick Griffith,A
+Biology,Evolution,Natural Selection,Easy,45,"The theory of evolution by natural selection was proposed by:",Charles Darwin,Gregor Mendel,Jean-Baptiste Lamarck,Hugo de Vries,A
+Biology,Evolution,Definition,Easy,45,"The gradual change in the characteristics of a species over many generations is called:",evolution,mutation,adaptation,succession,A
+Biology,Evolution,Fossils,Easy,45,"Fossils are:",the preserved remains of ancient organisms,living cells,modern bones,ordinary rocks,A
+Biology,Evolution,Darwin,Easy,45,"Darwin's famous book on evolution is titled:",On the Origin of Species,The Selfish Gene,Principia Mathematica,Systema Naturae,A
+Biology,Evolution,Homologous Organs,Medium,55,"Organs that have a similar basic structure but perform different functions, such as the forelimbs of vertebrates, are called:",homologous organs,analogous organs,vestigial organs,fossils,A
+Biology,Evolution,Analogous Organs,Medium,55,"Organs that have different structures but perform a similar function, such as the wings of an insect and a bird, are called:",analogous organs,homologous organs,vestigial organs,fossils,A
+Biology,Evolution,Convergent Evolution,Medium,55,"The wings of a bird and the wings of an insect are an example of:",convergent evolution,divergent evolution,co-evolution,no evolution,A
+Biology,Evolution,Vestigial Organs,Medium,55,"Reduced, non-functional organs such as the appendix in humans are called:",vestigial organs,homologous organs,analogous organs,fossils,A
+Biology,Evolution,Variation,Hard,80,"The raw material for evolution by natural selection is provided by:",variations,identical genes,a constant environment,vestigial organs,A
+Biology,Evolution,Hardy-Weinberg,Hard,80,"The Hardy-Weinberg principle is concerned with:",allele frequencies in a population,fossil dating,embryonic development,mutation rates only,A
+Biology,Evolution,Darwinism,Hard,80,"According to Darwin, the chief driving force of evolution is:",natural selection,use and disuse of organs,inheritance of acquired characters,mutation alone,A
+Biology,Evolution,Palaeontology,Hard,80,"The study that uses fossils as evidence for evolution is:",palaeontology,embryology,comparative anatomy,ecology,A
+Biology,Human Health and Disease,Infectious Disease,Easy,45,"Diseases caused by pathogens that spread from one person to another are called:",infectious diseases,non-infectious diseases,genetic diseases,deficiency diseases,A
+Biology,Human Health and Disease,Malaria,Easy,45,"Malaria in humans is caused by:",Plasmodium,a bacterium,a virus,a fungus,A
+Biology,Human Health and Disease,Immunity,Easy,45,"The ability of the body to resist and fight disease is called:",immunity,allergy,inflammation,infection,A
+Biology,Human Health and Disease,AIDS,Easy,45,"AIDS is caused by a virus known as:",HIV,Plasmodium,Salmonella,a fungus,A
+Biology,Human Health and Disease,Vaccination,Medium,55,"Vaccination provides the body with:",active acquired immunity,passive innate immunity,no immunity at all,only temporary digestion,A
+Biology,Human Health and Disease,Typhoid,Medium,55,"The disease typhoid is caused by:",bacteria,a virus,a protozoan,a fungus,A
+Biology,Human Health and Disease,Antibody Production,Medium,55,"The cells of the immune system that produce antibodies are the:",lymphocytes,red blood cells,platelets,neurons,A
+Biology,Human Health and Disease,Malaria Vector,Medium,55,"Malaria is transmitted to humans through the bite of the:",female Anopheles mosquito,housefly,Aedes mosquito,tsetse fly,A
+Biology,Human Health and Disease,HIV,Hard,80,"HIV primarily attacks and destroys which cells of the immune system?",helper T-lymphocytes,red blood cells,platelets,neurons,A
+Biology,Human Health and Disease,Antibodies,Hard,80,"The protein molecules produced by the body to fight specific antigens are called:",antibodies,hormones,enzymes,vitamins,A
+Biology,Human Health and Disease,Deficiency Disease,Hard,80,"A disease that results from the lack of a particular nutrient in the diet is called a:",deficiency disease,infectious disease,genetic disease,allergy,A
+Biology,Human Health and Disease,Dengue Vector,Hard,80,"Dengue and chikungunya are transmitted to humans by the:",Aedes mosquito,Anopheles mosquito,housefly,sandfly,A
+Biology,Strategies for Enhancement in Food Production,Animal Husbandry,Easy,45,"The scientific management and breeding of livestock is called:",animal husbandry,horticulture,sericulture,floriculture,A
+Biology,Strategies for Enhancement in Food Production,Apiculture,Easy,45,"The rearing of honeybees for the production of honey is called:",apiculture,sericulture,pisciculture,aquaculture,A
+Biology,Strategies for Enhancement in Food Production,Pisciculture,Easy,45,"The rearing and management of fish for food is called:",pisciculture,apiculture,sericulture,poultry farming,A
+Biology,Strategies for Enhancement in Food Production,Sericulture,Easy,45,"The rearing of silkworms for the production of silk is called:",sericulture,apiculture,pisciculture,horticulture,A
+Biology,Strategies for Enhancement in Food Production,Plant Breeding,Medium,55,"The development of new and improved varieties of crops is achieved through:",plant breeding,irrigation,weeding,harvesting,A
+Biology,Strategies for Enhancement in Food Production,Green Revolution,Medium,55,"The Green Revolution greatly increased the production of:",food grains,milk,fish,silk,A
+Biology,Strategies for Enhancement in Food Production,Micropropagation,Medium,55,"The technique of producing many plants from a small piece of tissue using tissue culture is called:",micropropagation,hybridization,mutation breeding,grafting,A
+Biology,Strategies for Enhancement in Food Production,Hydroponics,Medium,55,"The cultivation of plants in a nutrient solution without using soil is called:",hydroponics,sericulture,apiculture,vermiculture,A
+Biology,Strategies for Enhancement in Food Production,Genetic Engineering,Hard,80,"The introduction of a desirable gene into a crop to improve it is achieved through:",genetic engineering,simple selection,weeding,mulching,A
+Biology,Strategies for Enhancement in Food Production,Biofortification,Hard,80,"Biofortification is the breeding of crops to improve their:",nutrient content,water content,size only,colour only,A
+Biology,Strategies for Enhancement in Food Production,Blue Revolution,Hard,80,"The Blue Revolution is associated with an increase in the production of:",fish,milk,grain,silk,A
+Biology,Strategies for Enhancement in Food Production,Totipotency,Hard,80,"A single totipotent plant cell has the ability to develop into a:",whole plant,single organ only,gamete only,nothing,A
+Biology,Microbes in Human Welfare,Curd,Easy,45,"The microorganism used in the conversion of milk into curd is:",Lactobacillus,yeast,Penicillium,a virus,A
+Biology,Microbes in Human Welfare,Yeast,Easy,45,"The microorganism widely used in bread-making and brewing is:",yeast,Lactobacillus,Rhizobium,a virus,A
+Biology,Microbes in Human Welfare,Penicillin,Easy,45,"The antibiotic penicillin is obtained from a:",fungus,bacterium,virus,alga,A
+Biology,Microbes in Human Welfare,Microorganisms,Easy,45,"Living organisms that are too small to be seen with the naked eye are called:",microorganisms,plants,animals,minerals,A
+Biology,Microbes in Human Welfare,Fermentation,Medium,55,"During fermentation, the gas produced by yeast that makes dough rise is:",carbon dioxide,oxygen,nitrogen,hydrogen,A
+Biology,Microbes in Human Welfare,Biogas,Medium,55,"The main combustible component of biogas (gobar gas) is:",methane,oxygen,carbon dioxide,nitrogen,A
+Biology,Microbes in Human Welfare,Biofertilizer,Medium,55,"The bacterium used as a biofertilizer in association with the roots of legumes is:",Rhizobium,Lactobacillus,Escherichia coli,Clostridium,A
+Biology,Microbes in Human Welfare,Sewage Treatment,Medium,55,"The microbial treatment of sewage is carried out in:",sewage treatment plants,distilleries,bakeries,dairies,A
+Biology,Microbes in Human Welfare,Discovery of Penicillin,Hard,80,"Penicillin, the first antibiotic, was discovered by:",Alexander Fleming,Louis Pasteur,Robert Koch,Edward Jenner,A
+Biology,Microbes in Human Welfare,Penicillium,Hard,80,"The organism Penicillium, which yields penicillin, is a:",mould (fungus),bacterium,virus,protozoan,A
+Biology,Microbes in Human Welfare,Methanogens,Hard,80,"Biogas is produced through the anaerobic activity of:",methanogenic bacteria,aerobic bacteria,fungi only,viruses,A
+Biology,Microbes in Human Welfare,Activated Sludge,Hard,80,"In sewage treatment, the activated sludge is rich in useful:",aerobic microbes,viruses only,fungi only,no microbes,A

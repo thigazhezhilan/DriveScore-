@@ -1,0 +1,73 @@
+subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
+Biology,Biotechnology - Principles and Processes,Definition,Easy,45,"Biotechnology involves the use of living organisms to make products useful to:",humans,only plants,only animals,no one,A
+Biology,Biotechnology - Principles and Processes,Restriction Enzymes,Easy,50,"The enzymes that cut DNA at specific recognition sites are called:",restriction enzymes,DNA ligase,polymerase,amylase,A
+Biology,Biotechnology - Principles and Processes,DNA Ligase,Easy,50,"The enzyme used to join two DNA fragments together is:",DNA ligase,a restriction enzyme,amylase,lipase,A
+Biology,Biotechnology - Principles and Processes,Vectors,Easy,50,"The DNA molecule used to carry a foreign gene into a host cell is called a:",vector,antibody,hormone,enzyme,A
+Biology,Biotechnology - Principles and Processes,PCR,Medium,55,"The technique used to make many copies of a specific DNA segment is:",PCR (polymerase chain reaction),gel electrophoresis,centrifugation,chromatography,A
+Biology,Biotechnology - Principles and Processes,Plasmid,Medium,55,"A commonly used vector in recombinant DNA technology is the:",plasmid,ribosome,mitochondrion,chloroplast,A
+Biology,Biotechnology - Principles and Processes,Gel Electrophoresis,Medium,55,"DNA fragments of different sizes are separated by the technique of:",gel electrophoresis,PCR,distillation,filtration,A
+Biology,Biotechnology - Principles and Processes,Host Organism,Medium,55,"The organism most commonly used as a host in recombinant DNA technology is:",Escherichia coli,Plasmodium,Hydra,a housefly,A
+Biology,Biotechnology - Principles and Processes,Genetic Engineering,Hard,80,"Recombinant DNA technology is also known as:",genetic engineering,tissue culture,fermentation,hybridization,A
+Biology,Biotechnology - Principles and Processes,Molecular Scissors,Hard,80,"The molecular scissors used in genetic engineering are the:",restriction endonucleases,DNA ligase,DNA polymerase,helicase,A
+Biology,Biotechnology - Principles and Processes,Taq Polymerase,Hard,80,"The heat-stable enzyme used in the polymerase chain reaction (PCR) is:",Taq polymerase,DNA ligase,a restriction enzyme,amylase,A
+Biology,Biotechnology - Principles and Processes,Transformation,Hard,80,"The process of introducing recombinant DNA into a host cell is called:",transformation,translation,transcription,translocation,A
+Biology,Biotechnology and its Applications,GM Crops,Easy,45,"Crops whose genetic material has been altered using biotechnology are called:",genetically modified (transgenic) crops,hybrid crops,wild crops,organic crops,A
+Biology,Biotechnology and its Applications,Insulin,Easy,50,"Human insulin for the treatment of diabetes is now produced using:",recombinant DNA technology,distillation,fermentation of sugar,extraction from plants,A
+Biology,Biotechnology and its Applications,Bt Cotton,Easy,50,"Bt cotton is a genetically modified crop that is resistant to:",insect pests,drought,all viruses,salinity,A
+Biology,Biotechnology and its Applications,Transgenic Crops,Easy,45,"Among the following, an example of a transgenic (GM) crop is:",Bt cotton,ordinary wheat,wild rice,neem,A
+Biology,Biotechnology and its Applications,Gene Therapy,Medium,55,"Gene therapy is a technique used to treat:",genetic disorders,bacterial infections,bone fractures,burns,A
+Biology,Biotechnology and its Applications,Bt Toxin,Medium,55,"The Bt toxin used in Bt cotton is obtained from the bacterium:",Bacillus thuringiensis,Rhizobium,Lactobacillus,Escherichia coli,A
+Biology,Biotechnology and its Applications,Humulin,Medium,55,"The genetically engineered human insulin is commercially known as:",humulin,thyroxine,adrenaline,penicillin,A
+Biology,Biotechnology and its Applications,Molecular Diagnosis,Medium,55,"Early and accurate molecular diagnosis of many diseases is made possible by:",PCR,a simple microscope,litmus paper,distillation,A
+Biology,Biotechnology and its Applications,RNA Interference,Hard,80,"RNA interference (RNAi) has been used in some GM crops to provide resistance against:",nematodes,drought,salinity,frost,A
+Biology,Biotechnology and its Applications,Transgenic Animals,Hard,80,"Transgenic animals are animals that have:",a foreign gene introduced into them,no genes at all,only their natural genes,no DNA,A
+Biology,Biotechnology and its Applications,Biopiracy,Hard,80,"The unauthorized use of biological resources and traditional knowledge of a country is called:",biopiracy,bioremediation,biofortification,biomagnification,A
+Biology,Biotechnology and its Applications,ADA Deficiency,Hard,80,"The first successful attempt at gene therapy was made to treat a deficiency of the enzyme:",adenosine deaminase,amylase,lipase,pepsin,A
+Biology,Organisms and Populations,Ecology,Easy,45,"The study of interactions between organisms and their environment is called:",ecology,genetics,anatomy,physiology,A
+Biology,Organisms and Populations,Population,Easy,45,"A group of individuals of the same species living together in a given area is a:",population,community,ecosystem,biome,A
+Biology,Organisms and Populations,Community,Easy,45,"The populations of all different species living together in an area form a:",community,population,individual,organ,A
+Biology,Organisms and Populations,Habitat,Easy,45,"The specific place where an organism lives is called its:",habitat,niche,biome,population,A
+Biology,Organisms and Populations,Mutualism,Medium,55,"The interaction in which both interacting species benefit is called:",mutualism,predation,competition,parasitism,A
+Biology,Organisms and Populations,Parasitism,Medium,55,"The relationship in which one organism benefits at the expense of another is:",parasitism,mutualism,commensalism,neutralism,A
+Biology,Organisms and Populations,Logistic Growth,Medium,55,"The S-shaped curve of population growth is known as:",logistic growth,exponential growth,linear growth,zero growth,A
+Biology,Organisms and Populations,Commensalism,Medium,55,"The interaction in which one species benefits while the other is neither harmed nor benefited is:",commensalism,mutualism,parasitism,competition,A
+Biology,Organisms and Populations,Carrying Capacity,Hard,80,"The maximum population size that a given environment can sustainably support is called the:",carrying capacity,biotic potential,population density,natality,A
+Biology,Organisms and Populations,Exponential Growth,Hard,80,"The J-shaped growth curve represents ____ growth.",exponential,logistic,declining,stable,A
+Biology,Organisms and Populations,Population Density,Hard,80,"The number of individuals of a population per unit area is called the population:",density,natality,mortality,dispersion,A
+Biology,Organisms and Populations,Competition,Hard,80,"The interaction in which two species struggle for the same limited resources is called:",competition,mutualism,commensalism,predation,A
+Biology,Ecosystem,Producers,Easy,45,"Organisms that synthesize their own food, such as green plants, are called:",producers,consumers,decomposers,parasites,A
+Biology,Ecosystem,Consumers,Easy,45,"Organisms that obtain their food by feeding on other organisms are called:",consumers,producers,decomposers,autotrophs,A
+Biology,Ecosystem,Decomposers,Easy,45,"Organisms that break down dead organic matter are called:",decomposers,producers,herbivores,carnivores,A
+Biology,Ecosystem,Energy Flow,Easy,45,"The flow of energy through an ecosystem is:",unidirectional,bidirectional,cyclic,random,A
+Biology,Ecosystem,Food Chain,Medium,55,"The sequence of organisms through which energy and nutrients pass is called a:",food chain,niche,biome,habitat,A
+Biology,Ecosystem,Trophic Levels,Medium,55,"The first trophic level in any food chain is occupied by the:",producers,herbivores,carnivores,decomposers,A
+Biology,Ecosystem,Energy Source,Medium,55,"The ultimate source of energy for nearly all ecosystems is the:",Sun,soil,water,wind,A
+Biology,Ecosystem,Primary Consumers,Medium,55,"Herbivores, which feed directly on plants, are also called:",primary consumers,secondary consumers,producers,decomposers,A
+Biology,Ecosystem,Ten Percent Law,Hard,80,"According to the ten percent law, the amount of energy passed from one trophic level to the next is about:",10%,50%,90%,100%,A
+Biology,Ecosystem,Ecological Pyramid,Hard,80,"A graphical representation of the trophic levels of an ecosystem is called an:",ecological pyramid,food web,niche,biome,A
+Biology,Ecosystem,Pyramid of Energy,Hard,80,"In an ecosystem, the pyramid of energy is always:",upright,inverted,spherical,flat,A
+Biology,Ecosystem,Food Web,Hard,80,"A network of many interconnected food chains in an ecosystem forms a:",food web,single food chain,pyramid,trophic level,A
+Biology,Biodiversity and Conservation,Biodiversity,Easy,45,"The total variety of living organisms present on Earth is called:",biodiversity,ecology,population,community,A
+Biology,Biodiversity and Conservation,In-situ Conservation,Easy,50,"The conservation of a species within its natural habitat is called:",in-situ conservation,ex-situ conservation,captive breeding,none of these,A
+Biology,Biodiversity and Conservation,Ex-situ Conservation,Easy,50,"The conservation of a species outside its natural habitat, for example in a zoo, is called:",ex-situ conservation,in-situ conservation,reforestation,none of these,A
+Biology,Biodiversity and Conservation,Endangered Species,Easy,45,"A species that is at serious risk of becoming extinct is described as:",endangered,extinct,common,abundant,A
+Biology,Biodiversity and Conservation,In-situ Conservation,Medium,55,"National parks and wildlife sanctuaries are examples of ____ conservation.",in-situ,ex-situ,captive,none,A
+Biology,Biodiversity and Conservation,IUCN Red List,Medium,55,"The IUCN Red List provides information primarily about:",threatened and endangered species,weather patterns,soil types,fossils,A
+Biology,Biodiversity and Conservation,Hotspots,Medium,55,"Regions with very high species richness that are also under significant threat are called:",biodiversity hotspots,deserts,tundra,grasslands,A
+Biology,Biodiversity and Conservation,Endemic Species,Medium,55,"A species that is found in only one particular geographical region and nowhere else is said to be:",endemic,endangered,exotic,extinct,A
+Biology,Biodiversity and Conservation,Ex-situ Conservation,Hard,80,"Botanical gardens and zoological parks are examples of ____ conservation.",ex-situ,in-situ,natural,none,A
+Biology,Biodiversity and Conservation,Extinction,Hard,80,"The present rapid, large-scale loss of species is often referred to as the:",sixth extinction,first extinction,green revolution,blue revolution,A
+Biology,Biodiversity and Conservation,Causes of Loss,Hard,80,"The single most important cause of the loss of biodiversity is:",habitat loss and fragmentation,mild weather,volcanic ash,sunlight,A
+Biology,Biodiversity and Conservation,Extinct Species,Hard,80,"A species that has completely disappeared from the face of the Earth is described as:",extinct,endangered,endemic,vulnerable,A
+Biology,Environmental Issues,Pollution,Easy,45,"The addition of harmful substances to the environment is called:",pollution,conservation,recycling,afforestation,A
+Biology,Environmental Issues,Global Warming,Easy,45,"The principal gas responsible for global warming is:",carbon dioxide,oxygen,nitrogen,helium,A
+Biology,Environmental Issues,Ozone Depletion,Easy,50,"The thinning of the ozone layer is caused mainly by:",chlorofluorocarbons (CFCs),carbon dioxide,oxygen,methane,A
+Biology,Environmental Issues,Noise Pollution,Easy,45,"Loud and unwanted sound that causes discomfort and harm is called:",noise pollution,air pollution,water pollution,soil pollution,A
+Biology,Environmental Issues,Acid Rain,Medium,55,"Acid rain is caused mainly by the atmospheric oxides of:",sulphur and nitrogen,carbon only,hydrogen,helium,A
+Biology,Environmental Issues,Biomagnification,Medium,55,"The progressive accumulation of non-biodegradable pollutants at successive trophic levels is called:",biomagnification,eutrophication,bioremediation,decomposition,A
+Biology,Environmental Issues,Eutrophication,Medium,55,"The excessive growth of algae in a water body caused by nutrient enrichment is called:",eutrophication,biomagnification,desertification,deforestation,A
+Biology,Environmental Issues,Bioremediation,Medium,55,"The use of microorganisms to clean up environmental pollutants is called:",bioremediation,biomagnification,eutrophication,biofortification,A
+Biology,Environmental Issues,Greenhouse Gases,Hard,80,"A greenhouse gas released in large amounts from paddy fields and cattle is:",methane,oxygen,argon,neon,A
+Biology,Environmental Issues,Montreal Protocol,Hard,80,"The Montreal Protocol was an international agreement aimed at protecting the:",ozone layer,rainforests,oceans,rivers,A
+Biology,Environmental Issues,Carbon Monoxide,Hard,80,"The major source of the air pollutant carbon monoxide is the:",incomplete combustion of fuels,photosynthesis of plants,respiration of plants,ocean spray,A
+Biology,Environmental Issues,Water Pollution,Hard,80,"The discharge of domestic sewage and industrial waste into water bodies mainly causes:",water pollution,noise pollution,radioactive pollution,thermal pollution,A

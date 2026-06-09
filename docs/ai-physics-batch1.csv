@@ -1,0 +1,85 @@
+subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
+Physics,Units and Measurements,SI Units,Easy,40,"The SI unit of luminous intensity is the:",Candela,Lux,Lumen,Watt,A
+Physics,Units and Measurements,Base Quantities,Easy,40,"The number of base (fundamental) quantities in the SI system is:",5,6,7,9,C
+Physics,Units and Measurements,Units,Easy,40,"A light year is a unit of:",Time,Distance,Light intensity,Speed,B
+Physics,Units and Measurements,Dimensions,Easy,45,"The dimensional formula of force is:",MLT^-1,MLT^-2,ML^2T^-2,MLT,B
+Physics,Units and Measurements,Dimensions,Medium,60,"The dimensional formula of work (or energy) is:",MLT^-2,ML^2T^-2,ML^2T^-1,MLT^-1,B
+Physics,Units and Measurements,Dimensionless Quantities,Medium,55,"Which of the following physical quantities is dimensionless?",Force,Strain,Pressure,Density,B
+Physics,Units and Measurements,Significant Figures,Medium,55,"The number of significant figures in 0.00420 is:",2,3,5,6,B
+Physics,Units and Measurements,Dimensions,Medium,55,"The dimensional formula of pressure is:",ML^-1T^-2,MLT^-2,ML^2T^-2,ML^-2T^-2,A
+Physics,Units and Measurements,Dimensional Analysis,Hard,90,"If force (F), velocity (V) and time (T) are taken as fundamental units, the dimensional formula of mass is:",F V T,F V^-1 T,F V T^-1,F^-1 V T,B
+Physics,Units and Measurements,Dimensions,Hard,80,"The dimensional formula of Planck's constant is:",ML^2T^-1,ML^2T^-2,MLT^-1,ML^2T,A
+Physics,Units and Measurements,Error Analysis,Hard,90,"A quantity P = a^2 b^3 / (c sqrt(d)). If the percentage errors in a, b, c and d are 1%, 2%, 3% and 4% respectively, the maximum percentage error in P is:",13%,7%,9%,11%,A
+Physics,Units and Measurements,Dimensions,Hard,85,"The dimensional formula of the coefficient of viscosity is:",ML^-1T^-1,MLT^-1,ML^-1T^-2,MLT^-2,A
+Physics,Motion in a Straight Line,Vectors and Scalars,Easy,40,"Which of the following is a vector quantity?",Distance,Speed,Displacement,Time,C
+Physics,Motion in a Straight Line,Graphs,Easy,45,"The slope of a position-time graph gives the:",Acceleration,Velocity,Displacement,Force,B
+Physics,Motion in a Straight Line,Units,Easy,40,"The SI unit of acceleration is:",m/s,m/s^2,m,s,B
+Physics,Motion in a Straight Line,Uniform Acceleration,Easy,45,"For a body starting from rest with uniform acceleration, the distance covered is proportional to:",t,t^2,1/t,sqrt(t),B
+Physics,Motion in a Straight Line,Equations of Motion,Medium,55,"A car starts from rest and accelerates at 2 m/s^2 for 5 s. Its final velocity is:",5 m/s,10 m/s,15 m/s,20 m/s,B
+Physics,Motion in a Straight Line,Vertical Motion,Medium,60,"A body is thrown vertically upward with 20 m/s. The time to reach maximum height is (g = 10 m/s^2):",1 s,2 s,4 s,20 s,B
+Physics,Motion in a Straight Line,Graphs,Medium,55,"The area under a velocity-time graph gives the:",Acceleration,Displacement,Speed,Jerk,B
+Physics,Motion in a Straight Line,Retardation,Medium,60,"A train moving at 72 km/h is brought to rest in 10 s. The retardation is:",2 m/s^2,7.2 m/s^2,20 m/s^2,10 m/s^2,A
+Physics,Motion in a Straight Line,Free Fall,Hard,90,"A stone is dropped from rest and covers 25 m in the last second of its fall (g = 10 m/s^2). The total time of fall is:",3 s,2.5 s,2 s,3.5 s,A
+Physics,Motion in a Straight Line,Relative Velocity,Hard,90,"Two trains, each 100 m long, move in opposite directions at 10 m/s and 15 m/s. The time taken to completely cross each other is:",8 s,4 s,10 s,20 s,A
+Physics,Motion in a Straight Line,Calculus of Motion,Hard,80,"The position of a particle is x = 4t^2 - 2t (SI units). Its velocity at t = 2 s is:",14 m/s,16 m/s,12 m/s,6 m/s,A
+Physics,Motion in a Straight Line,Average Speed,Hard,85,"A body covers the first half of a journey at 40 km/h and the second half at 60 km/h. Its average speed for the whole journey is:",48 km/h,50 km/h,100 km/h,45 km/h,A
+Physics,Motion in a Plane,Projectile Motion,Easy,45,"In projectile motion, the horizontal component of velocity:",Increases,Decreases,Remains constant,Becomes zero,C
+Physics,Motion in a Plane,Projectile Motion,Easy,45,"At the highest point of a projectile's path, its vertical velocity is:",Maximum,Zero,Equal to the initial value,Minimum but non-zero,B
+Physics,Motion in a Plane,Vectors,Easy,40,"A quantity having both magnitude and direction is called a:",Scalar,Vector,Unit,Dimensionless quantity,B
+Physics,Motion in a Plane,Projectile Range,Easy,45,"The angle of projection for maximum horizontal range is:",30 degrees,45 degrees,60 degrees,90 degrees,B
+Physics,Motion in a Plane,Projectile Range,Medium,60,"Projectiles launched at 30 degrees and 60 degrees with the same speed have the same:",Range,Maximum height,Time of flight,Velocity at the top,A
+Physics,Motion in a Plane,Time of Flight,Medium,60,"A projectile is launched at 20 m/s at 30 degrees to the horizontal. Its time of flight is (g = 10 m/s^2):",2 s,1 s,4 s,0.5 s,A
+Physics,Motion in a Plane,Vector Addition,Medium,65,"Two vectors of equal magnitude F are inclined at 120 degrees. The magnitude of their resultant is:",F,2F,F sqrt(3),0,A
+Physics,Motion in a Plane,Circular Motion,Medium,55,"A body in uniform circular motion has a constant:",Velocity,Acceleration,Speed,Displacement,C
+Physics,Motion in a Plane,Maximum Height,Hard,85,"A projectile is launched at 20 m/s at 30 degrees (g = 10 m/s^2). Its maximum height is:",5 m,10 m,20 m,2.5 m,A
+Physics,Motion in a Plane,Centripetal Acceleration,Hard,80,"A particle moves in a circle of radius 5 m at a constant speed of 10 m/s. Its centripetal acceleration is:",20 m/s^2,2 m/s^2,50 m/s^2,100 m/s^2,A
+Physics,Motion in a Plane,Relative Velocity,Hard,80,"A river flows at 3 m/s. A swimmer swims at 4 m/s directed perpendicular to the current. The swimmer's resultant speed is:",5 m/s,7 m/s,1 m/s,3.5 m/s,A
+Physics,Motion in a Plane,Vector Addition,Hard,75,"Two forces of 3 N and 4 N act at right angles to each other. The magnitude of their resultant is:",5 N,7 N,1 N,12 N,A
+Physics,Laws of Motion,Newton's First Law,Easy,40,"Newton's first law of motion gives the definition of:",Force,Inertia,Momentum,Energy,B
+Physics,Laws of Motion,Units,Easy,40,"The SI unit of force is the:",Joule,Newton,Pascal,Watt,B
+Physics,Laws of Motion,Momentum,Easy,45,"Linear momentum is defined as:",mass x velocity,mass x acceleration,force x area,force / area,A
+Physics,Laws of Motion,Newton's Third Law,Easy,45,"Action and reaction forces act on:",The same body,Different bodies,No body,The same point of one body,B
+Physics,Laws of Motion,Newton's Second Law,Medium,55,"The force required to give a 2 kg mass an acceleration of 5 m/s^2 is:",10 N,2.5 N,7 N,0.4 N,A
+Physics,Laws of Motion,Impulse,Medium,55,"Impulse is equal to the change in:",Force,Momentum,Energy,Velocity,B
+Physics,Laws of Motion,Newton's Second Law,Medium,60,"A 1000 kg car accelerates at 2 m/s^2. The net force acting on it is:",2000 N,500 N,1000 N,4000 N,A
+Physics,Laws of Motion,Apparent Weight,Medium,60,"The apparent weight of a person in a lift accelerating upward is:",Equal to mg,Greater than mg,Less than mg,Zero,B
+Physics,Laws of Motion,Newton's Second Law,Hard,80,"A 5 kg block on a frictionless surface is pulled by a horizontal force of 20 N. Its acceleration is:",4 m/s^2,100 m/s^2,0.25 m/s^2,15 m/s^2,A
+Physics,Laws of Motion,Atwood Machine,Hard,90,"Two masses of 3 kg and 2 kg are connected by a string over a frictionless pulley. The acceleration of the system is (g = 10 m/s^2):",2 m/s^2,10 m/s^2,5 m/s^2,1 m/s^2,A
+Physics,Laws of Motion,Conservation of Momentum,Hard,90,"A 0.01 kg bullet moving at 100 m/s embeds into a 0.99 kg block at rest. Their common velocity afterwards is:",1 m/s,100 m/s,0.5 m/s,10 m/s,A
+Physics,Laws of Motion,Impulse,Hard,80,"A 2 kg body moving at 4 m/s is brought to rest in 0.2 s. The average force on it is:",40 N,8 N,20 N,16 N,A
+Physics,"Work, Energy and Power",Units,Easy,40,"The SI unit of work is the:",Newton,Joule,Watt,Pascal,B
+Physics,"Work, Energy and Power",Work,Easy,45,"The work done by a force acting perpendicular to the displacement is:",Maximum,Zero,Negative,Infinite,B
+Physics,"Work, Energy and Power",Kinetic Energy,Easy,45,"The kinetic energy of a body of mass m moving with speed v is:",mgh,(1/2)mv^2,mv,(1/2)mv,B
+Physics,"Work, Energy and Power",Power,Easy,40,"The SI unit of power is the:",Joule,Watt,Newton,Horsepower,B
+Physics,"Work, Energy and Power",Kinetic Energy,Medium,55,"A 2 kg body moves at 3 m/s. Its kinetic energy is:",9 J,6 J,18 J,3 J,A
+Physics,"Work, Energy and Power",Work against Gravity,Medium,55,"The work done in lifting a 5 kg body through 2 m is (g = 10 m/s^2):",100 J,50 J,10 J,25 J,A
+Physics,"Work, Energy and Power",Power,Medium,55,"If 100 J of work is done in 5 s, the power is:",20 W,500 W,0.05 W,5 W,A
+Physics,"Work, Energy and Power",Conservation of Energy,Medium,55,"For a body in free fall (no air resistance), the total mechanical energy:",Increases,Decreases,Remains constant,Becomes zero,C
+Physics,"Work, Energy and Power",Work by a Force,Hard,80,"A force F = (3i + 4j) N moves a body through a displacement d = (2i + 1j) m. The work done is:",10 J,7 J,5 J,14 J,A
+Physics,"Work, Energy and Power",Energy and Momentum,Hard,85,"If the kinetic energy of a body is doubled, its momentum becomes ____ times the original:",sqrt(2),2,4,1.5,A
+Physics,"Work, Energy and Power",Power,Hard,80,"A 50 kg person climbs a 10 m staircase in 20 s. The power developed is (g = 10 m/s^2):",250 W,500 W,5000 W,25 W,A
+Physics,"Work, Energy and Power",Spring Potential Energy,Hard,80,"A spring of force constant 200 N/m is compressed by 0.1 m. The potential energy stored is:",1 J,2 J,10 J,0.5 J,A
+Physics,System of Particles and Rotational Motion,Centre of Mass,Easy,45,"The centre of mass of a uniform rod lies at:",One end,Its centre,One quarter from an end,Outside the rod,B
+Physics,System of Particles and Rotational Motion,Units,Easy,40,"The SI unit of torque is:",N,N.m,N/m,J/s,B
+Physics,System of Particles and Rotational Motion,Angular Momentum,Easy,45,"For a rigid body, angular momentum L is given by:",I alpha,I omega,m v,F r,B
+Physics,System of Particles and Rotational Motion,Moment of Inertia,Easy,50,"The moment of inertia of a body depends on:",Its speed,The distribution of mass about the axis,The applied force,The time of rotation,B
+Physics,System of Particles and Rotational Motion,Torque,Medium,55,"Torque is defined as:",force x perpendicular distance,force / distance,force + distance,mass x acceleration,A
+Physics,System of Particles and Rotational Motion,Moment of Inertia,Medium,60,"The moment of inertia of a ring of mass M and radius R about its central axis is:",MR^2,(1/2)MR^2,(2/5)MR^2,(1/12)MR^2,A
+Physics,System of Particles and Rotational Motion,Rotational Kinematics,Medium,55,"If a body rotates with constant angular velocity, its angular acceleration is:",Constant and non-zero,Zero,Increasing,Infinite,B
+Physics,System of Particles and Rotational Motion,Moment of Inertia,Medium,60,"The moment of inertia of a solid sphere about its diameter is:",(2/5)MR^2,(2/3)MR^2,MR^2,(1/2)MR^2,A
+Physics,System of Particles and Rotational Motion,Moment of Inertia,Hard,80,"A disc of mass 2 kg and radius 0.5 m has a moment of inertia about its central axis of:",0.25 kg.m^2,0.5 kg.m^2,1 kg.m^2,0.125 kg.m^2,A
+Physics,System of Particles and Rotational Motion,Angular Momentum,Hard,80,"A particle moves in a circle of radius 2 m with linear momentum 3 kg.m/s directed tangentially. Its angular momentum about the centre is:",6 kg.m^2/s,1.5 kg.m^2/s,12 kg.m^2/s,3 kg.m^2/s,A
+Physics,System of Particles and Rotational Motion,Conservation of Angular Momentum,Hard,75,"When a spinning skater pulls her arms inward, her angular velocity:",Increases,Decreases,Stays constant,Becomes zero,A
+Physics,System of Particles and Rotational Motion,Rotational Dynamics,Hard,80,"The torque needed to give a body of moment of inertia 4 kg.m^2 an angular acceleration of 2 rad/s^2 is:",8 N.m,2 N.m,0.5 N.m,6 N.m,A
+Physics,Gravitation,Acceleration due to Gravity,Easy,40,"The approximate value of acceleration due to gravity at the Earth's surface is:",9.8 m/s^2,6.67 m/s^2,8.9 m/s^2,11 m/s^2,A
+Physics,Gravitation,Newton's Law of Gravitation,Easy,45,"The gravitational force between two bodies is proportional to the:",Sum of their masses,Product of their masses,Difference of their masses,Ratio of their masses,B
+Physics,Gravitation,Gravitational Constant,Easy,45,"The SI unit of the universal gravitational constant G is:",N.m^2/kg^2,N/kg,m/s^2,J,A
+Physics,Gravitation,Variation of g,Easy,45,"The weight of a body at the centre of the Earth is:",Maximum,Zero,Equal to that at the surface,Infinite,B
+Physics,Gravitation,Variation of g with Height,Medium,65,"At a height equal to the Earth's radius above the surface, the value of g becomes:",g/4,g/2,g,2g,A
+Physics,Gravitation,Escape Velocity,Medium,55,"The escape velocity from the Earth's surface is approximately:",11.2 km/s,7.9 km/s,9.8 km/s,3 km/s,A
+Physics,Gravitation,Orbital Velocity,Medium,55,"The orbital velocity of a satellite revolving close to the Earth's surface is approximately:",7.9 km/s,11.2 km/s,9.8 km/s,3 km/s,A
+Physics,Gravitation,Kepler's Laws,Medium,55,"According to Kepler's third law, the square of the orbital period is proportional to:",r,r^2,r^3,1/r,C
+Physics,Gravitation,Variation of g with Depth,Hard,80,"The acceleration due to gravity at a depth equal to half the Earth's radius (R/2) below the surface is:",g/2,g/4,g,2g,A
+Physics,Gravitation,Variation of g,Hard,80,"If the radius of the Earth were halved while its mass remained unchanged, the surface value of g would become:",4g,2g,g/2,g/4,A
+Physics,Gravitation,Escape Velocity,Hard,90,"A planet has the same mean density as the Earth but twice its radius. The escape velocity from this planet is approximately:",22.4 km/s,11.2 km/s,5.6 km/s,44.8 km/s,A
+Physics,Gravitation,Geostationary Satellite,Hard,75,"The time period of a geostationary satellite is:",24 hours,1 hour,12 hours,28 days,A
