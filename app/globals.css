@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+
+  /* Student-facing "energetic & motivating" palette (M-UI).
+     Raw CSS variables so the inline-SVG mascot + student skin can theme
+     themselves. Teacher / admin / parent screens never read these. */
+  --energy: #00e0b8; /* electric mint — primary "go" / progress / wins */
+  --energy-deep: #00b89a;
+  --energy-soft: #7cf0dd;
+  --pop: #ff5a4d; /* vivid coral — attention / wrong / alerts */
+  --reward: #ffb020; /* warm amber — celebration / highlights */
+  --accent2: #6c5ce7; /* indigo — secondary info */
+  --paper: #fbfaf6; /* warm off-white base */
+  --focus-ink: #0a1f1c; /* deep teal-ink for the test focus surface */
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-[#f6f8f7] text-ink font-body antialiased;
+  /* subtle clinical paper texture via layered gradients */
+  background-image:
+    radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.06) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 45%);
+  background-attachment: fixed;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@layer components {
+  /* Frosted card used across the app. */
+  .card {
+    @apply rounded-2xl border border-black/5 bg-white/90 shadow-sm backdrop-blur;
+  }
+
+  /* Primary call-to-action. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-5 py-3
+      font-semibold text-white shadow-sm transition
+      hover:bg-teal-deep active:scale-[0.98]
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-black/10
+      bg-white px-5 py-3 font-semibold text-ink transition
+      hover:border-black/20 hover:bg-black/[0.02] active:scale-[0.98]
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Student skin (M-UI)
+   Scopes the energetic font pairing + visual language to ONLY the student
+   welcome / test / report. Applied via a `.student-skin` wrapper. Because it
+   remaps the --font-display / --font-body CSS variables, every descendant that
+   uses the `font-display` / `font-body` utilities automatically switches to
+   Bricolage Grotesque + Hanken Grotesk — without touching teacher/admin/parent.
+   ────────────────────────────────────────────────────────────────────────── */
+.student-skin {
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-hanken);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+@layer components {
+  /* Bold, confident primary action for the student side. */
+  .btn-energy {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl
+      bg-energy px-5 py-3.5 font-display text-base font-bold text-focusink shadow-[0_8px_24px_-8px_rgba(0,224,184,0.65)]
+      transition-transform duration-150 ease-out
+      hover:-translate-y-0.5 active:scale-[0.97]
+      disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0;
+  }
+
+  /* The sweep of light that travels across the primary CTA. */
+  .btn-energy::after {
+    content: "";
+    @apply pointer-events-none absolute inset-y-0 left-0 w-1/3 -skew-x-12 bg-white/30 blur-md;
+    animation: shine 2.8s ease-in-out infinite;
+  }
+
+  /* Punchier card for the student surfaces (rounder, softer shadow). */
+  .card-energy {
+    @apply rounded-3xl border border-black/5 bg-white shadow-[0_10px_30px_-18px_rgba(10,31,28,0.4)];
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Cinematic dashboard surfaces (dark).
+   Shared "glass" language for the logged-in student / teacher / admin screens
+   so they match the dark, aurora-lit welcome + login pages. These are additive
+   — the light `.card` / `.card-energy` used by sub-pages (test, report, mock
+   builder) are untouched.
+   ────────────────────────────────────────────────────────────────────────── */
+@layer components {
+  /* Frosted glass card on the dark aurora background. */
+  .card-glass {
+    @apply rounded-2xl border border-white/10 bg-white/[0.05] shadow-[0_10px_40px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md;
+  }
+
+  /* Rounder, punchier glass card (student hero / mock cards). */
+  .card-glass-lg {
+    @apply rounded-3xl border border-white/10 bg-white/[0.05] shadow-[0_18px_50px_-24px_rgba(0,0,0,0.85)] backdrop-blur-md;
+  }
+
+  /* Ghost button tuned for dark surfaces. */
+  .btn-ghost-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/15
+      bg-white/5 px-5 py-3 font-semibold text-paper transition
+      hover:border-white/30 hover:bg-white/10 active:scale-[0.98]
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Form input/select on dark surfaces. */
+  .field-dark {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2.5 text-sm
+      text-paper placeholder:text-paper/40 outline-none transition
+      focus:border-energy focus:ring-2 focus:ring-energy/30;
+  }
+}
+
+/* Reduced motion: kill the CTA shine entirely (the global rule above already
+   neutralises durations, but the sweep should simply not run). */
+@media (prefers-reduced-motion: reduce) {
+  .btn-energy::after {
+    display: none;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Public landing page (cinematic) — standalone, dark, brand-skinned.
+   Self-contained: nothing here affects the authenticated app screens.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Brand font scope for the landing (Bricolage display + Hanken body). */
+.landing-skin {
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-hanken);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+}
+
+/* Aurora blobs drift slowly. The global reduced-motion rule above freezes
+   these into a static (still gorgeous) gradient automatically. */
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(7%, -5%, 0) scale(1.12); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-6%, 6%, 0) scale(0.92); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, 8%, 0) scale(1.08); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+
+.aurora-a { animation: drift-a 18s ease-in-out infinite; }
+.aurora-b { animation: drift-b 22s ease-in-out infinite; }
+.aurora-c { animation: drift-c 26s ease-in-out infinite; }
+.aurora-sheen { animation: spin-slow 60s linear infinite; }
+.aurora-breathe { animation: glow-breathe 7s ease-in-out infinite; }
+.scroll-cue { animation: cue-bob 1.8s ease-in-out infinite; }
+
+/* Fine film grain for an "expensive" matte finish (cheap: one tiled SVG). */
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}

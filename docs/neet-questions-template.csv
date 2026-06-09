@@ -1,0 +1,4 @@
+subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
+Physics,Laws of Motion,Newton's second law,Easy,45,A force of 10 N acts on a 2 kg body. Its acceleration is?,2 m/s^2,5 m/s^2,10 m/s^2,20 m/s^2,B
+Chemistry,Some Basic Concepts of Chemistry,Mole concept,Medium,60,The number of molecules in 1 mole of any gas is?,6.022x10^20,6.022x10^23,3.011x10^23,1.204x10^24,B
+Biology,Cell: The Unit of Life,Cell organelles,Easy,40,The site of aerobic respiration in a eukaryotic cell is the?,Nucleus,Ribosome,Mitochondria,Golgi apparatus,C
