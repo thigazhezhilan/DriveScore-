@@ -1,85 +1,85 @@
 subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Chemistry,The Solid State,Crystalline Solids,Easy,45,"Solids in which the constituent particles are arranged in a regular, repeating pattern are called:",crystalline solids,amorphous solids,liquids,gases,A
-Chemistry,The Solid State,Amorphous Solids,Easy,45,"Glass is an example of a(n):",amorphous solid,crystalline solid,metallic crystal,ionic crystal,A
-Chemistry,The Solid State,Unit Cell,Easy,45,"The smallest repeating unit of a crystal lattice is called the:",unit cell,atom,molecule,ion,A
-Chemistry,The Solid State,Covalent Solids,Easy,45,"Diamond is an example of a:",covalent (network) solid,molecular solid,ionic solid,metallic solid,A
-Chemistry,The Solid State,Simple Cubic,Medium,55,"The number of atoms per unit cell in a simple cubic lattice is:",1,2,4,8,A
-Chemistry,The Solid State,BCC,Medium,55,"The number of atoms per unit cell in a body-centred cubic (bcc) lattice is:",2,1,4,8,A
-Chemistry,The Solid State,Ionic Solids,Medium,55,"In sodium chloride (NaCl), the constituent particles are held together by:",ionic bonds,covalent bonds,metallic bonds,hydrogen bonds,A
-Chemistry,The Solid State,Coordination Number,Medium,55,"The coordination number of an atom in a simple cubic structure is:",6,8,12,4,A
-Chemistry,The Solid State,FCC,Hard,80,"The number of atoms per unit cell in a face-centred cubic (fcc) lattice is:",4,2,1,8,A
-Chemistry,The Solid State,Packing Efficiency,Hard,80,"The packing efficiency of a face-centred cubic (fcc) structure is approximately:",74%,68%,52%,100%,A
-Chemistry,The Solid State,Crystal Defects,Hard,85,"A Schottky defect in an ionic crystal arises due to:",missing cations and anions (vacancies),extra electrons only,interstitial ions only,no defect at all,A
-Chemistry,The Solid State,Coordination Number,Hard,80,"The coordination number of an atom in a body-centred cubic (bcc) structure is:",8,6,12,4,A
-Chemistry,Solutions,Definition,Easy,45,"A solution is a ____ mixture of two or more substances.",homogeneous,heterogeneous,colloidal,suspended,A
-Chemistry,Solutions,Solvent,Easy,45,"In a solution, the component present in the larger amount is usually called the:",solvent,solute,precipitate,residue,A
-Chemistry,Solutions,Molarity,Easy,45,"Molarity is defined as the number of moles of solute per litre of:",solution,solvent,water,gas,A
-Chemistry,Solutions,Solute,Easy,45,"When salt is dissolved in water, the salt is the:",solute,solvent,solution,colloid,A
-Chemistry,Solutions,Molarity,Medium,55,"The molarity of a solution containing 1 mole of solute in 2 litres of solution is:",0.5 M,1 M,2 M,0.25 M,A
-Chemistry,Solutions,Colligative Properties,Medium,55,"Colligative properties of a solution depend on the:",number of solute particles,nature of the solute,colour of the solution,mass of solvent only,A
-Chemistry,Solutions,Boiling Point Elevation,Medium,55,"Adding a non-volatile solute to a solvent ____ its boiling point.",raises,lowers,does not change,doubles,A
-Chemistry,Solutions,Freezing Point Depression,Medium,55,"On adding a solute, the freezing point of a solvent:",decreases,increases,stays the same,doubles,A
-Chemistry,Solutions,Molarity,Hard,80,"A solution contains 0.5 mole of solute in 250 mL of solution. Its molarity is:",2 M,0.5 M,1 M,4 M,A
-Chemistry,Solutions,Raoult's Law,Hard,80,"According to Raoult's law, the relative lowering of vapour pressure of a solution equals the:",mole fraction of the solute,mole fraction of the solvent,molarity,molality,A
-Chemistry,Solutions,Henry's Law,Hard,80,"Henry's law states that the solubility of a gas in a liquid is proportional to its:",partial pressure,temperature only,volume,density,A
-Chemistry,Solutions,van't Hoff Factor,Hard,80,"The van't Hoff factor (i) for NaCl in a dilute aqueous solution is approximately:",2,1,3,0.5,A
-Chemistry,Electrochemistry,Electrolysis,Easy,45,"During electrolysis, oxidation takes place at the:",anode,cathode,salt bridge,electrolyte,A
-Chemistry,Electrochemistry,Galvanic Cell,Easy,45,"A device that converts chemical energy into electrical energy is a:",galvanic (voltaic) cell,electrolytic cell,resistor,transformer,A
-Chemistry,Electrochemistry,Conductance,Easy,45,"The SI unit of electrical conductance is the:",siemens,ohm,volt,ampere,A
-Chemistry,Electrochemistry,Galvanic Cell,Easy,45,"In a galvanic cell, reduction occurs at the:",cathode,anode,salt bridge,connecting wire,A
-Chemistry,Electrochemistry,Standard Electrode,Medium,55,"The standard reduction potential of the standard hydrogen electrode is taken as:",0 V,1 V,-1 V,0.76 V,A
-Chemistry,Electrochemistry,Salt Bridge,Medium,55,"The main function of a salt bridge in a galvanic cell is to:",maintain electrical neutrality and complete the circuit,supply electrons,store energy,increase the voltage,A
-Chemistry,Electrochemistry,Faraday's Laws,Medium,55,"Faraday's laws of electrolysis relate the amount of substance deposited to the:",quantity of charge passed,voltage only,time only,resistance,A
-Chemistry,Electrochemistry,Faraday Constant,Medium,55,"One faraday of electric charge is approximately equal to:",96500 C,9650 C,1.6 x 10^-19 C,6.022 x 10^23 C,A
-Chemistry,Electrochemistry,Cell Potential,Hard,80,"The standard cell potential of a galvanic cell is given by:",E cathode - E anode,E anode - E cathode,E cathode + E anode,E cathode x E anode,A
-Chemistry,Electrochemistry,Spontaneity,Hard,80,"If the standard cell potential (E cell) is positive, the cell reaction is:",spontaneous,non-spontaneous,at equilibrium,impossible,A
-Chemistry,Electrochemistry,Gibbs Energy,Hard,85,"The relation between standard Gibbs free energy change and standard cell potential is:",delta G = -nFE cell,delta G = +nFE cell,delta G = nF/E cell,delta G = E cell/nF,A
-Chemistry,Electrochemistry,Electrolysis,Hard,80,"During the electrolysis of molten sodium chloride, the product formed at the cathode is:",sodium metal,chlorine gas,oxygen,hydrogen,A
-Chemistry,Chemical Kinetics,Definition,Easy,45,"The branch of chemistry that deals with the rates of chemical reactions is:",chemical kinetics,thermodynamics,electrochemistry,stoichiometry,A
-Chemistry,Chemical Kinetics,Activation Energy,Easy,45,"The minimum energy that reactant molecules must possess for a reaction to occur is the:",activation energy,kinetic energy,bond energy,free energy,A
-Chemistry,Chemical Kinetics,Catalyst,Easy,45,"A substance that increases the rate of a reaction without being consumed is a:",catalyst,reactant,product,inhibitor,A
-Chemistry,Chemical Kinetics,Temperature,Easy,45,"In general, increasing the temperature ____ the rate of a chemical reaction.",increases,decreases,does not affect,halts,A
-Chemistry,Chemical Kinetics,Concentration,Medium,55,"The rate of a reaction generally ____ as the concentration of the reactants increases.",increases,decreases,stays constant,becomes zero,A
-Chemistry,Chemical Kinetics,Order of Reaction,Medium,55,"The order of a chemical reaction is determined by:",experiment (the rate law),the balanced equation directly,the temperature,the catalyst used,A
-Chemistry,Chemical Kinetics,Catalyst,Medium,55,"A catalyst increases the rate of a reaction by:",lowering the activation energy,raising the temperature,increasing the concentration,adding energy to the system,A
-Chemistry,Chemical Kinetics,Zero Order,Medium,55,"For a zero-order reaction, the rate is:",independent of reactant concentration,proportional to concentration,proportional to the square of concentration,always zero,A
-Chemistry,Chemical Kinetics,Rate Constant,Hard,80,"The unit of the rate constant for a first-order reaction is:",s^-1,mol/L/s,L/mol/s,mol/L,A
-Chemistry,Chemical Kinetics,Half-Life,Hard,80,"For a first-order reaction, the half-life is:",independent of the initial concentration,proportional to the concentration,inversely proportional to the concentration,always zero,A
-Chemistry,Chemical Kinetics,Arrhenius Equation,Hard,80,"The Arrhenius equation relates the rate constant of a reaction to the:",temperature and activation energy,pressure only,volume,concentration only,A
-Chemistry,Chemical Kinetics,Order of Reaction,Hard,80,"If the rate law of a reaction is rate = k[A][B], the overall order of the reaction is:",2,1,3,0,A
-Chemistry,Surface Chemistry,Adsorption,Easy,45,"The accumulation of molecules of a substance on a surface is called:",adsorption,absorption,desorption,diffusion,A
-Chemistry,Surface Chemistry,Colloids,Easy,50,"A colloid contains particles whose size is intermediate between those of a:",true solution and a suspension,gas and a liquid,solid and a gas,two gases,A
-Chemistry,Surface Chemistry,Adsorbate,Easy,45,"The substance that gets adsorbed onto a surface is called the:",adsorbate,adsorbent,catalyst,solvent,A
-Chemistry,Surface Chemistry,Colloids,Easy,45,"Milk is a common example of a:",colloid,true solution,suspension,pure compound,A
-Chemistry,Surface Chemistry,Absorption,Medium,55,"The process in which a substance is taken up uniformly throughout the bulk of another is called:",absorption,adsorption,adhesion,coagulation,A
-Chemistry,Surface Chemistry,Tyndall Effect,Medium,55,"The scattering of light by the particles of a colloid is known as the:",Tyndall effect,Raman effect,photoelectric effect,Doppler effect,A
-Chemistry,Surface Chemistry,Catalysis,Medium,55,"A catalyst that exists in a different phase from the reactants is called a:",heterogeneous catalyst,homogeneous catalyst,inhibitor,promoter,A
-Chemistry,Surface Chemistry,Desorption,Medium,55,"The removal of an adsorbed substance from a surface is called:",desorption,adsorption,absorption,coagulation,A
-Chemistry,Surface Chemistry,Physisorption,Hard,80,"Physical adsorption (physisorption) is due to:",weak van der Waals forces,strong covalent bonds,ionic bonds,metallic bonds,A
-Chemistry,Surface Chemistry,Coagulation,Hard,80,"The coagulation of a colloidal solution is most effectively brought about by adding:",an electrolyte,more water,a non-electrolyte,sugar,A
-Chemistry,Surface Chemistry,Chemisorption,Hard,80,"Chemical adsorption (chemisorption) involves the formation of:",chemical bonds between adsorbate and adsorbent,only weak van der Waals forces,no interaction,ionic crystals,A
-Chemistry,Surface Chemistry,Emulsion,Hard,80,"An emulsion is a colloidal system consisting of:",one liquid dispersed in another liquid,a solid dispersed in a gas,a gas dispersed in a liquid,a solid dispersed in a solid,A
-Chemistry,General Principles of Isolation of Elements,Ores,Easy,45,"Naturally occurring substances from which a metal can be profitably extracted are called:",ores,alloys,slags,non-metals,A
-Chemistry,General Principles of Isolation of Elements,Calcination,Easy,50,"The process of strongly heating an ore in the absence of air is called:",calcination,roasting,smelting,refining,A
-Chemistry,General Principles of Isolation of Elements,Metallurgy,Easy,45,"The science and technology of extracting metals from their ores is called:",metallurgy,mineralogy,geology,electrochemistry,A
-Chemistry,General Principles of Isolation of Elements,Flux,Easy,50,"The substance added to an ore to combine with impurities and lower the melting point is the:",flux,slag,gangue,ore,A
-Chemistry,General Principles of Isolation of Elements,Gangue,Medium,55,"The unwanted earthy or rocky impurity present in an ore is called the:",gangue,flux,slag,matrix metal,A
-Chemistry,General Principles of Isolation of Elements,Roasting,Medium,55,"The process of heating a sulphide ore strongly in the presence of air is called:",roasting,calcination,smelting,electrolysis,A
-Chemistry,General Principles of Isolation of Elements,Slag,Medium,55,"The fusible product formed when a flux combines with gangue is called:",slag,ore,matte,alloy,A
-Chemistry,General Principles of Isolation of Elements,Reactive Metals,Medium,55,"Highly reactive metals such as sodium and aluminium are usually extracted by:",electrolysis,reduction with carbon,roasting,hand-picking,A
-Chemistry,General Principles of Isolation of Elements,Froth Flotation,Hard,80,"The concentration of a sulphide ore is commonly carried out by:",froth flotation,magnetic separation,calcination,distillation,A
-Chemistry,General Principles of Isolation of Elements,Thermite Process,Hard,80,"In the thermite process, the reducing agent used for metal oxides is:",aluminium,carbon,hydrogen,sodium,A
-Chemistry,General Principles of Isolation of Elements,Blast Furnace,Hard,80,"In the extraction of iron in a blast furnace, the chief reducing agent is:",carbon monoxide,oxygen,water,nitrogen,A
-Chemistry,General Principles of Isolation of Elements,Zone Refining,Hard,80,"The purification of a metal by moving a molten zone repeatedly along a rod is called:",zone refining,electrolytic refining,distillation,roasting,A
-Chemistry,The d- and f-Block Elements,Transition Elements,Easy,45,"The d-block elements are also commonly called the:",transition elements,noble gases,alkali metals,halogens,A
-Chemistry,The d- and f-Block Elements,Coloured Compounds,Easy,45,"A characteristic property of transition metals is that they form:",coloured compounds,only white compounds,gaseous compounds,no compounds,A
-Chemistry,The d- and f-Block Elements,Inner Transition,Easy,45,"The f-block elements are also called the:",inner transition elements,alkali metals,noble gases,halogens,A
-Chemistry,The d- and f-Block Elements,Metallic Properties,Easy,45,"Transition metals are generally good:",conductors of electricity,electrical insulators,non-metals,gases,A
-Chemistry,The d- and f-Block Elements,Oxidation States,Medium,55,"Transition elements commonly show:",variable oxidation states,only one oxidation state,no oxidation states,only the +1 state,A
-Chemistry,The d- and f-Block Elements,Colour,Medium,55,"The colour of many transition metal ions is due to:",d-d electronic transitions,nuclear reactions,filling of s-orbitals,ionic size alone,A
-Chemistry,The d- and f-Block Elements,Catalysis,Medium,55,"Many transition metals and their compounds are widely used as:",catalysts,insulators,fuels,acids,A
-Chemistry,The d- and f-Block Elements,Lanthanides,Medium,55,"The lanthanide elements belong to the:",f-block,d-block,s-block,p-block,A
-Chemistry,The d- and f-Block Elements,Electronic Configuration,Hard,80,"The general outer electronic configuration of d-block elements is:",(n-1)d 1-10 ns 1-2,ns 1-2 only,np 1-6,(n-2)f 1-14,A
-Chemistry,The d- and f-Block Elements,Lanthanide Contraction,Hard,80,"The steady decrease in atomic and ionic radii across the lanthanide series is called:",lanthanide contraction,actinide expansion,periodicity,electron screening,A
-Chemistry,The d- and f-Block Elements,Colour,Hard,80,"Transition metals form coloured ions mainly because their d-orbitals are:",partially filled,completely empty,completely filled,absent,A
-Chemistry,The d- and f-Block Elements,Identification,Hard,80,"Among the following, the element that is a transition metal is:",iron,sodium,calcium,aluminium,A
+Chemistry,The Solid State,Crystalline Solids,Easy,45,"Solids in which the constituent particles are arranged in a regular, repeating pattern are called:",amorphous solids,crystalline solids,gases,liquids,B
+Chemistry,The Solid State,Amorphous Solids,Easy,45,Glass is an example of a(n):,ionic crystal,amorphous solid,crystalline solid,metallic crystal,B
+Chemistry,The Solid State,Unit Cell,Easy,45,The smallest repeating unit of a crystal lattice is called the:,molecule,unit cell,ion,atom,B
+Chemistry,The Solid State,Covalent Solids,Easy,45,Diamond is an example of a:,covalent (network) solid,ionic solid,molecular solid,metallic solid,A
+Chemistry,The Solid State,Simple Cubic,Medium,55,The number of atoms per unit cell in a simple cubic lattice is:,8,4,2,1,D
+Chemistry,The Solid State,BCC,Medium,55,The number of atoms per unit cell in a body-centred cubic (bcc) lattice is:,4,2,8,1,B
+Chemistry,The Solid State,Ionic Solids,Medium,55,"In sodium chloride (NaCl), the constituent particles are held together by:",ionic bonds,metallic bonds,covalent bonds,hydrogen bonds,A
+Chemistry,The Solid State,Coordination Number,Medium,55,The coordination number of an atom in a simple cubic structure is:,12,8,6,4,C
+Chemistry,The Solid State,FCC,Hard,80,The number of atoms per unit cell in a face-centred cubic (fcc) lattice is:,8,2,4,1,C
+Chemistry,The Solid State,Packing Efficiency,Hard,80,The packing efficiency of a face-centred cubic (fcc) structure is approximately:,74%,52%,100%,68%,A
+Chemistry,The Solid State,Crystal Defects,Hard,85,A Schottky defect in an ionic crystal arises due to:,extra electrons only,no defect at all,interstitial ions only,missing cations and anions (vacancies),D
+Chemistry,The Solid State,Coordination Number,Hard,80,The coordination number of an atom in a body-centred cubic (bcc) structure is:,12,4,8,6,C
+Chemistry,Solutions,Definition,Easy,45,A solution is a ____ mixture of two or more substances.,heterogeneous,colloidal,suspended,homogeneous,D
+Chemistry,Solutions,Solvent,Easy,45,"In a solution, the component present in the larger amount is usually called the:",precipitate,residue,solute,solvent,D
+Chemistry,Solutions,Molarity,Easy,45,Molarity is defined as the number of moles of solute per litre of:,solution,gas,solvent,water,A
+Chemistry,Solutions,Solute,Easy,45,"When salt is dissolved in water, the salt is the:",solvent,colloid,solution,solute,D
+Chemistry,Solutions,Molarity,Medium,55,The molarity of a solution containing 1 mole of solute in 2 litres of solution is:,1 M,0.25 M,2 M,0.5 M,D
+Chemistry,Solutions,Colligative Properties,Medium,55,Colligative properties of a solution depend on the:,nature of the solute,colour of the solution,number of solute particles,mass of solvent only,C
+Chemistry,Solutions,Boiling Point Elevation,Medium,55,Adding a non-volatile solute to a solvent ____ its boiling point.,lowers,doubles,raises,does not change,C
+Chemistry,Solutions,Freezing Point Depression,Medium,55,"On adding a solute, the freezing point of a solvent:",stays the same,doubles,decreases,increases,C
+Chemistry,Solutions,Molarity,Hard,80,A solution contains 0.5 mole of solute in 250 mL of solution. Its molarity is:,1 M,2 M,4 M,0.5 M,B
+Chemistry,Solutions,Raoult's Law,Hard,80,"According to Raoult's law, the relative lowering of vapour pressure of a solution equals the:",mole fraction of the solute,molality,molarity,mole fraction of the solvent,A
+Chemistry,Solutions,Henry's Law,Hard,80,Henry's law states that the solubility of a gas in a liquid is proportional to its:,volume,density,temperature only,partial pressure,D
+Chemistry,Solutions,van't Hoff Factor,Hard,80,The van't Hoff factor (i) for NaCl in a dilute aqueous solution is approximately:,0.5,3,2,1,C
+Chemistry,Electrochemistry,Electrolysis,Easy,45,"During electrolysis, oxidation takes place at the:",salt bridge,anode,electrolyte,cathode,B
+Chemistry,Electrochemistry,Galvanic Cell,Easy,45,A device that converts chemical energy into electrical energy is a:,galvanic (voltaic) cell,resistor,transformer,electrolytic cell,A
+Chemistry,Electrochemistry,Conductance,Easy,45,The SI unit of electrical conductance is the:,ampere,siemens,ohm,volt,B
+Chemistry,Electrochemistry,Galvanic Cell,Easy,45,"In a galvanic cell, reduction occurs at the:",connecting wire,salt bridge,anode,cathode,D
+Chemistry,Electrochemistry,Standard Electrode,Medium,55,The standard reduction potential of the standard hydrogen electrode is taken as:,1 V,0 V,-1 V,0.76 V,B
+Chemistry,Electrochemistry,Salt Bridge,Medium,55,The main function of a salt bridge in a galvanic cell is to:,supply electrons,store energy,increase the voltage,maintain electrical neutrality and complete the circuit,D
+Chemistry,Electrochemistry,Faraday's Laws,Medium,55,Faraday's laws of electrolysis relate the amount of substance deposited to the:,voltage only,quantity of charge passed,resistance,time only,B
+Chemistry,Electrochemistry,Faraday Constant,Medium,55,One faraday of electric charge is approximately equal to:,1.6 x 10^-19 C,9650 C,96500 C,6.022 x 10^23 C,C
+Chemistry,Electrochemistry,Cell Potential,Hard,80,The standard cell potential of a galvanic cell is given by:,E cathode - E anode,E anode - E cathode,E cathode x E anode,E cathode + E anode,A
+Chemistry,Electrochemistry,Spontaneity,Hard,80,"If the standard cell potential (E cell) is positive, the cell reaction is:",impossible,spontaneous,at equilibrium,non-spontaneous,B
+Chemistry,Electrochemistry,Gibbs Energy,Hard,85,The relation between standard Gibbs free energy change and standard cell potential is:,delta G = nF/E cell,delta G = E cell/nF,delta G = +nFE cell,delta G = -nFE cell,D
+Chemistry,Electrochemistry,Electrolysis,Hard,80,"During the electrolysis of molten sodium chloride, the product formed at the cathode is:",hydrogen,oxygen,sodium metal,chlorine gas,C
+Chemistry,Chemical Kinetics,Definition,Easy,45,The branch of chemistry that deals with the rates of chemical reactions is:,chemical kinetics,stoichiometry,electrochemistry,thermodynamics,A
+Chemistry,Chemical Kinetics,Activation Energy,Easy,45,The minimum energy that reactant molecules must possess for a reaction to occur is the:,free energy,bond energy,activation energy,kinetic energy,C
+Chemistry,Chemical Kinetics,Catalyst,Easy,45,A substance that increases the rate of a reaction without being consumed is a:,catalyst,reactant,product,inhibitor,A
+Chemistry,Chemical Kinetics,Temperature,Easy,45,"In general, increasing the temperature ____ the rate of a chemical reaction.",increases,does not affect,halts,decreases,A
+Chemistry,Chemical Kinetics,Concentration,Medium,55,The rate of a reaction generally ____ as the concentration of the reactants increases.,stays constant,increases,becomes zero,decreases,B
+Chemistry,Chemical Kinetics,Order of Reaction,Medium,55,The order of a chemical reaction is determined by:,the catalyst used,the balanced equation directly,the temperature,experiment (the rate law),D
+Chemistry,Chemical Kinetics,Catalyst,Medium,55,A catalyst increases the rate of a reaction by:,raising the temperature,lowering the activation energy,increasing the concentration,adding energy to the system,B
+Chemistry,Chemical Kinetics,Zero Order,Medium,55,"For a zero-order reaction, the rate is:",always zero,proportional to concentration,independent of reactant concentration,proportional to the square of concentration,C
+Chemistry,Chemical Kinetics,Rate Constant,Hard,80,The unit of the rate constant for a first-order reaction is:,s^-1,mol/L,L/mol/s,mol/L/s,A
+Chemistry,Chemical Kinetics,Half-Life,Hard,80,"For a first-order reaction, the half-life is:",always zero,proportional to the concentration,independent of the initial concentration,inversely proportional to the concentration,C
+Chemistry,Chemical Kinetics,Arrhenius Equation,Hard,80,The Arrhenius equation relates the rate constant of a reaction to the:,concentration only,temperature and activation energy,volume,pressure only,B
+Chemistry,Chemical Kinetics,Order of Reaction,Hard,80,"If the rate law of a reaction is rate = k[A][B], the overall order of the reaction is:",0,3,2,1,C
+Chemistry,Surface Chemistry,Adsorption,Easy,45,The accumulation of molecules of a substance on a surface is called:,desorption,absorption,diffusion,adsorption,D
+Chemistry,Surface Chemistry,Colloids,Easy,50,A colloid contains particles whose size is intermediate between those of a:,true solution and a suspension,gas and a liquid,two gases,solid and a gas,A
+Chemistry,Surface Chemistry,Adsorbate,Easy,45,The substance that gets adsorbed onto a surface is called the:,adsorbent,catalyst,adsorbate,solvent,C
+Chemistry,Surface Chemistry,Colloids,Easy,45,Milk is a common example of a:,true solution,colloid,suspension,pure compound,B
+Chemistry,Surface Chemistry,Absorption,Medium,55,The process in which a substance is taken up uniformly throughout the bulk of another is called:,adsorption,absorption,adhesion,coagulation,B
+Chemistry,Surface Chemistry,Tyndall Effect,Medium,55,The scattering of light by the particles of a colloid is known as the:,Tyndall effect,photoelectric effect,Raman effect,Doppler effect,A
+Chemistry,Surface Chemistry,Catalysis,Medium,55,A catalyst that exists in a different phase from the reactants is called a:,heterogeneous catalyst,promoter,homogeneous catalyst,inhibitor,A
+Chemistry,Surface Chemistry,Desorption,Medium,55,The removal of an adsorbed substance from a surface is called:,adsorption,desorption,coagulation,absorption,B
+Chemistry,Surface Chemistry,Physisorption,Hard,80,Physical adsorption (physisorption) is due to:,weak van der Waals forces,ionic bonds,metallic bonds,strong covalent bonds,A
+Chemistry,Surface Chemistry,Coagulation,Hard,80,The coagulation of a colloidal solution is most effectively brought about by adding:,an electrolyte,a non-electrolyte,sugar,more water,A
+Chemistry,Surface Chemistry,Chemisorption,Hard,80,Chemical adsorption (chemisorption) involves the formation of:,chemical bonds between adsorbate and adsorbent,no interaction,only weak van der Waals forces,ionic crystals,A
+Chemistry,Surface Chemistry,Emulsion,Hard,80,An emulsion is a colloidal system consisting of:,a gas dispersed in a liquid,a solid dispersed in a gas,one liquid dispersed in another liquid,a solid dispersed in a solid,C
+Chemistry,General Principles of Isolation of Elements,Ores,Easy,45,Naturally occurring substances from which a metal can be profitably extracted are called:,slags,alloys,non-metals,ores,D
+Chemistry,General Principles of Isolation of Elements,Calcination,Easy,50,The process of strongly heating an ore in the absence of air is called:,refining,calcination,roasting,smelting,B
+Chemistry,General Principles of Isolation of Elements,Metallurgy,Easy,45,The science and technology of extracting metals from their ores is called:,mineralogy,metallurgy,electrochemistry,geology,B
+Chemistry,General Principles of Isolation of Elements,Flux,Easy,50,The substance added to an ore to combine with impurities and lower the melting point is the:,slag,ore,flux,gangue,C
+Chemistry,General Principles of Isolation of Elements,Gangue,Medium,55,The unwanted earthy or rocky impurity present in an ore is called the:,gangue,slag,flux,matrix metal,A
+Chemistry,General Principles of Isolation of Elements,Roasting,Medium,55,The process of heating a sulphide ore strongly in the presence of air is called:,smelting,roasting,calcination,electrolysis,B
+Chemistry,General Principles of Isolation of Elements,Slag,Medium,55,The fusible product formed when a flux combines with gangue is called:,matte,slag,alloy,ore,B
+Chemistry,General Principles of Isolation of Elements,Reactive Metals,Medium,55,Highly reactive metals such as sodium and aluminium are usually extracted by:,roasting,hand-picking,electrolysis,reduction with carbon,C
+Chemistry,General Principles of Isolation of Elements,Froth Flotation,Hard,80,The concentration of a sulphide ore is commonly carried out by:,magnetic separation,distillation,froth flotation,calcination,C
+Chemistry,General Principles of Isolation of Elements,Thermite Process,Hard,80,"In the thermite process, the reducing agent used for metal oxides is:",carbon,hydrogen,sodium,aluminium,D
+Chemistry,General Principles of Isolation of Elements,Blast Furnace,Hard,80,"In the extraction of iron in a blast furnace, the chief reducing agent is:",oxygen,carbon monoxide,water,nitrogen,B
+Chemistry,General Principles of Isolation of Elements,Zone Refining,Hard,80,The purification of a metal by moving a molten zone repeatedly along a rod is called:,zone refining,distillation,electrolytic refining,roasting,A
+Chemistry,The d- and f-Block Elements,Transition Elements,Easy,45,The d-block elements are also commonly called the:,alkali metals,noble gases,halogens,transition elements,D
+Chemistry,The d- and f-Block Elements,Coloured Compounds,Easy,45,A characteristic property of transition metals is that they form:,coloured compounds,gaseous compounds,no compounds,only white compounds,A
+Chemistry,The d- and f-Block Elements,Inner Transition,Easy,45,The f-block elements are also called the:,inner transition elements,noble gases,halogens,alkali metals,A
+Chemistry,The d- and f-Block Elements,Metallic Properties,Easy,45,Transition metals are generally good:,gases,non-metals,electrical insulators,conductors of electricity,D
+Chemistry,The d- and f-Block Elements,Oxidation States,Medium,55,Transition elements commonly show:,variable oxidation states,only one oxidation state,only the +1 state,no oxidation states,A
+Chemistry,The d- and f-Block Elements,Colour,Medium,55,The colour of many transition metal ions is due to:,d-d electronic transitions,nuclear reactions,ionic size alone,filling of s-orbitals,A
+Chemistry,The d- and f-Block Elements,Catalysis,Medium,55,Many transition metals and their compounds are widely used as:,fuels,acids,insulators,catalysts,D
+Chemistry,The d- and f-Block Elements,Lanthanides,Medium,55,The lanthanide elements belong to the:,d-block,p-block,s-block,f-block,D
+Chemistry,The d- and f-Block Elements,Electronic Configuration,Hard,80,The general outer electronic configuration of d-block elements is:,(n-2)f 1-14,ns 1-2 only,(n-1)d 1-10 ns 1-2,np 1-6,C
+Chemistry,The d- and f-Block Elements,Lanthanide Contraction,Hard,80,The steady decrease in atomic and ionic radii across the lanthanide series is called:,lanthanide contraction,periodicity,actinide expansion,electron screening,A
+Chemistry,The d- and f-Block Elements,Colour,Hard,80,Transition metals form coloured ions mainly because their d-orbitals are:,completely filled,partially filled,completely empty,absent,B
+Chemistry,The d- and f-Block Elements,Identification,Hard,80,"Among the following, the element that is a transition metal is:",aluminium,calcium,iron,sodium,C

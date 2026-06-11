@@ -1,97 +1,97 @@
 subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Biology,The Living World,Taxonomy,Easy,45,"The branch of science dealing with the naming and classification of organisms is:",taxonomy,ecology,genetics,anatomy,A
-Biology,The Living World,Species,Easy,45,"The basic (lowest) unit of biological classification is the:",species,genus,family,kingdom,A
-Biology,The Living World,Nomenclature,Easy,45,"The system of binomial nomenclature was introduced by:",Carolus Linnaeus,Charles Darwin,Gregor Mendel,Robert Hooke,A
-Biology,The Living World,Nomenclature,Easy,45,"In a binomial name, the first word denotes the:",genus,species,family,order,A
-Biology,The Living World,Taxonomic Hierarchy,Medium,60,"The correct descending sequence of taxonomic categories is:",Kingdom Phylum Class Order Family Genus Species,Species Genus Family Order Class,Phylum Kingdom Class Order,Class Kingdom Phylum Order,A
-Biology,The Living World,Scientific Names,Medium,55,"The scientific name of modern humans is:",Homo sapiens,Mangifera indica,Panthera leo,Felis catus,A
-Biology,The Living World,Genus,Medium,55,"A group of closely related species constitutes a:",genus,family,order,class,A
-Biology,The Living World,Characteristics of Life,Medium,55,"A defining feature common to all living organisms is:",metabolism,immobility,crystalline structure,a fixed mass,A
-Biology,The Living World,Systematics,Hard,80,"The branch dealing with identification, nomenclature and classification of organisms is:",systematics,physiology,embryology,palaeontology,A
-Biology,The Living World,Nomenclature Codes,Hard,80,"The ICBN provides rules for the scientific naming of:",plants,animals,bacteria,viruses,A
-Biology,The Living World,Herbarium,Hard,80,"A herbarium is:","a store of dried, pressed and preserved plant specimens",a collection of live animals,a fossil museum,a seed-only bank,A
-Biology,The Living World,Taxonomic Categories,Hard,80,"The taxonomic category that includes a group of related families is the:",order,genus,species,kingdom,A
-Biology,Biological Classification,Five Kingdoms,Easy,45,"The five-kingdom system of classification was proposed by:",R.H. Whittaker,Carolus Linnaeus,Charles Darwin,Aristotle,A
-Biology,Biological Classification,Monera,Easy,45,"Bacteria are placed in the kingdom:",Monera,Protista,Fungi,Plantae,A
-Biology,Biological Classification,Fungi,Easy,45,"With respect to nutrition, fungi are:",heterotrophic,autotrophic,chemosynthetic only,photosynthetic only,A
-Biology,Biological Classification,Prokaryotes,Easy,45,"Organisms that lack a true (membrane-bound) nucleus are called:",prokaryotes,eukaryotes,protists,fungi,A
-Biology,Biological Classification,Protista,Medium,55,"Single-celled eukaryotic organisms are placed in the kingdom:",Protista,Monera,Plantae,Animalia,A
-Biology,Biological Classification,Fungal Cell Wall,Medium,55,"The cell wall of fungi is mainly composed of:",chitin,cellulose,peptidoglycan,lignin,A
-Biology,Biological Classification,Viruses,Medium,55,"Viruses are best regarded as:",non-cellular agents on the borderline of living and non-living,true prokaryotes,typical eukaryotes,a type of fungus,A
-Biology,Biological Classification,Bacterial Cell Wall,Medium,55,"The cell wall of bacteria is made up of:",peptidoglycan,chitin,cellulose,lignin,A
-Biology,Biological Classification,Nutrition,Hard,80,"The mode of nutrition in which organisms obtain food from dead organic matter is called:",saprophytic,holozoic,parasitic,autotrophic,A
-Biology,Biological Classification,Cyanobacteria,Hard,80,"Cyanobacteria (blue-green algae) are classified under the kingdom:",Monera,Protista,Plantae,Fungi,A
-Biology,Biological Classification,Prions,Hard,80,"The infectious protein particles responsible for diseases such as mad-cow disease are called:",prions,viroids,viruses,bacteria,A
-Biology,Biological Classification,Lichens,Hard,80,"A lichen is a symbiotic association between a fungus and a(n):",alga,moss,fern,non-photosynthetic bacterium,A
-Biology,Plant Kingdom,Bryophytes,Easy,45,"The plant group that lacks vascular tissue and includes the mosses is:",Bryophyta,Pteridophyta,Gymnosperms,Angiosperms,A
-Biology,Plant Kingdom,Gymnosperms,Easy,45,"Plants that bear naked seeds not enclosed within a fruit are the:",gymnosperms,angiosperms,bryophytes,algae,A
-Biology,Plant Kingdom,Angiosperms,Easy,45,"The most advanced plant group, bearing flowers, is the:",angiosperms,gymnosperms,ferns,mosses,A
-Biology,Plant Kingdom,Pteridophytes,Easy,45,"Ferns are placed in the plant group:",Pteridophyta,Bryophyta,Gymnosperms,Algae,A
-Biology,Plant Kingdom,Bryophytes,Medium,55,"Bryophytes are often called the ____ of the plant kingdom.",amphibians,reptiles,parasites,predators,A
-Biology,Plant Kingdom,Vascular Plants,Medium,55,"The first true vascular plants, possessing xylem and phloem, are the:",pteridophytes,bryophytes,algae,fungi,A
-Biology,Plant Kingdom,Angiosperms,Medium,55,"Angiosperms are divided into monocotyledons and:",dicotyledons,bryophytes,gymnosperms,algae,A
-Biology,Plant Kingdom,Seeds,Medium,55,"In angiosperms, the seeds are enclosed within the:",fruit,cone,spore case,leaf,A
-Biology,Plant Kingdom,Life Cycle,Hard,80,"The occurrence of distinct gametophyte and sporophyte phases in a plant life cycle is called:",alternation of generations,double fertilization,parthenogenesis,metamorphosis,A
-Biology,Plant Kingdom,Double Fertilization,Hard,80,"Double fertilization is a characteristic feature of:",angiosperms,gymnosperms,pteridophytes,bryophytes,A
-Biology,Plant Kingdom,Cotyledons,Hard,80,"A monocotyledonous seed contains ____ cotyledon(s).",one,two,three,none,A
-Biology,Plant Kingdom,Dominant Phase,Hard,80,"In the life cycle of a moss (bryophyte), the dominant phase is the:",gametophyte,sporophyte,zygote,spore,A
-Biology,Animal Kingdom,Invertebrates,Easy,45,"Animals that lack a backbone are called:",invertebrates,vertebrates,mammals,chordates,A
-Biology,Animal Kingdom,Arthropoda,Easy,45,"The largest phylum in the animal kingdom is:",Arthropoda,Chordata,Mollusca,Annelida,A
-Biology,Animal Kingdom,Annelida,Easy,45,"The earthworm belongs to the phylum:",Annelida,Arthropoda,Mollusca,Chordata,A
-Biology,Animal Kingdom,Chordata,Easy,45,"Animals that possess a notochord at some stage of life belong to the phylum:",Chordata,Arthropoda,Porifera,Cnidaria,A
-Biology,Animal Kingdom,Porifera,Medium,55,"Sponges are placed in the phylum:",Porifera,Cnidaria,Annelida,Mollusca,A
-Biology,Animal Kingdom,Echinodermata,Medium,55,"The phylum characterised by a water vascular system is:",Echinodermata,Mollusca,Arthropoda,Annelida,A
-Biology,Animal Kingdom,Cnidaria,Medium,55,"Animals such as Hydra and jellyfish, which possess stinging cells, belong to the phylum:",Cnidaria,Porifera,Annelida,Mollusca,A
-Biology,Animal Kingdom,Mammals,Medium,55,"Warm-blooded animals that possess hair and mammary glands are:",mammals,reptiles,amphibians,fishes,A
-Biology,Animal Kingdom,Germ Layers,Hard,80,"Animals that develop from three germ layers are described as:",triploblastic,diploblastic,monoblastic,acellular,A
-Biology,Animal Kingdom,Coelom,Hard,80,"A true body cavity lined by mesoderm is called a:",coelom,blastula,gastrula,notochord,A
-Biology,Animal Kingdom,Reptiles,Hard,80,"Snakes and lizards are classified as:",reptiles,amphibians,mammals,birds,A
-Biology,Animal Kingdom,Symmetry,Hard,80,"The body plan of a starfish, with parts arranged around a central axis, shows:",radial symmetry,bilateral symmetry,asymmetry,no symmetry,A
-Biology,Morphology of Flowering Plants,Root,Easy,45,"The plant part that anchors it in the soil and absorbs water is the:",root,stem,leaf,flower,A
-Biology,Morphology of Flowering Plants,Flower,Easy,45,"The reproductive organ of a flowering plant is the:",flower,root,stem,leaf,A
-Biology,Morphology of Flowering Plants,Leaf,Easy,45,"The green, food-making organ of a plant is the:",leaf,root,fruit,seed,A
-Biology,Morphology of Flowering Plants,Stamen,Easy,45,"The male reproductive part of a flower is the:",stamen,carpel,sepal,petal,A
-Biology,Morphology of Flowering Plants,Carpel,Medium,55,"The female reproductive part of a flower is the:",carpel,stamen,sepal,petal,A
-Biology,Morphology of Flowering Plants,Phyllotaxy,Medium,55,"The arrangement of leaves on the stem is called:",phyllotaxy,venation,aestivation,placentation,A
-Biology,Morphology of Flowering Plants,Root System,Medium,55,"A tap root system is characteristic of:",dicotyledonous plants,monocotyledonous plants,ferns,mosses,A
-Biology,Morphology of Flowering Plants,Ovary,Medium,55,"The swollen basal part of the pistil that contains the ovules is the:",ovary,style,stigma,anther,A
-Biology,Morphology of Flowering Plants,Venation,Hard,80,"Parallel venation is typically seen in the leaves of:",monocotyledonous plants,dicotyledonous plants,gymnosperms,ferns,A
-Biology,Morphology of Flowering Plants,Anther,Hard,80,"The part of the stamen that produces pollen grains is the:",anther,filament,stigma,ovary,A
-Biology,Morphology of Flowering Plants,Aestivation,Hard,80,"The type of aestivation in which the margins of petals overlap one another in one direction is:",twisted (contorted),valvate,imbricate,vexillary,A
-Biology,Morphology of Flowering Plants,Fruit,Hard,80,"After fertilization, a fruit develops from the:",ovary,ovule,anther,stigma,A
-Biology,Anatomy of Flowering Plants,Xylem,Easy,45,"The plant tissue responsible for conducting water is:",xylem,phloem,epidermis,cortex,A
-Biology,Anatomy of Flowering Plants,Phloem,Easy,45,"The plant tissue responsible for conducting food is:",phloem,xylem,cortex,pith,A
-Biology,Anatomy of Flowering Plants,Epidermis,Easy,45,"The outermost protective layer of a plant organ is the:",epidermis,cortex,pith,xylem,A
-Biology,Anatomy of Flowering Plants,Meristem,Easy,50,"The plant tissue responsible for growth through cell division is the:",meristematic tissue,permanent tissue,parenchyma,sclerenchyma,A
-Biology,Anatomy of Flowering Plants,Stomata,Medium,55,"The tiny pores on the leaf surface through which gaseous exchange occurs are the:",stomata,lenticels,trichomes,vessels,A
-Biology,Anatomy of Flowering Plants,Sclerenchyma,Medium,55,"The dead, thick-walled tissue that provides mechanical support to plants is:",sclerenchyma,parenchyma,collenchyma,phloem,A
-Biology,Anatomy of Flowering Plants,Cambium,Medium,55,"The lateral meristem responsible for secondary growth (increase in girth) is the:",cambium,apical meristem,intercalary meristem,cortex,A
-Biology,Anatomy of Flowering Plants,Parenchyma,Medium,55,"The thin-walled ground tissue that stores food is:",parenchyma,sclerenchyma,xylem,phloem,A
-Biology,Anatomy of Flowering Plants,Xylem Elements,Hard,80,"The water-conducting elements of xylem, which are dead and tubular, are the:",vessels and tracheids,sieve tubes,companion cells,guard cells,A
-Biology,Anatomy of Flowering Plants,Phloem Elements,Hard,80,"Sieve tubes and companion cells are components of the:",phloem,xylem,epidermis,cambium,A
-Biology,Anatomy of Flowering Plants,Endodermis,Hard,80,"The Casparian strips are found in the ____ of the root.",endodermis,epidermis,pith,outermost cortex,A
-Biology,Anatomy of Flowering Plants,Annual Rings,Hard,80,"Annual rings in the trunk of a tree are produced by the activity of the:",vascular cambium,cork cambium,phloem,pith,A
-Biology,Structural Organisation in Animals,Epithelial Tissue,Easy,45,"The tissue that covers body surfaces and lines internal cavities is:",epithelial tissue,muscular tissue,nervous tissue,connective tissue,A
-Biology,Structural Organisation in Animals,Muscular Tissue,Easy,45,"The animal tissue specialised for contraction is:",muscular tissue,epithelial tissue,nervous tissue,connective tissue,A
-Biology,Structural Organisation in Animals,Connective Tissue,Easy,45,"Blood is classified as a type of ____ tissue.",connective,epithelial,muscular,nervous,A
-Biology,Structural Organisation in Animals,Nervous Tissue,Easy,45,"The tissue that conducts and transmits impulses is:",nervous tissue,muscular tissue,epithelial tissue,connective tissue,A
-Biology,Structural Organisation in Animals,Neuron,Medium,55,"The structural and functional unit of the nervous system is the:",neuron,nephron,alveolus,sarcomere,A
-Biology,Structural Organisation in Animals,Tendons,Medium,55,"Tendons are connective structures that join:",muscle to bone,bone to bone,skin to muscle,nerve to muscle,A
-Biology,Structural Organisation in Animals,Ligaments,Medium,55,"Ligaments are connective structures that join:",bone to bone,muscle to bone,nerve to muscle,skin to muscle,A
-Biology,Structural Organisation in Animals,Connective Tissue,Medium,55,"Cartilage and bone are examples of ____ tissue.",connective,epithelial,muscular,nervous,A
-Biology,Structural Organisation in Animals,Skeletal Muscle,Hard,80,"The voluntary muscles that are attached to bones are the:",skeletal (striated) muscles,cardiac muscle,smooth muscle,involuntary muscles,A
-Biology,Structural Organisation in Animals,Cardiac Muscle,Hard,80,"The type of muscle found exclusively in the heart is:",cardiac muscle,skeletal muscle,smooth muscle,voluntary muscle,A
-Biology,Structural Organisation in Animals,Cartilage,Hard,80,"The matrix of cartilage is secreted by cells called:",chondrocytes,osteocytes,neurons,myocytes,A
-Biology,Structural Organisation in Animals,Earthworm,Hard,80,"In an earthworm, the body is divided into a series of ring-like:",segments,scales,scutes,valves,A
-Biology,Cell: The Unit of Life,Cell,Easy,45,"The basic structural and functional unit of life is the:",cell,tissue,organ,molecule,A
-Biology,Cell: The Unit of Life,Discovery,Easy,45,"The cell was first observed and named by:",Robert Hooke,Robert Brown,Matthias Schleiden,Charles Darwin,A
-Biology,Cell: The Unit of Life,Mitochondrion,Easy,45,"The organelle known as the powerhouse of the cell is the:",mitochondrion,nucleus,ribosome,lysosome,A
-Biology,Cell: The Unit of Life,Nucleus,Easy,45,"The control centre of the cell is the:",nucleus,mitochondrion,ribosome,vacuole,A
-Biology,Cell: The Unit of Life,Ribosome,Medium,55,"The site of protein synthesis within the cell is the:",ribosome,mitochondrion,lysosome,Golgi body,A
-Biology,Cell: The Unit of Life,Lysosome,Medium,55,"The cell organelle often called the suicidal bag is the:",lysosome,ribosome,nucleus,vacuole,A
-Biology,Cell: The Unit of Life,Prokaryotes,Medium,55,"Cells that lack a membrane-bound nucleus are described as:",prokaryotic,eukaryotic,plant cells only,animal cells only,A
-Biology,Cell: The Unit of Life,Cell Membrane,Medium,55,"The plasma (cell) membrane is mainly composed of:",lipids and proteins,only carbohydrates,only nucleic acids,only minerals,A
-Biology,Cell: The Unit of Life,Cell Wall,Hard,80,"The cell wall of a plant cell is chiefly made of:",cellulose,chitin,peptidoglycan,protein,A
-Biology,Cell: The Unit of Life,Golgi Apparatus,Hard,80,"The organelle involved in the packaging and secretion of cellular products is the:",Golgi apparatus,mitochondrion,ribosome,nucleolus,A
-Biology,Cell: The Unit of Life,Vacuole,Hard,80,"The large fluid-filled organelle that maintains turgidity in a plant cell is the:",vacuole,nucleus,plastid,lysosome,A
-Biology,Cell: The Unit of Life,Semi-autonomous Organelles,Hard,80,"Besides mitochondria, the other semi-autonomous organelle that contains its own DNA is the:",chloroplast,ribosome,lysosome,Golgi body,A
+Biology,The Living World,Taxonomy,Easy,45,The branch of science dealing with the naming and classification of organisms is:,ecology,taxonomy,anatomy,genetics,B
+Biology,The Living World,Species,Easy,45,The basic (lowest) unit of biological classification is the:,species,family,kingdom,genus,A
+Biology,The Living World,Nomenclature,Easy,45,The system of binomial nomenclature was introduced by:,Gregor Mendel,Carolus Linnaeus,Robert Hooke,Charles Darwin,B
+Biology,The Living World,Nomenclature,Easy,45,"In a binomial name, the first word denotes the:",family,order,species,genus,D
+Biology,The Living World,Taxonomic Hierarchy,Medium,60,The correct descending sequence of taxonomic categories is:,Class Kingdom Phylum Order,Species Genus Family Order Class,Phylum Kingdom Class Order,Kingdom Phylum Class Order Family Genus Species,D
+Biology,The Living World,Scientific Names,Medium,55,The scientific name of modern humans is:,Felis catus,Homo sapiens,Mangifera indica,Panthera leo,B
+Biology,The Living World,Genus,Medium,55,A group of closely related species constitutes a:,family,genus,class,order,B
+Biology,The Living World,Characteristics of Life,Medium,55,A defining feature common to all living organisms is:,a fixed mass,metabolism,immobility,crystalline structure,B
+Biology,The Living World,Systematics,Hard,80,"The branch dealing with identification, nomenclature and classification of organisms is:",physiology,palaeontology,embryology,systematics,D
+Biology,The Living World,Nomenclature Codes,Hard,80,The ICBN provides rules for the scientific naming of:,animals,viruses,bacteria,plants,D
+Biology,The Living World,Herbarium,Hard,80,A herbarium is:,a collection of live animals,a seed-only bank,"a store of dried, pressed and preserved plant specimens",a fossil museum,C
+Biology,The Living World,Taxonomic Categories,Hard,80,The taxonomic category that includes a group of related families is the:,genus,species,kingdom,order,D
+Biology,Biological Classification,Five Kingdoms,Easy,45,The five-kingdom system of classification was proposed by:,Carolus Linnaeus,R.H. Whittaker,Charles Darwin,Aristotle,B
+Biology,Biological Classification,Monera,Easy,45,Bacteria are placed in the kingdom:,Monera,Protista,Fungi,Plantae,A
+Biology,Biological Classification,Fungi,Easy,45,"With respect to nutrition, fungi are:",chemosynthetic only,photosynthetic only,heterotrophic,autotrophic,C
+Biology,Biological Classification,Prokaryotes,Easy,45,Organisms that lack a true (membrane-bound) nucleus are called:,prokaryotes,eukaryotes,fungi,protists,A
+Biology,Biological Classification,Protista,Medium,55,Single-celled eukaryotic organisms are placed in the kingdom:,Monera,Protista,Plantae,Animalia,B
+Biology,Biological Classification,Fungal Cell Wall,Medium,55,The cell wall of fungi is mainly composed of:,chitin,peptidoglycan,cellulose,lignin,A
+Biology,Biological Classification,Viruses,Medium,55,Viruses are best regarded as:,true prokaryotes,a type of fungus,non-cellular agents on the borderline of living and non-living,typical eukaryotes,C
+Biology,Biological Classification,Bacterial Cell Wall,Medium,55,The cell wall of bacteria is made up of:,chitin,lignin,cellulose,peptidoglycan,D
+Biology,Biological Classification,Nutrition,Hard,80,The mode of nutrition in which organisms obtain food from dead organic matter is called:,saprophytic,autotrophic,parasitic,holozoic,A
+Biology,Biological Classification,Cyanobacteria,Hard,80,Cyanobacteria (blue-green algae) are classified under the kingdom:,Fungi,Monera,Plantae,Protista,B
+Biology,Biological Classification,Prions,Hard,80,The infectious protein particles responsible for diseases such as mad-cow disease are called:,bacteria,viroids,prions,viruses,C
+Biology,Biological Classification,Lichens,Hard,80,A lichen is a symbiotic association between a fungus and a(n):,fern,alga,moss,non-photosynthetic bacterium,B
+Biology,Plant Kingdom,Bryophytes,Easy,45,The plant group that lacks vascular tissue and includes the mosses is:,Angiosperms,Bryophyta,Pteridophyta,Gymnosperms,B
+Biology,Plant Kingdom,Gymnosperms,Easy,45,Plants that bear naked seeds not enclosed within a fruit are the:,gymnosperms,bryophytes,algae,angiosperms,A
+Biology,Plant Kingdom,Angiosperms,Easy,45,"The most advanced plant group, bearing flowers, is the:",ferns,angiosperms,mosses,gymnosperms,B
+Biology,Plant Kingdom,Pteridophytes,Easy,45,Ferns are placed in the plant group:,Gymnosperms,Bryophyta,Algae,Pteridophyta,D
+Biology,Plant Kingdom,Bryophytes,Medium,55,Bryophytes are often called the ____ of the plant kingdom.,amphibians,parasites,reptiles,predators,A
+Biology,Plant Kingdom,Vascular Plants,Medium,55,"The first true vascular plants, possessing xylem and phloem, are the:",algae,fungi,bryophytes,pteridophytes,D
+Biology,Plant Kingdom,Angiosperms,Medium,55,Angiosperms are divided into monocotyledons and:,gymnosperms,bryophytes,dicotyledons,algae,C
+Biology,Plant Kingdom,Seeds,Medium,55,"In angiosperms, the seeds are enclosed within the:",cone,leaf,spore case,fruit,D
+Biology,Plant Kingdom,Life Cycle,Hard,80,The occurrence of distinct gametophyte and sporophyte phases in a plant life cycle is called:,double fertilization,alternation of generations,metamorphosis,parthenogenesis,B
+Biology,Plant Kingdom,Double Fertilization,Hard,80,Double fertilization is a characteristic feature of:,gymnosperms,bryophytes,angiosperms,pteridophytes,C
+Biology,Plant Kingdom,Cotyledons,Hard,80,A monocotyledonous seed contains ____ cotyledon(s).,none,three,one,two,C
+Biology,Plant Kingdom,Dominant Phase,Hard,80,"In the life cycle of a moss (bryophyte), the dominant phase is the:",zygote,sporophyte,gametophyte,spore,C
+Biology,Animal Kingdom,Invertebrates,Easy,45,Animals that lack a backbone are called:,invertebrates,mammals,chordates,vertebrates,A
+Biology,Animal Kingdom,Arthropoda,Easy,45,The largest phylum in the animal kingdom is:,Arthropoda,Chordata,Annelida,Mollusca,A
+Biology,Animal Kingdom,Annelida,Easy,45,The earthworm belongs to the phylum:,Mollusca,Arthropoda,Chordata,Annelida,D
+Biology,Animal Kingdom,Chordata,Easy,45,Animals that possess a notochord at some stage of life belong to the phylum:,Cnidaria,Chordata,Arthropoda,Porifera,B
+Biology,Animal Kingdom,Porifera,Medium,55,Sponges are placed in the phylum:,Mollusca,Porifera,Annelida,Cnidaria,B
+Biology,Animal Kingdom,Echinodermata,Medium,55,The phylum characterised by a water vascular system is:,Annelida,Arthropoda,Mollusca,Echinodermata,D
+Biology,Animal Kingdom,Cnidaria,Medium,55,"Animals such as Hydra and jellyfish, which possess stinging cells, belong to the phylum:",Porifera,Annelida,Cnidaria,Mollusca,C
+Biology,Animal Kingdom,Mammals,Medium,55,Warm-blooded animals that possess hair and mammary glands are:,reptiles,fishes,amphibians,mammals,D
+Biology,Animal Kingdom,Germ Layers,Hard,80,Animals that develop from three germ layers are described as:,monoblastic,triploblastic,acellular,diploblastic,B
+Biology,Animal Kingdom,Coelom,Hard,80,A true body cavity lined by mesoderm is called a:,blastula,gastrula,notochord,coelom,D
+Biology,Animal Kingdom,Reptiles,Hard,80,Snakes and lizards are classified as:,reptiles,mammals,amphibians,birds,A
+Biology,Animal Kingdom,Symmetry,Hard,80,"The body plan of a starfish, with parts arranged around a central axis, shows:",bilateral symmetry,no symmetry,radial symmetry,asymmetry,C
+Biology,Morphology of Flowering Plants,Root,Easy,45,The plant part that anchors it in the soil and absorbs water is the:,stem,root,leaf,flower,B
+Biology,Morphology of Flowering Plants,Flower,Easy,45,The reproductive organ of a flowering plant is the:,leaf,flower,stem,root,B
+Biology,Morphology of Flowering Plants,Leaf,Easy,45,"The green, food-making organ of a plant is the:",leaf,seed,fruit,root,A
+Biology,Morphology of Flowering Plants,Stamen,Easy,45,The male reproductive part of a flower is the:,petal,sepal,stamen,carpel,C
+Biology,Morphology of Flowering Plants,Carpel,Medium,55,The female reproductive part of a flower is the:,stamen,sepal,petal,carpel,D
+Biology,Morphology of Flowering Plants,Phyllotaxy,Medium,55,The arrangement of leaves on the stem is called:,phyllotaxy,aestivation,venation,placentation,A
+Biology,Morphology of Flowering Plants,Root System,Medium,55,A tap root system is characteristic of:,ferns,mosses,dicotyledonous plants,monocotyledonous plants,C
+Biology,Morphology of Flowering Plants,Ovary,Medium,55,The swollen basal part of the pistil that contains the ovules is the:,anther,style,stigma,ovary,D
+Biology,Morphology of Flowering Plants,Venation,Hard,80,Parallel venation is typically seen in the leaves of:,monocotyledonous plants,ferns,dicotyledonous plants,gymnosperms,A
+Biology,Morphology of Flowering Plants,Anther,Hard,80,The part of the stamen that produces pollen grains is the:,stigma,ovary,anther,filament,C
+Biology,Morphology of Flowering Plants,Aestivation,Hard,80,The type of aestivation in which the margins of petals overlap one another in one direction is:,imbricate,twisted (contorted),valvate,vexillary,B
+Biology,Morphology of Flowering Plants,Fruit,Hard,80,"After fertilization, a fruit develops from the:",stigma,ovule,ovary,anther,C
+Biology,Anatomy of Flowering Plants,Xylem,Easy,45,The plant tissue responsible for conducting water is:,cortex,epidermis,phloem,xylem,D
+Biology,Anatomy of Flowering Plants,Phloem,Easy,45,The plant tissue responsible for conducting food is:,pith,xylem,cortex,phloem,D
+Biology,Anatomy of Flowering Plants,Epidermis,Easy,45,The outermost protective layer of a plant organ is the:,xylem,pith,cortex,epidermis,D
+Biology,Anatomy of Flowering Plants,Meristem,Easy,50,The plant tissue responsible for growth through cell division is the:,meristematic tissue,parenchyma,sclerenchyma,permanent tissue,A
+Biology,Anatomy of Flowering Plants,Stomata,Medium,55,The tiny pores on the leaf surface through which gaseous exchange occurs are the:,trichomes,stomata,vessels,lenticels,B
+Biology,Anatomy of Flowering Plants,Sclerenchyma,Medium,55,"The dead, thick-walled tissue that provides mechanical support to plants is:",phloem,collenchyma,parenchyma,sclerenchyma,D
+Biology,Anatomy of Flowering Plants,Cambium,Medium,55,The lateral meristem responsible for secondary growth (increase in girth) is the:,apical meristem,intercalary meristem,cortex,cambium,D
+Biology,Anatomy of Flowering Plants,Parenchyma,Medium,55,The thin-walled ground tissue that stores food is:,parenchyma,phloem,xylem,sclerenchyma,A
+Biology,Anatomy of Flowering Plants,Xylem Elements,Hard,80,"The water-conducting elements of xylem, which are dead and tubular, are the:",vessels and tracheids,guard cells,sieve tubes,companion cells,A
+Biology,Anatomy of Flowering Plants,Phloem Elements,Hard,80,Sieve tubes and companion cells are components of the:,epidermis,phloem,cambium,xylem,B
+Biology,Anatomy of Flowering Plants,Endodermis,Hard,80,The Casparian strips are found in the ____ of the root.,pith,endodermis,outermost cortex,epidermis,B
+Biology,Anatomy of Flowering Plants,Annual Rings,Hard,80,Annual rings in the trunk of a tree are produced by the activity of the:,cork cambium,vascular cambium,pith,phloem,B
+Biology,Structural Organisation in Animals,Epithelial Tissue,Easy,45,The tissue that covers body surfaces and lines internal cavities is:,connective tissue,epithelial tissue,nervous tissue,muscular tissue,B
+Biology,Structural Organisation in Animals,Muscular Tissue,Easy,45,The animal tissue specialised for contraction is:,muscular tissue,connective tissue,nervous tissue,epithelial tissue,A
+Biology,Structural Organisation in Animals,Connective Tissue,Easy,45,Blood is classified as a type of ____ tissue.,connective,muscular,nervous,epithelial,A
+Biology,Structural Organisation in Animals,Nervous Tissue,Easy,45,The tissue that conducts and transmits impulses is:,epithelial tissue,connective tissue,muscular tissue,nervous tissue,D
+Biology,Structural Organisation in Animals,Neuron,Medium,55,The structural and functional unit of the nervous system is the:,neuron,nephron,sarcomere,alveolus,A
+Biology,Structural Organisation in Animals,Tendons,Medium,55,Tendons are connective structures that join:,muscle to bone,bone to bone,nerve to muscle,skin to muscle,A
+Biology,Structural Organisation in Animals,Ligaments,Medium,55,Ligaments are connective structures that join:,skin to muscle,nerve to muscle,muscle to bone,bone to bone,D
+Biology,Structural Organisation in Animals,Connective Tissue,Medium,55,Cartilage and bone are examples of ____ tissue.,nervous,muscular,epithelial,connective,D
+Biology,Structural Organisation in Animals,Skeletal Muscle,Hard,80,The voluntary muscles that are attached to bones are the:,involuntary muscles,smooth muscle,skeletal (striated) muscles,cardiac muscle,C
+Biology,Structural Organisation in Animals,Cardiac Muscle,Hard,80,The type of muscle found exclusively in the heart is:,skeletal muscle,cardiac muscle,smooth muscle,voluntary muscle,B
+Biology,Structural Organisation in Animals,Cartilage,Hard,80,The matrix of cartilage is secreted by cells called:,neurons,myocytes,osteocytes,chondrocytes,D
+Biology,Structural Organisation in Animals,Earthworm,Hard,80,"In an earthworm, the body is divided into a series of ring-like:",scales,scutes,segments,valves,C
+Biology,Cell: The Unit of Life,Cell,Easy,45,The basic structural and functional unit of life is the:,tissue,cell,molecule,organ,B
+Biology,Cell: The Unit of Life,Discovery,Easy,45,The cell was first observed and named by:,Matthias Schleiden,Robert Brown,Robert Hooke,Charles Darwin,C
+Biology,Cell: The Unit of Life,Mitochondrion,Easy,45,The organelle known as the powerhouse of the cell is the:,lysosome,nucleus,ribosome,mitochondrion,D
+Biology,Cell: The Unit of Life,Nucleus,Easy,45,The control centre of the cell is the:,nucleus,vacuole,mitochondrion,ribosome,A
+Biology,Cell: The Unit of Life,Ribosome,Medium,55,The site of protein synthesis within the cell is the:,lysosome,ribosome,Golgi body,mitochondrion,B
+Biology,Cell: The Unit of Life,Lysosome,Medium,55,The cell organelle often called the suicidal bag is the:,nucleus,vacuole,lysosome,ribosome,C
+Biology,Cell: The Unit of Life,Prokaryotes,Medium,55,Cells that lack a membrane-bound nucleus are described as:,prokaryotic,animal cells only,plant cells only,eukaryotic,A
+Biology,Cell: The Unit of Life,Cell Membrane,Medium,55,The plasma (cell) membrane is mainly composed of:,only minerals,only carbohydrates,lipids and proteins,only nucleic acids,C
+Biology,Cell: The Unit of Life,Cell Wall,Hard,80,The cell wall of a plant cell is chiefly made of:,peptidoglycan,cellulose,chitin,protein,B
+Biology,Cell: The Unit of Life,Golgi Apparatus,Hard,80,The organelle involved in the packaging and secretion of cellular products is the:,Golgi apparatus,ribosome,nucleolus,mitochondrion,A
+Biology,Cell: The Unit of Life,Vacuole,Hard,80,The large fluid-filled organelle that maintains turgidity in a plant cell is the:,lysosome,vacuole,plastid,nucleus,B
+Biology,Cell: The Unit of Life,Semi-autonomous Organelles,Hard,80,"Besides mitochondria, the other semi-autonomous organelle that contains its own DNA is the:",Golgi body,chloroplast,lysosome,ribosome,B

@@ -1,73 +1,73 @@
 subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Physics,Electric Charges and Fields,Charge,Easy,40,"The SI unit of electric charge is the:",Coulomb,Ampere,Volt,Farad,A
-Physics,Electric Charges and Fields,Coulomb's Law,Easy,45,"Two like charges placed near each other:",repel,attract,exert no force,neutralize,A
-Physics,Electric Charges and Fields,Coulomb's Law,Easy,45,"By Coulomb's law, the force between two point charges is inversely proportional to the:",square of the distance between them,distance between them,cube of the distance,sum of the charges,A
-Physics,Electric Charges and Fields,Electric Field,Easy,45,"The SI unit of electric field intensity is:",N/C,C/N,N.C,C/m,A
-Physics,Electric Charges and Fields,Electric Field,Medium,55,"The electric field due to a point charge varies with distance r as:",1/r^2,1/r,r,r^2,A
-Physics,Electric Charges and Fields,Gauss's Law,Medium,60,"By Gauss's law, the total electric flux through a closed surface enclosing charge q is:",q / epsilon0,q epsilon0,epsilon0 / q,q / (2 epsilon0),A
-Physics,Electric Charges and Fields,Conductors,Medium,55,"The electric field inside a charged hollow conductor in electrostatic equilibrium is:",zero,maximum,uniform and non-zero,infinite,A
-Physics,Electric Charges and Fields,Electric Flux,Medium,55,"The SI unit of electric flux is:",N.m^2/C,N/C,C/m^2,C,A
-Physics,Electric Charges and Fields,Coulomb's Law,Hard,85,"The force between charges of 2 micro-C and 3 micro-C separated by 0.1 m in vacuum is (k = 9 x 10^9):",5.4 N,0.54 N,54 N,0.054 N,A
-Physics,Electric Charges and Fields,Coulomb's Law,Hard,80,"If the distance between two point charges is doubled, the electrostatic force between them becomes:",one-fourth,half,double,four times,A
-Physics,Electric Charges and Fields,Electric Dipole,Hard,80,"An electric dipole consists of charges plus q and minus q separated by 2a. Its dipole moment is:",q x 2a,q / 2a,2 q a^2,q a^2,A
-Physics,Electric Charges and Fields,Dipole Field,Hard,85,"The electric field on the axis of a short dipole varies with distance r as:",1/r^3,1/r^2,1/r,r,A
-Physics,Electrostatic Potential and Capacitance,Potential,Easy,40,"The SI unit of electric potential is the:",Volt,Coulomb,Farad,Joule,A
-Physics,Electrostatic Potential and Capacitance,Capacitance,Easy,40,"The SI unit of capacitance is the:",Farad,Volt,Coulomb,Henry,A
-Physics,Electrostatic Potential and Capacitance,Capacitance,Easy,45,"The capacitance of a capacitor is given by:",Q/V,V/Q,Q x V,Q + V,A
-Physics,Electrostatic Potential and Capacitance,Energy,Easy,45,"The energy stored in a charged capacitor is:",(1/2)CV^2,CV,CV^2,(1/2)QV^2 only when V is zero,A
-Physics,Electrostatic Potential and Capacitance,Potential,Medium,55,"The electric potential due to a point charge varies with distance r as:",1/r,1/r^2,r,r^2,A
-Physics,Electrostatic Potential and Capacitance,Parallel Plate Capacitor,Medium,55,"The capacitance of a parallel-plate capacitor is proportional to:",plate area / separation,separation / plate area,area x separation,1/(area x separation),A
-Physics,Electrostatic Potential and Capacitance,Dielectrics,Medium,55,"When a dielectric of constant greater than 1 is inserted between the plates, the capacitance:",increases,decreases,remains unchanged,becomes zero,A
-Physics,Electrostatic Potential and Capacitance,Combination,Medium,55,"For two capacitors C1 and C2 connected in parallel, the equivalent capacitance is:",C1 + C2,C1 C2 / (C1 + C2),1/(C1 + C2),C1 - C2,A
-Physics,Electrostatic Potential and Capacitance,Series Combination,Hard,80,"Two 4 micro-F capacitors connected in series have an equivalent capacitance of:",2 micro-F,8 micro-F,4 micro-F,16 micro-F,A
-Physics,Electrostatic Potential and Capacitance,Energy,Hard,80,"A 2 micro-F capacitor is charged to 100 V. The energy stored is:",0.01 J,0.1 J,1 J,0.001 J,A
-Physics,Electrostatic Potential and Capacitance,Charge,Hard,80,"The charge stored on a 5 micro-F capacitor connected to a 20 V supply is:",100 micro-C,25 micro-C,4 micro-C,0.25 micro-C,A
-Physics,Electrostatic Potential and Capacitance,Parallel Combination,Hard,80,"Three capacitors of 3 micro-F each are connected in parallel. The equivalent capacitance is:",9 micro-F,1 micro-F,3 micro-F,6 micro-F,A
-Physics,Moving Charges and Magnetism,Magnetic Field,Easy,40,"The SI unit of magnetic field (magnetic flux density) is the:",Tesla,Weber,Henry,Joule,A
-Physics,Moving Charges and Magnetism,Magnetic Effect,Easy,45,"A moving electric charge produces:",a magnetic field,only an electric field,no field,a sound wave,A
-Physics,Moving Charges and Magnetism,Force on Conductor,Easy,45,"The force on a straight conductor of length L carrying current I placed perpendicular to a field B is:",B I L,B I / L,I L / B,B / (I L),A
-Physics,Moving Charges and Magnetism,Galvanometer,Easy,45,"The instrument that uses the magnetic effect of current to detect current is the:",galvanometer,voltmeter,thermometer,barometer,A
-Physics,Moving Charges and Magnetism,Lorentz Force,Medium,55,"The magnitude of the force on a charge q moving with speed v perpendicular to a field B is:",q v B,q v / B,q B / v,q / (v B),A
-Physics,Moving Charges and Magnetism,Circular Motion,Medium,55,"A charged particle moving perpendicular to a uniform magnetic field follows a path that is:",circular,straight,parabolic,elliptical,A
-Physics,Moving Charges and Magnetism,Circular Loop,Medium,60,"The magnetic field at the centre of a circular loop of radius r carrying current I is proportional to:",I / r,I r,I / r^2,r / I,A
-Physics,Moving Charges and Magnetism,Lorentz Force,Medium,55,"A charged particle moving parallel to a magnetic field experiences a force of:",zero,maximum,q v B,half of the maximum,A
-Physics,Moving Charges and Magnetism,Force on Conductor,Hard,80,"A 2 m wire carrying 3 A is placed perpendicular to a 0.5 T field. The force on it is:",3 N,1.5 N,6 N,0.75 N,A
-Physics,Moving Charges and Magnetism,Radius of Path,Hard,80,"The radius of the circular path of a charge in a magnetic field is r = mv/(qB). If the speed is doubled, the radius:",doubles,halves,is unchanged,quadruples,A
-Physics,Moving Charges and Magnetism,Lorentz Force,Hard,80,"The force on a 2 C charge moving at 3 m/s perpendicular to a 4 T magnetic field is:",24 N,12 N,6 N,9 N,A
-Physics,Moving Charges and Magnetism,Galvanometer,Hard,80,"A moving-coil galvanometer works on the principle of the torque experienced by a:",current-carrying coil in a magnetic field,charge at rest,magnet in an electric field,resistor carrying current,A
-Physics,Magnetism and Matter,Magnetic Poles,Easy,40,"Two like magnetic poles brought close together will:",repel,attract,exert no force,merge,A
-Physics,Magnetism and Matter,Magnetic Moment,Easy,45,"The SI unit of magnetic dipole moment is:",A.m^2,A/m,Tesla,Weber,A
-Physics,Magnetism and Matter,Magnetic Materials,Easy,45,"Materials that are strongly attracted by magnets are called:",ferromagnetic,diamagnetic,weakly paramagnetic,non-magnetic,A
-Physics,Magnetism and Matter,Bar Magnet,Easy,45,"A freely suspended bar magnet comes to rest pointing approximately:",north-south,east-west,randomly,vertically,A
-Physics,Magnetism and Matter,Diamagnetism,Medium,55,"Diamagnetic materials are:",weakly repelled by magnets,strongly attracted by magnets,unaffected by magnets,permanently magnetized,A
-Physics,Magnetism and Matter,Field Lines,Medium,55,"Outside a bar magnet, the magnetic field lines emerge from the:",north pole,south pole,both poles equally,centre,A
-Physics,Magnetism and Matter,Earth's Magnetism,Medium,60,"The angle between the geographic meridian and the magnetic meridian is called the:",declination,inclination (dip),latitude,longitude,A
-Physics,Magnetism and Matter,Paramagnetism,Medium,55,"Paramagnetic substances have a relative permeability that is:",slightly greater than 1,much less than 1,equal to zero,negative,A
-Physics,Magnetism and Matter,Magnetic Moment,Hard,80,"The magnetic moment of a coil of N turns each of area A carrying current I is:",N I A,N I / A,I A / N,N A / I,A
+Physics,Electric Charges and Fields,Charge,Easy,40,The SI unit of electric charge is the:,Ampere,Farad,Volt,Coulomb,D
+Physics,Electric Charges and Fields,Coulomb's Law,Easy,45,Two like charges placed near each other:,neutralize,attract,exert no force,repel,D
+Physics,Electric Charges and Fields,Coulomb's Law,Easy,45,"By Coulomb's law, the force between two point charges is inversely proportional to the:",square of the distance between them,cube of the distance,distance between them,sum of the charges,A
+Physics,Electric Charges and Fields,Electric Field,Easy,45,The SI unit of electric field intensity is:,C/N,N.C,N/C,C/m,C
+Physics,Electric Charges and Fields,Electric Field,Medium,55,The electric field due to a point charge varies with distance r as:,r^2,r,1/r^2,1/r,C
+Physics,Electric Charges and Fields,Gauss's Law,Medium,60,"By Gauss's law, the total electric flux through a closed surface enclosing charge q is:",epsilon0 / q,q epsilon0,q / (2 epsilon0),q / epsilon0,D
+Physics,Electric Charges and Fields,Conductors,Medium,55,The electric field inside a charged hollow conductor in electrostatic equilibrium is:,infinite,uniform and non-zero,maximum,zero,D
+Physics,Electric Charges and Fields,Electric Flux,Medium,55,The SI unit of electric flux is:,C/m^2,C,N.m^2/C,N/C,C
+Physics,Electric Charges and Fields,Coulomb's Law,Hard,85,The force between charges of 2 micro-C and 3 micro-C separated by 0.1 m in vacuum is (k = 9 x 10^9):,54 N,5.4 N,0.54 N,0.054 N,B
+Physics,Electric Charges and Fields,Coulomb's Law,Hard,80,"If the distance between two point charges is doubled, the electrostatic force between them becomes:",double,half,one-fourth,four times,C
+Physics,Electric Charges and Fields,Electric Dipole,Hard,80,An electric dipole consists of charges plus q and minus q separated by 2a. Its dipole moment is:,q a^2,q x 2a,2 q a^2,q / 2a,B
+Physics,Electric Charges and Fields,Dipole Field,Hard,85,The electric field on the axis of a short dipole varies with distance r as:,1/r,r,1/r^2,1/r^3,D
+Physics,Electrostatic Potential and Capacitance,Potential,Easy,40,The SI unit of electric potential is the:,Joule,Farad,Coulomb,Volt,D
+Physics,Electrostatic Potential and Capacitance,Capacitance,Easy,40,The SI unit of capacitance is the:,Farad,Coulomb,Volt,Henry,A
+Physics,Electrostatic Potential and Capacitance,Capacitance,Easy,45,The capacitance of a capacitor is given by:,V/Q,Q + V,Q/V,Q x V,C
+Physics,Electrostatic Potential and Capacitance,Energy,Easy,45,The energy stored in a charged capacitor is:,(1/2)QV^2 only when V is zero,CV^2,(1/2)CV^2,CV,C
+Physics,Electrostatic Potential and Capacitance,Potential,Medium,55,The electric potential due to a point charge varies with distance r as:,1/r^2,r^2,r,1/r,D
+Physics,Electrostatic Potential and Capacitance,Parallel Plate Capacitor,Medium,55,The capacitance of a parallel-plate capacitor is proportional to:,1/(area x separation),plate area / separation,separation / plate area,area x separation,B
+Physics,Electrostatic Potential and Capacitance,Dielectrics,Medium,55,"When a dielectric of constant greater than 1 is inserted between the plates, the capacitance:",becomes zero,remains unchanged,increases,decreases,C
+Physics,Electrostatic Potential and Capacitance,Combination,Medium,55,"For two capacitors C1 and C2 connected in parallel, the equivalent capacitance is:",C1 + C2,1/(C1 + C2),C1 C2 / (C1 + C2),C1 - C2,A
+Physics,Electrostatic Potential and Capacitance,Series Combination,Hard,80,Two 4 micro-F capacitors connected in series have an equivalent capacitance of:,8 micro-F,2 micro-F,4 micro-F,16 micro-F,B
+Physics,Electrostatic Potential and Capacitance,Energy,Hard,80,A 2 micro-F capacitor is charged to 100 V. The energy stored is:,0.01 J,1 J,0.001 J,0.1 J,A
+Physics,Electrostatic Potential and Capacitance,Charge,Hard,80,The charge stored on a 5 micro-F capacitor connected to a 20 V supply is:,100 micro-C,25 micro-C,0.25 micro-C,4 micro-C,A
+Physics,Electrostatic Potential and Capacitance,Parallel Combination,Hard,80,Three capacitors of 3 micro-F each are connected in parallel. The equivalent capacitance is:,1 micro-F,3 micro-F,6 micro-F,9 micro-F,D
+Physics,Moving Charges and Magnetism,Magnetic Field,Easy,40,The SI unit of magnetic field (magnetic flux density) is the:,Joule,Henry,Weber,Tesla,D
+Physics,Moving Charges and Magnetism,Magnetic Effect,Easy,45,A moving electric charge produces:,no field,only an electric field,a sound wave,a magnetic field,D
+Physics,Moving Charges and Magnetism,Force on Conductor,Easy,45,The force on a straight conductor of length L carrying current I placed perpendicular to a field B is:,B I / L,B I L,I L / B,B / (I L),B
+Physics,Moving Charges and Magnetism,Galvanometer,Easy,45,The instrument that uses the magnetic effect of current to detect current is the:,thermometer,galvanometer,voltmeter,barometer,B
+Physics,Moving Charges and Magnetism,Lorentz Force,Medium,55,The magnitude of the force on a charge q moving with speed v perpendicular to a field B is:,q v / B,q B / v,q / (v B),q v B,D
+Physics,Moving Charges and Magnetism,Circular Motion,Medium,55,A charged particle moving perpendicular to a uniform magnetic field follows a path that is:,circular,elliptical,parabolic,straight,A
+Physics,Moving Charges and Magnetism,Circular Loop,Medium,60,The magnetic field at the centre of a circular loop of radius r carrying current I is proportional to:,r / I,I / r^2,I r,I / r,D
+Physics,Moving Charges and Magnetism,Lorentz Force,Medium,55,A charged particle moving parallel to a magnetic field experiences a force of:,zero,half of the maximum,maximum,q v B,A
+Physics,Moving Charges and Magnetism,Force on Conductor,Hard,80,A 2 m wire carrying 3 A is placed perpendicular to a 0.5 T field. The force on it is:,1.5 N,3 N,6 N,0.75 N,B
+Physics,Moving Charges and Magnetism,Radius of Path,Hard,80,"The radius of the circular path of a charge in a magnetic field is r = mv/(qB). If the speed is doubled, the radius:",is unchanged,halves,doubles,quadruples,C
+Physics,Moving Charges and Magnetism,Lorentz Force,Hard,80,The force on a 2 C charge moving at 3 m/s perpendicular to a 4 T magnetic field is:,6 N,9 N,12 N,24 N,D
+Physics,Moving Charges and Magnetism,Galvanometer,Hard,80,A moving-coil galvanometer works on the principle of the torque experienced by a:,resistor carrying current,magnet in an electric field,current-carrying coil in a magnetic field,charge at rest,C
+Physics,Magnetism and Matter,Magnetic Poles,Easy,40,Two like magnetic poles brought close together will:,repel,merge,exert no force,attract,A
+Physics,Magnetism and Matter,Magnetic Moment,Easy,45,The SI unit of magnetic dipole moment is:,Tesla,A.m^2,A/m,Weber,B
+Physics,Magnetism and Matter,Magnetic Materials,Easy,45,Materials that are strongly attracted by magnets are called:,weakly paramagnetic,ferromagnetic,diamagnetic,non-magnetic,B
+Physics,Magnetism and Matter,Bar Magnet,Easy,45,A freely suspended bar magnet comes to rest pointing approximately:,randomly,north-south,vertically,east-west,B
+Physics,Magnetism and Matter,Diamagnetism,Medium,55,Diamagnetic materials are:,unaffected by magnets,strongly attracted by magnets,weakly repelled by magnets,permanently magnetized,C
+Physics,Magnetism and Matter,Field Lines,Medium,55,"Outside a bar magnet, the magnetic field lines emerge from the:",centre,north pole,both poles equally,south pole,B
+Physics,Magnetism and Matter,Earth's Magnetism,Medium,60,The angle between the geographic meridian and the magnetic meridian is called the:,latitude,declination,longitude,inclination (dip),B
+Physics,Magnetism and Matter,Paramagnetism,Medium,55,Paramagnetic substances have a relative permeability that is:,much less than 1,equal to zero,slightly greater than 1,negative,C
+Physics,Magnetism and Matter,Magnetic Moment,Hard,80,The magnetic moment of a coil of N turns each of area A carrying current I is:,N I / A,N A / I,I A / N,N I A,D
 Physics,Magnetism and Matter,Curie's Law,Hard,80,"By Curie's law, the magnetic susceptibility of a paramagnetic material is proportional to:",1/T,T,T^2,1/T^2,A
-Physics,Magnetism and Matter,Angle of Dip,Hard,80,"The angle of dip at the magnetic equator is:",0 degrees,90 degrees,45 degrees,30 degrees,A
-Physics,Magnetism and Matter,Curie Temperature,Hard,80,"Above its Curie temperature, a ferromagnetic material behaves as:",paramagnetic,diamagnetic,more strongly ferromagnetic,superconducting,A
-Physics,Electromagnetic Induction,Induced EMF,Easy,45,"An EMF is induced in a coil when the magnetic flux through it:",changes with time,stays constant,is zero,is maximum and constant,A
-Physics,Electromagnetic Induction,Lenz's Law,Easy,45,"The law that gives the direction of an induced current is:",Lenz's law,Ohm's law,Coulomb's law,Gauss's law,A
-Physics,Electromagnetic Induction,Magnetic Flux,Easy,40,"The SI unit of magnetic flux is the:",Weber,Tesla,Henry,Volt,A
-Physics,Electromagnetic Induction,Inductance,Easy,40,"The SI unit of inductance is the:",Henry,Weber,Farad,Tesla,A
-Physics,Electromagnetic Induction,Faraday's Law,Medium,55,"By Faraday's law, the induced EMF in a circuit equals the:",rate of change of magnetic flux,magnetic flux,charge,current times resistance,A
-Physics,Electromagnetic Induction,Lenz's Law,Medium,55,"Lenz's law is a direct consequence of the conservation of:",energy,charge,momentum,mass,A
-Physics,Electromagnetic Induction,Applications,Medium,55,"A device that operates on the principle of electromagnetic induction is the:",transformer,resistor,capacitor,diode,A
-Physics,Electromagnetic Induction,Self Induction,Medium,55,"A self-induced EMF in a coil always opposes the:",change in current through it,steady current,resistance,external source only,A
-Physics,Electromagnetic Induction,Faraday's Law,Hard,80,"The magnetic flux through a coil falls from 2 Wb to 0 in 0.1 s. The average induced EMF is:",20 V,2 V,0.2 V,200 V,A
-Physics,Electromagnetic Induction,Motional EMF,Hard,80,"The EMF induced across a rod of length L moving with velocity v perpendicular to a field B is:",B L v,B L / v,L v / B,B v / L,A
-Physics,Electromagnetic Induction,Faraday's Law,Hard,80,"A 50-turn coil experiences a flux change of 0.02 Wb in 0.1 s. The induced EMF is:",10 V,1 V,100 V,0.1 V,A
-Physics,Electromagnetic Induction,Mutual Induction,Hard,80,"The mutual inductance of a pair of coils depends on their:",geometry and number of turns,current only,resistance only,applied voltage only,A
-Physics,Alternating Current,Mains Frequency,Easy,40,"The frequency of AC mains supply in India is:",50 Hz,60 Hz,100 Hz,220 Hz,A
-Physics,Alternating Current,RMS Value,Easy,45,"The rms value of an alternating current is related to its peak value I0 by:",I0 / sqrt(2),I0 sqrt(2),I0 / 2,2 I0,A
-Physics,Alternating Current,Transformer,Easy,45,"A transformer can operate with:",AC only,DC only,both AC and DC equally,neither,A
-Physics,Alternating Current,Reactance,Easy,45,"The opposition offered by a capacitor to alternating current is called:",capacitive reactance,resistance,inductance,conductance,A
-Physics,Alternating Current,Inductive Reactance,Medium,55,"The inductive reactance of an inductor L at frequency f is:",2 pi f L,1/(2 pi f L),2 pi f C,f L,A
-Physics,Alternating Current,Capacitive Reactance,Medium,55,"The capacitive reactance of a capacitor C at frequency f is:",1/(2 pi f C),2 pi f C,2 pi f L,f C,A
-Physics,Alternating Current,Phase,Medium,55,"In a purely resistive AC circuit, the phase difference between voltage and current is:",0 degrees,90 degrees,45 degrees,180 degrees,A
-Physics,Alternating Current,Power Factor,Medium,55,"The power factor of a purely inductive AC circuit is:",zero,one,0.5,infinite,A
-Physics,Alternating Current,Peak Value,Hard,80,"The peak value of an alternating voltage of rms value 220 V is approximately:",311 V,220 V,156 V,440 V,A
-Physics,Alternating Current,Transformer,Hard,80,"A step-up transformer (Ns greater than Np):",increases the voltage and decreases the current,increases both current and voltage,increases the frequency,increases the power,A
-Physics,Alternating Current,Resonance,Hard,80,"In a series LCR circuit at resonance, the impedance is:",minimum and equal to R,maximum,zero,infinite,A
-Physics,Alternating Current,LC Oscillations,Hard,80,"The resonant frequency of an LC circuit is:",1/(2 pi sqrt(LC)),2 pi sqrt(LC),1/(2 pi LC),sqrt(LC),A
+Physics,Magnetism and Matter,Angle of Dip,Hard,80,The angle of dip at the magnetic equator is:,90 degrees,45 degrees,0 degrees,30 degrees,C
+Physics,Magnetism and Matter,Curie Temperature,Hard,80,"Above its Curie temperature, a ferromagnetic material behaves as:",superconducting,more strongly ferromagnetic,paramagnetic,diamagnetic,C
+Physics,Electromagnetic Induction,Induced EMF,Easy,45,An EMF is induced in a coil when the magnetic flux through it:,changes with time,is maximum and constant,is zero,stays constant,A
+Physics,Electromagnetic Induction,Lenz's Law,Easy,45,The law that gives the direction of an induced current is:,Coulomb's law,Ohm's law,Gauss's law,Lenz's law,D
+Physics,Electromagnetic Induction,Magnetic Flux,Easy,40,The SI unit of magnetic flux is the:,Henry,Volt,Weber,Tesla,C
+Physics,Electromagnetic Induction,Inductance,Easy,40,The SI unit of inductance is the:,Farad,Tesla,Weber,Henry,D
+Physics,Electromagnetic Induction,Faraday's Law,Medium,55,"By Faraday's law, the induced EMF in a circuit equals the:",magnetic flux,charge,rate of change of magnetic flux,current times resistance,C
+Physics,Electromagnetic Induction,Lenz's Law,Medium,55,Lenz's law is a direct consequence of the conservation of:,mass,energy,momentum,charge,B
+Physics,Electromagnetic Induction,Applications,Medium,55,A device that operates on the principle of electromagnetic induction is the:,diode,transformer,resistor,capacitor,B
+Physics,Electromagnetic Induction,Self Induction,Medium,55,A self-induced EMF in a coil always opposes the:,resistance,steady current,change in current through it,external source only,C
+Physics,Electromagnetic Induction,Faraday's Law,Hard,80,The magnetic flux through a coil falls from 2 Wb to 0 in 0.1 s. The average induced EMF is:,200 V,0.2 V,2 V,20 V,D
+Physics,Electromagnetic Induction,Motional EMF,Hard,80,The EMF induced across a rod of length L moving with velocity v perpendicular to a field B is:,B L / v,L v / B,B v / L,B L v,D
+Physics,Electromagnetic Induction,Faraday's Law,Hard,80,A 50-turn coil experiences a flux change of 0.02 Wb in 0.1 s. The induced EMF is:,100 V,10 V,1 V,0.1 V,B
+Physics,Electromagnetic Induction,Mutual Induction,Hard,80,The mutual inductance of a pair of coils depends on their:,resistance only,current only,geometry and number of turns,applied voltage only,C
+Physics,Alternating Current,Mains Frequency,Easy,40,The frequency of AC mains supply in India is:,100 Hz,50 Hz,220 Hz,60 Hz,B
+Physics,Alternating Current,RMS Value,Easy,45,The rms value of an alternating current is related to its peak value I0 by:,I0 sqrt(2),I0 / 2,2 I0,I0 / sqrt(2),D
+Physics,Alternating Current,Transformer,Easy,45,A transformer can operate with:,AC only,neither,DC only,both AC and DC equally,A
+Physics,Alternating Current,Reactance,Easy,45,The opposition offered by a capacitor to alternating current is called:,inductance,conductance,capacitive reactance,resistance,C
+Physics,Alternating Current,Inductive Reactance,Medium,55,The inductive reactance of an inductor L at frequency f is:,2 pi f L,f L,1/(2 pi f L),2 pi f C,A
+Physics,Alternating Current,Capacitive Reactance,Medium,55,The capacitive reactance of a capacitor C at frequency f is:,f C,2 pi f L,1/(2 pi f C),2 pi f C,C
+Physics,Alternating Current,Phase,Medium,55,"In a purely resistive AC circuit, the phase difference between voltage and current is:",0 degrees,45 degrees,180 degrees,90 degrees,A
+Physics,Alternating Current,Power Factor,Medium,55,The power factor of a purely inductive AC circuit is:,infinite,zero,0.5,one,B
+Physics,Alternating Current,Peak Value,Hard,80,The peak value of an alternating voltage of rms value 220 V is approximately:,311 V,440 V,220 V,156 V,A
+Physics,Alternating Current,Transformer,Hard,80,A step-up transformer (Ns greater than Np):,increases the frequency,increases the voltage and decreases the current,increases the power,increases both current and voltage,B
+Physics,Alternating Current,Resonance,Hard,80,"In a series LCR circuit at resonance, the impedance is:",zero,infinite,maximum,minimum and equal to R,D
+Physics,Alternating Current,LC Oscillations,Hard,80,The resonant frequency of an LC circuit is:,1/(2 pi LC),sqrt(LC),1/(2 pi sqrt(LC)),2 pi sqrt(LC),C

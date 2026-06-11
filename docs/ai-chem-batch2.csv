@@ -1,85 +1,85 @@
 subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Chemistry,Redox Reactions,Oxidation,Easy,45,"Oxidation, in terms of electrons, is the:",loss of electrons,gain of electrons,gain of protons,loss of neutrons,A
-Chemistry,Redox Reactions,Reduction,Easy,45,"Reduction, in terms of electrons, is the:",gain of electrons,loss of electrons,loss of protons,gain of neutrons,A
-Chemistry,Redox Reactions,Oxidation Number,Easy,45,"In most of its compounds, the oxidation number of oxygen is:",-2,+2,-1,0,A
-Chemistry,Redox Reactions,Oxidizing Agent,Easy,45,"A substance that is itself reduced in a redox reaction is called the:",oxidizing agent,reducing agent,catalyst,solvent,A
-Chemistry,Redox Reactions,Oxidation Number,Medium,55,"In most of its compounds, the oxidation number of hydrogen is:",+1,-1,0,+2,A
-Chemistry,Redox Reactions,Redox,Medium,55,"In a redox reaction, the reducing agent:",gets oxidized,gets reduced,remains unchanged,gains electrons,A
-Chemistry,Redox Reactions,Oxidation Number,Medium,55,"The oxidation number of an element in its free (elemental) state is:",0,+1,-1,+2,A
-Chemistry,Redox Reactions,Oxidation Number,Medium,55,"The algebraic sum of the oxidation numbers of all atoms in a neutral molecule is:",0,+1,-1,equal to the number of atoms,A
-Chemistry,Redox Reactions,Oxidation Number,Hard,85,"The oxidation number of sulphur in sulphuric acid (H2SO4) is:",+6,+4,+2,-2,A
-Chemistry,Redox Reactions,Oxidation Number,Hard,85,"The oxidation number of manganese in potassium permanganate (KMnO4) is:",+7,+4,+2,+6,A
-Chemistry,Redox Reactions,Redox,Hard,80,"In the reaction Zn + CuSO4 -> ZnSO4 + Cu, the species that is oxidized is:",Zn,Cu,SO4,Cu2+,A
-Chemistry,Redox Reactions,Oxidation Number,Hard,85,"The oxidation number of chromium in potassium dichromate (K2Cr2O7) is:",+6,+3,+7,+2,A
-Chemistry,Hydrogen,Abundance,Easy,40,"The most abundant element in the universe is:",hydrogen,helium,oxygen,carbon,A
-Chemistry,Hydrogen,Isotopes,Easy,45,"The isotope of hydrogen that contains one neutron is:",deuterium,protium,tritium,helium,A
-Chemistry,Hydrogen,Properties,Easy,45,"Hydrogen gas is:",highly combustible,chemically inert,a noble gas,non-flammable,A
-Chemistry,Hydrogen,Water,Easy,45,"Water is a compound of hydrogen and:",oxygen,nitrogen,carbon,sulphur,A
-Chemistry,Hydrogen,Isotopes,Medium,55,"The number of isotopes of hydrogen is:",3,2,1,4,A
-Chemistry,Hydrogen,Hard Water,Medium,55,"Hardness of water is mainly due to dissolved salts of:",calcium and magnesium,sodium and potassium,iron and copper,lead,A
-Chemistry,Hydrogen,Periodic Position,Medium,55,"In the periodic table, hydrogen is usually placed in:",Group 1,Group 18,Group 17 only,Group 2,A
-Chemistry,Hydrogen,Isotopes,Medium,55,"The radioactive isotope of hydrogen is:",tritium,protium,deuterium,helium,A
-Chemistry,Hydrogen,Heavy Water,Hard,80,"The chemical formula of heavy water is:",D2O,H2O2,H2O,T2O,A
-Chemistry,Hydrogen,Reactions,Hard,80,"When an active metal such as sodium reacts with water, the gas evolved is:",hydrogen,oxygen,chlorine,nitrogen,A
-Chemistry,Hydrogen,Hard Water,Hard,80,"Temporary hardness of water is caused by the presence of:",bicarbonates of calcium and magnesium,chlorides of calcium and magnesium,sulphates of calcium and magnesium,nitrates of sodium,A
-Chemistry,Hydrogen,Hydrogen Peroxide,Hard,80,"Hydrogen peroxide can act as:",both an oxidizing and a reducing agent,only an oxidizing agent,only a reducing agent,neither,A
-Chemistry,The s-Block Elements,Alkali Metals,Easy,45,"The elements of Group 1 are known as the:",alkali metals,alkaline earth metals,halogens,noble gases,A
-Chemistry,The s-Block Elements,Alkaline Earth Metals,Easy,45,"The elements of Group 2 are known as the:",alkaline earth metals,alkali metals,halogens,transition metals,A
-Chemistry,The s-Block Elements,Sodium,Easy,45,"The alkali metal present in common table salt is:",sodium,potassium,lithium,calcium,A
-Chemistry,The s-Block Elements,Storage,Easy,45,"Highly reactive alkali metals are commonly stored under:",kerosene,water,open air,alcohol,A
-Chemistry,The s-Block Elements,Flame Test,Medium,55,"The colour imparted to a flame by sodium compounds is:",golden yellow,brick red,lilac,apple green,A
-Chemistry,The s-Block Elements,Valence Electrons,Medium,55,"Alkali metals have ____ valence electron(s) in their outermost shell.",one,two,three,seven,A
-Chemistry,The s-Block Elements,Calcium,Medium,55,"The alkaline earth metal that is a major constituent of bones and teeth is:",calcium,sodium,potassium,magnesium,A
-Chemistry,The s-Block Elements,Reactivity,Medium,55,"Alkali metals are highly reactive mainly because they have:",low ionization energies,high ionization energies,completely filled shells,no valence electrons,A
-Chemistry,The s-Block Elements,Flame Test,Hard,80,"The colour imparted to a flame by potassium compounds is:",lilac (violet),golden yellow,brick red,apple green,A
-Chemistry,The s-Block Elements,Reactivity Trend,Hard,80,"As one moves down Group 1, the reaction of the metals with water becomes:",more vigorous,less vigorous,unchanged,impossible,A
-Chemistry,The s-Block Elements,Oxides,Hard,80,"The general formula of the normal oxides of Group 1 metals is:",M2O,MO,MO2,M2O3,A
-Chemistry,The s-Block Elements,Flame Test,Hard,80,"The alkaline earth metal that imparts a brick-red colour to a flame is:",calcium,sodium,barium,magnesium,A
-Chemistry,The p-Block Elements,Halogens,Easy,45,"The elements of Group 17 are called the:",halogens,noble gases,alkali metals,chalcogens,A
-Chemistry,The p-Block Elements,Atmosphere,Easy,45,"The most abundant gas in the Earth's atmosphere is:",nitrogen,oxygen,carbon dioxide,argon,A
-Chemistry,The p-Block Elements,Allotropes,Easy,45,"Diamond and graphite are allotropic forms of:",carbon,silicon,sulphur,phosphorus,A
-Chemistry,The p-Block Elements,Noble Gases,Easy,45,"The noble gas that is lighter than air and used to fill balloons is:",helium,neon,argon,krypton,A
-Chemistry,The p-Block Elements,Halogens,Medium,55,"The halogen that exists as a liquid at room temperature is:",bromine,chlorine,iodine,fluorine,A
-Chemistry,The p-Block Elements,Group 15,Medium,55,"An element of Group 15 that is widely used in fertilizers is:",nitrogen,sodium,calcium,iron,A
-Chemistry,The p-Block Elements,Noble Gases,Medium,55,"Group 18 elements (noble gases) are generally:",chemically inert,highly reactive,strongly metallic,strongly acidic,A
-Chemistry,The p-Block Elements,Oxoacids,Medium,55,"The acid formed when sulphur trioxide (SO3) dissolves in water is:",sulphuric acid,nitric acid,carbonic acid,hydrochloric acid,A
-Chemistry,The p-Block Elements,Hybridization,Hard,80,"The hybridization of the boron atom in boron trifluoride (BF3) is:",sp2,sp3,sp,sp3d,A
-Chemistry,The p-Block Elements,Electronegativity,Hard,80,"The most electronegative halogen is:",fluorine,chlorine,bromine,iodine,A
-Chemistry,The p-Block Elements,Molecular Shape,Hard,80,"The shape of the ammonia (NH3) molecule is:",trigonal pyramidal,trigonal planar,linear,tetrahedral,A
-Chemistry,The p-Block Elements,Oxidizing Power,Hard,80,"Down Group 17, the oxidizing power of the halogens:",decreases,increases,remains constant,becomes zero,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Definition,Easy,40,"Organic chemistry is essentially the study of the compounds of:",carbon,nitrogen,oxygen,silicon,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Hydrocarbons,Easy,45,"The simplest hydrocarbon is:",methane,ethane,ethene,benzene,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Functional Groups,Easy,45,"The functional group -OH is characteristic of:",alcohols,aldehydes,carboxylic acids,ketones,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Isomerism,Easy,45,"Compounds having the same molecular formula but different structures are called:",isomers,isotopes,allotropes,homologues,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Functional Groups,Medium,55,"The functional group -COOH is present in:",carboxylic acids,alcohols,ethers,amines,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Homologous Series,Medium,55,"Successive members of a homologous series differ by a unit of:",CH2,CH3,H2O,CO2,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,IUPAC Nomenclature,Medium,55,"The IUPAC name of the compound CH3CH2OH is:",ethanol,methanol,propanol,ethanal,A
+Chemistry,Redox Reactions,Oxidation,Easy,45,"Oxidation, in terms of electrons, is the:",gain of protons,loss of neutrons,gain of electrons,loss of electrons,D
+Chemistry,Redox Reactions,Reduction,Easy,45,"Reduction, in terms of electrons, is the:",gain of neutrons,gain of electrons,loss of electrons,loss of protons,B
+Chemistry,Redox Reactions,Oxidation Number,Easy,45,"In most of its compounds, the oxidation number of oxygen is:",+2,-1,0,-2,D
+Chemistry,Redox Reactions,Oxidizing Agent,Easy,45,A substance that is itself reduced in a redox reaction is called the:,solvent,catalyst,reducing agent,oxidizing agent,D
+Chemistry,Redox Reactions,Oxidation Number,Medium,55,"In most of its compounds, the oxidation number of hydrogen is:",0,-1,+1,+2,C
+Chemistry,Redox Reactions,Redox,Medium,55,"In a redox reaction, the reducing agent:",gets reduced,gains electrons,gets oxidized,remains unchanged,C
+Chemistry,Redox Reactions,Oxidation Number,Medium,55,The oxidation number of an element in its free (elemental) state is:,+1,+2,-1,0,D
+Chemistry,Redox Reactions,Oxidation Number,Medium,55,The algebraic sum of the oxidation numbers of all atoms in a neutral molecule is:,+1,0,equal to the number of atoms,-1,B
+Chemistry,Redox Reactions,Oxidation Number,Hard,85,The oxidation number of sulphur in sulphuric acid (H2SO4) is:,+6,+2,+4,-2,A
+Chemistry,Redox Reactions,Oxidation Number,Hard,85,The oxidation number of manganese in potassium permanganate (KMnO4) is:,+7,+4,+2,+6,A
+Chemistry,Redox Reactions,Redox,Hard,80,"In the reaction Zn + CuSO4 -> ZnSO4 + Cu, the species that is oxidized is:",Zn,Cu2+,Cu,SO4,A
+Chemistry,Redox Reactions,Oxidation Number,Hard,85,The oxidation number of chromium in potassium dichromate (K2Cr2O7) is:,+2,+7,+6,+3,C
+Chemistry,Hydrogen,Abundance,Easy,40,The most abundant element in the universe is:,helium,carbon,hydrogen,oxygen,C
+Chemistry,Hydrogen,Isotopes,Easy,45,The isotope of hydrogen that contains one neutron is:,protium,helium,deuterium,tritium,C
+Chemistry,Hydrogen,Properties,Easy,45,Hydrogen gas is:,a noble gas,chemically inert,non-flammable,highly combustible,D
+Chemistry,Hydrogen,Water,Easy,45,Water is a compound of hydrogen and:,sulphur,oxygen,nitrogen,carbon,B
+Chemistry,Hydrogen,Isotopes,Medium,55,The number of isotopes of hydrogen is:,2,3,1,4,B
+Chemistry,Hydrogen,Hard Water,Medium,55,Hardness of water is mainly due to dissolved salts of:,lead,calcium and magnesium,sodium and potassium,iron and copper,B
+Chemistry,Hydrogen,Periodic Position,Medium,55,"In the periodic table, hydrogen is usually placed in:",Group 2,Group 1,Group 17 only,Group 18,B
+Chemistry,Hydrogen,Isotopes,Medium,55,The radioactive isotope of hydrogen is:,helium,tritium,protium,deuterium,B
+Chemistry,Hydrogen,Heavy Water,Hard,80,The chemical formula of heavy water is:,T2O,D2O,H2O2,H2O,B
+Chemistry,Hydrogen,Reactions,Hard,80,"When an active metal such as sodium reacts with water, the gas evolved is:",oxygen,nitrogen,hydrogen,chlorine,C
+Chemistry,Hydrogen,Hard Water,Hard,80,Temporary hardness of water is caused by the presence of:,sulphates of calcium and magnesium,bicarbonates of calcium and magnesium,chlorides of calcium and magnesium,nitrates of sodium,B
+Chemistry,Hydrogen,Hydrogen Peroxide,Hard,80,Hydrogen peroxide can act as:,neither,both an oxidizing and a reducing agent,only an oxidizing agent,only a reducing agent,B
+Chemistry,The s-Block Elements,Alkali Metals,Easy,45,The elements of Group 1 are known as the:,halogens,alkali metals,noble gases,alkaline earth metals,B
+Chemistry,The s-Block Elements,Alkaline Earth Metals,Easy,45,The elements of Group 2 are known as the:,alkali metals,halogens,alkaline earth metals,transition metals,C
+Chemistry,The s-Block Elements,Sodium,Easy,45,The alkali metal present in common table salt is:,potassium,calcium,lithium,sodium,D
+Chemistry,The s-Block Elements,Storage,Easy,45,Highly reactive alkali metals are commonly stored under:,water,alcohol,open air,kerosene,D
+Chemistry,The s-Block Elements,Flame Test,Medium,55,The colour imparted to a flame by sodium compounds is:,brick red,golden yellow,lilac,apple green,B
+Chemistry,The s-Block Elements,Valence Electrons,Medium,55,Alkali metals have ____ valence electron(s) in their outermost shell.,two,one,three,seven,B
+Chemistry,The s-Block Elements,Calcium,Medium,55,The alkaline earth metal that is a major constituent of bones and teeth is:,calcium,magnesium,potassium,sodium,A
+Chemistry,The s-Block Elements,Reactivity,Medium,55,Alkali metals are highly reactive mainly because they have:,completely filled shells,low ionization energies,no valence electrons,high ionization energies,B
+Chemistry,The s-Block Elements,Flame Test,Hard,80,The colour imparted to a flame by potassium compounds is:,golden yellow,apple green,brick red,lilac (violet),D
+Chemistry,The s-Block Elements,Reactivity Trend,Hard,80,"As one moves down Group 1, the reaction of the metals with water becomes:",less vigorous,more vigorous,impossible,unchanged,B
+Chemistry,The s-Block Elements,Oxides,Hard,80,The general formula of the normal oxides of Group 1 metals is:,M2O,MO,MO2,M2O3,A
+Chemistry,The s-Block Elements,Flame Test,Hard,80,The alkaline earth metal that imparts a brick-red colour to a flame is:,sodium,magnesium,barium,calcium,D
+Chemistry,The p-Block Elements,Halogens,Easy,45,The elements of Group 17 are called the:,halogens,noble gases,chalcogens,alkali metals,A
+Chemistry,The p-Block Elements,Atmosphere,Easy,45,The most abundant gas in the Earth's atmosphere is:,carbon dioxide,nitrogen,argon,oxygen,B
+Chemistry,The p-Block Elements,Allotropes,Easy,45,Diamond and graphite are allotropic forms of:,carbon,phosphorus,sulphur,silicon,A
+Chemistry,The p-Block Elements,Noble Gases,Easy,45,The noble gas that is lighter than air and used to fill balloons is:,argon,neon,krypton,helium,D
+Chemistry,The p-Block Elements,Halogens,Medium,55,The halogen that exists as a liquid at room temperature is:,iodine,chlorine,bromine,fluorine,C
+Chemistry,The p-Block Elements,Group 15,Medium,55,An element of Group 15 that is widely used in fertilizers is:,sodium,calcium,iron,nitrogen,D
+Chemistry,The p-Block Elements,Noble Gases,Medium,55,Group 18 elements (noble gases) are generally:,strongly metallic,chemically inert,strongly acidic,highly reactive,B
+Chemistry,The p-Block Elements,Oxoacids,Medium,55,The acid formed when sulphur trioxide (SO3) dissolves in water is:,sulphuric acid,nitric acid,carbonic acid,hydrochloric acid,A
+Chemistry,The p-Block Elements,Hybridization,Hard,80,The hybridization of the boron atom in boron trifluoride (BF3) is:,sp,sp3,sp3d,sp2,D
+Chemistry,The p-Block Elements,Electronegativity,Hard,80,The most electronegative halogen is:,chlorine,iodine,fluorine,bromine,C
+Chemistry,The p-Block Elements,Molecular Shape,Hard,80,The shape of the ammonia (NH3) molecule is:,trigonal planar,linear,trigonal pyramidal,tetrahedral,C
+Chemistry,The p-Block Elements,Oxidizing Power,Hard,80,"Down Group 17, the oxidizing power of the halogens:",increases,remains constant,decreases,becomes zero,C
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Definition,Easy,40,Organic chemistry is essentially the study of the compounds of:,carbon,silicon,oxygen,nitrogen,A
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Hydrocarbons,Easy,45,The simplest hydrocarbon is:,methane,benzene,ethene,ethane,A
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Functional Groups,Easy,45,The functional group -OH is characteristic of:,carboxylic acids,alcohols,aldehydes,ketones,B
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Isomerism,Easy,45,Compounds having the same molecular formula but different structures are called:,isotopes,allotropes,homologues,isomers,D
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Functional Groups,Medium,55,The functional group -COOH is present in:,alcohols,amines,carboxylic acids,ethers,C
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Homologous Series,Medium,55,Successive members of a homologous series differ by a unit of:,CH3,CO2,H2O,CH2,D
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,IUPAC Nomenclature,Medium,55,The IUPAC name of the compound CH3CH2OH is:,ethanal,propanol,methanol,ethanol,D
 Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Saturation,Medium,55,"In a saturated hydrocarbon, the carbon atoms are joined by:",single bonds,double bonds,triple bonds,ionic bonds,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Functional Groups,Hard,80,"The functional group present in aldehydes is:",-CHO,-COOH,-OH,-CO- (between carbons),A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Nomenclature,Hard,80,"The number of carbon atoms in a molecule of butane is:",4,3,2,5,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Bond Fission,Hard,80,"Homolytic fission of a covalent bond produces:",free radicals,ions,only cations,only anions,A
-Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Reaction Intermediates,Hard,80,"A nucleophile is a species that is:",electron-rich and donates an electron pair,electron-deficient,always positively charged,always neutral,A
-Chemistry,Hydrocarbons,Alkanes,Easy,45,"The general formula of alkanes is:",CnH2n+2,CnH2n,CnH2n-2,CnHn,A
-Chemistry,Hydrocarbons,Alkenes,Easy,45,"The general formula of alkenes is:",CnH2n,CnH2n+2,CnH2n-2,CnHn,A
-Chemistry,Hydrocarbons,Unsaturation,Easy,45,"An ethene molecule contains a:",carbon-carbon double bond,carbon-carbon single bond,carbon-carbon triple bond,ionic bond,A
-Chemistry,Hydrocarbons,Alkynes,Easy,45,"The simplest alkyne is:",ethyne (acetylene),ethene,ethane,methane,A
-Chemistry,Hydrocarbons,Alkynes,Medium,55,"The general formula of alkynes is:",CnH2n-2,CnH2n,CnH2n+2,CnHn,A
-Chemistry,Hydrocarbons,Aromatic,Medium,55,"The molecular formula of benzene is:",C6H6,C6H12,C5H5,C6H14,A
-Chemistry,Hydrocarbons,Saturation,Medium,55,"Saturated hydrocarbons are also known as:",alkanes,alkenes,alkynes,arenes,A
-Chemistry,Hydrocarbons,Reactions,Medium,55,"The characteristic reaction of alkanes is:",substitution,addition,elimination,polymerization,A
-Chemistry,Hydrocarbons,Reactions,Hard,80,"The characteristic reaction of alkenes (unsaturated hydrocarbons) is:",addition,substitution,only combustion,isomerization,A
-Chemistry,Hydrocarbons,Bonding,Hard,85,"The total number of sigma bonds in a molecule of ethane (C2H6) is:",7,6,8,5,A
-Chemistry,Hydrocarbons,Markovnikov Rule,Hard,80,"Markovnikov's rule governs the addition of HX to:",unsymmetrical alkenes,alkanes,benzene,alkali metals,A
-Chemistry,Hydrocarbons,Combustion,Hard,80,"The complete combustion of a hydrocarbon produces:",carbon dioxide and water,carbon monoxide and hydrogen,carbon and oxygen,methane,A
-Chemistry,Environmental Chemistry,Greenhouse Effect,Easy,45,"The gas chiefly responsible for the greenhouse effect is:",carbon dioxide,oxygen,nitrogen,helium,A
-Chemistry,Environmental Chemistry,Ozone Depletion,Easy,45,"Depletion of the ozone layer is caused mainly by:",chlorofluorocarbons (CFCs),carbon dioxide,oxygen,water vapour,A
-Chemistry,Environmental Chemistry,Acid Rain,Easy,45,"Acid rain is caused mainly by oxides of:",sulphur and nitrogen,carbon only,hydrogen,helium,A
-Chemistry,Environmental Chemistry,Air Pollution,Easy,45,"A major air pollutant emitted from vehicle exhaust is:",carbon monoxide,oxygen,nitrogen gas,hydrogen,A
-Chemistry,Environmental Chemistry,Ozone Layer,Medium,55,"The ozone layer protects life on Earth by absorbing:",ultraviolet radiation,infrared radiation,radio waves,visible light,A
-Chemistry,Environmental Chemistry,Water Pollution,Medium,55,"In the context of water pollution, BOD stands for:",Biochemical Oxygen Demand,Basic Oxygen Demand,Biological Oxide Decay,Body Oxygen Density,A
-Chemistry,Environmental Chemistry,Smog,Medium,60,"Photochemical smog is formed by the action of sunlight on:",nitrogen oxides and hydrocarbons,carbon dioxide,water vapour,ozone alone,A
-Chemistry,Environmental Chemistry,Greenhouse Gases,Medium,55,"A potent greenhouse gas released from paddy fields and cattle is:",methane,oxygen,nitrogen,argon,A
-Chemistry,Environmental Chemistry,Ozone,Hard,80,"The chemical formula of ozone is:",O3,O2,O,CO2,A
-Chemistry,Environmental Chemistry,Acid Rain,Hard,80,"Rain is generally classified as acid rain when its pH is:",less than 5.6,greater than 7,exactly 7,greater than 10,A
-Chemistry,Environmental Chemistry,Global Warming,Hard,80,"Among the following gases, the main contributor to global warming is:",carbon dioxide,argon,nitrogen,neon,A
-Chemistry,Environmental Chemistry,Air Pollution,Hard,80,"The pollutant that reduces the oxygen-carrying capacity of blood by binding to haemoglobin is:",carbon monoxide,carbon dioxide,oxygen,nitrogen,A
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Functional Groups,Hard,80,The functional group present in aldehydes is:,-COOH,-CO- (between carbons),-OH,-CHO,D
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Nomenclature,Hard,80,The number of carbon atoms in a molecule of butane is:,3,2,4,5,C
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Bond Fission,Hard,80,Homolytic fission of a covalent bond produces:,only cations,ions,free radicals,only anions,C
+Chemistry,Organic Chemistry - Some Basic Principles and Techniques,Reaction Intermediates,Hard,80,A nucleophile is a species that is:,always neutral,electron-rich and donates an electron pair,always positively charged,electron-deficient,B
+Chemistry,Hydrocarbons,Alkanes,Easy,45,The general formula of alkanes is:,CnH2n-2,CnH2n,CnHn,CnH2n+2,D
+Chemistry,Hydrocarbons,Alkenes,Easy,45,The general formula of alkenes is:,CnHn,CnH2n+2,CnH2n-2,CnH2n,D
+Chemistry,Hydrocarbons,Unsaturation,Easy,45,An ethene molecule contains a:,ionic bond,carbon-carbon triple bond,carbon-carbon double bond,carbon-carbon single bond,C
+Chemistry,Hydrocarbons,Alkynes,Easy,45,The simplest alkyne is:,ethyne (acetylene),ethene,ethane,methane,A
+Chemistry,Hydrocarbons,Alkynes,Medium,55,The general formula of alkynes is:,CnH2n-2,CnH2n,CnHn,CnH2n+2,A
+Chemistry,Hydrocarbons,Aromatic,Medium,55,The molecular formula of benzene is:,C6H14,C6H6,C5H5,C6H12,B
+Chemistry,Hydrocarbons,Saturation,Medium,55,Saturated hydrocarbons are also known as:,alkanes,alkenes,arenes,alkynes,A
+Chemistry,Hydrocarbons,Reactions,Medium,55,The characteristic reaction of alkanes is:,substitution,elimination,polymerization,addition,A
+Chemistry,Hydrocarbons,Reactions,Hard,80,The characteristic reaction of alkenes (unsaturated hydrocarbons) is:,substitution,only combustion,isomerization,addition,D
+Chemistry,Hydrocarbons,Bonding,Hard,85,The total number of sigma bonds in a molecule of ethane (C2H6) is:,5,8,7,6,C
+Chemistry,Hydrocarbons,Markovnikov Rule,Hard,80,Markovnikov's rule governs the addition of HX to:,unsymmetrical alkenes,benzene,alkali metals,alkanes,A
+Chemistry,Hydrocarbons,Combustion,Hard,80,The complete combustion of a hydrocarbon produces:,carbon dioxide and water,carbon monoxide and hydrogen,carbon and oxygen,methane,A
+Chemistry,Environmental Chemistry,Greenhouse Effect,Easy,45,The gas chiefly responsible for the greenhouse effect is:,carbon dioxide,nitrogen,helium,oxygen,A
+Chemistry,Environmental Chemistry,Ozone Depletion,Easy,45,Depletion of the ozone layer is caused mainly by:,chlorofluorocarbons (CFCs),water vapour,carbon dioxide,oxygen,A
+Chemistry,Environmental Chemistry,Acid Rain,Easy,45,Acid rain is caused mainly by oxides of:,hydrogen,sulphur and nitrogen,helium,carbon only,B
+Chemistry,Environmental Chemistry,Air Pollution,Easy,45,A major air pollutant emitted from vehicle exhaust is:,oxygen,nitrogen gas,carbon monoxide,hydrogen,C
+Chemistry,Environmental Chemistry,Ozone Layer,Medium,55,The ozone layer protects life on Earth by absorbing:,ultraviolet radiation,radio waves,infrared radiation,visible light,A
+Chemistry,Environmental Chemistry,Water Pollution,Medium,55,"In the context of water pollution, BOD stands for:",Biological Oxide Decay,Biochemical Oxygen Demand,Basic Oxygen Demand,Body Oxygen Density,B
+Chemistry,Environmental Chemistry,Smog,Medium,60,Photochemical smog is formed by the action of sunlight on:,carbon dioxide,nitrogen oxides and hydrocarbons,water vapour,ozone alone,B
+Chemistry,Environmental Chemistry,Greenhouse Gases,Medium,55,A potent greenhouse gas released from paddy fields and cattle is:,methane,oxygen,nitrogen,argon,A
+Chemistry,Environmental Chemistry,Ozone,Hard,80,The chemical formula of ozone is:,O3,O,CO2,O2,A
+Chemistry,Environmental Chemistry,Acid Rain,Hard,80,Rain is generally classified as acid rain when its pH is:,greater than 10,exactly 7,greater than 7,less than 5.6,D
+Chemistry,Environmental Chemistry,Global Warming,Hard,80,"Among the following gases, the main contributor to global warming is:",carbon dioxide,nitrogen,argon,neon,A
+Chemistry,Environmental Chemistry,Air Pollution,Hard,80,The pollutant that reduces the oxygen-carrying capacity of blood by binding to haemoglobin is:,oxygen,carbon monoxide,carbon dioxide,nitrogen,B

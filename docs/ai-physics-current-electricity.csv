@@ -1,13 +1,13 @@
 subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Physics,Current Electricity,Ohm's Law,Easy,45,"Ohm's law states that the current through a conductor is directly proportional to the potential difference across it, provided which quantity remains constant?",Resistance,Length of the conductor,Temperature,Cross-sectional area,C
-Physics,Current Electricity,Units,Easy,40,The SI unit of electrical resistance is the:,Coulomb,Ohm,Volt,Ampere,B
-Physics,Current Electricity,Resistivity,Easy,45,"For a conductor of length L and area A, R = rho L / A. The resistance is:",Directly proportional to L,Inversely proportional to L,Independent of L,Directly proportional to A,A
-Physics,Current Electricity,Electric Current,Easy,40,Electric current is defined as the rate of flow of:,Charge,Energy,Mass,Power,A
-Physics,Current Electricity,Series Combination,Medium,60,"Three resistors of 2 ohm, 3 ohm and 5 ohm are connected in series. The equivalent resistance is:",30 ohm,10 ohm,1 ohm,0.97 ohm,B
-Physics,Current Electricity,Parallel Combination,Medium,60,A 6 ohm and a 3 ohm resistor are connected in parallel. The equivalent resistance is:,9 ohm,4.5 ohm,2 ohm,18 ohm,C
-Physics,Current Electricity,Electric Power,Medium,75,A bulb is rated 60 W at 220 V. The resistance of its filament is approximately:,220 ohm,807 ohm,3.7 ohm,13200 ohm,B
-Physics,Current Electricity,EMF and Internal Resistance,Medium,60,A cell of emf 2 V and internal resistance 0.5 ohm drives an external resistance of 1.5 ohm. The current in the circuit is:,0.5 A,1 A,1.33 A,2 A,B
-Physics,Current Electricity,Drift Velocity,Hard,90,"In a wire of a given material, the current is doubled and the cross-sectional area is halved. The drift velocity of the electrons becomes:",2 times,4 times,unchanged,one-fourth,B
-Physics,Current Electricity,Wheatstone Bridge,Hard,90,"A balanced Wheatstone bridge has P = 10 ohm, Q = 20 ohm and R = 15 ohm (with P/Q = R/S). The value of S is:",7.5 ohm,25 ohm,30 ohm,10 ohm,C
-Physics,Current Electricity,Cells in Parallel,Hard,120,"Two cells of emf 2 V and 4 V, with internal resistances 1 ohm and 2 ohm respectively, are joined in parallel (like terminals together). The equivalent emf of the combination is:",2 V,3 V,2.67 V,6 V,C
-Physics,Current Electricity,Temperature Coefficient,Hard,90,The resistance of a wire is 20 ohm at 20 C and 24 ohm at 120 C. Its temperature coefficient of resistance is:,0.0002 per C,0.02 per C,0.2 per C,0.002 per C,D
+Physics,Current Electricity,Ohm's Law,Easy,45,"Ohm's law states that the current through a conductor is directly proportional to the potential difference across it, provided which quantity remains constant?",Temperature,Resistance,Cross-sectional area,Length of the conductor,A
+Physics,Current Electricity,Units,Easy,40,The SI unit of electrical resistance is the:,Ohm,Ampere,Volt,Coulomb,A
+Physics,Current Electricity,Resistivity,Easy,45,"For a conductor of length L and area A, R = rho L / A. The resistance is:",Directly proportional to L,Inversely proportional to L,Directly proportional to A,Independent of L,A
+Physics,Current Electricity,Electric Current,Easy,40,Electric current is defined as the rate of flow of:,Energy,Power,Charge,Mass,C
+Physics,Current Electricity,Series Combination,Medium,60,"Three resistors of 2 ohm, 3 ohm and 5 ohm are connected in series. The equivalent resistance is:",10 ohm,1 ohm,0.97 ohm,30 ohm,A
+Physics,Current Electricity,Parallel Combination,Medium,60,A 6 ohm and a 3 ohm resistor are connected in parallel. The equivalent resistance is:,2 ohm,4.5 ohm,18 ohm,9 ohm,A
+Physics,Current Electricity,Electric Power,Medium,75,A bulb is rated 60 W at 220 V. The resistance of its filament is approximately:,807 ohm,220 ohm,3.7 ohm,13200 ohm,A
+Physics,Current Electricity,EMF and Internal Resistance,Medium,60,A cell of emf 2 V and internal resistance 0.5 ohm drives an external resistance of 1.5 ohm. The current in the circuit is:,1 A,2 A,1.33 A,0.5 A,A
+Physics,Current Electricity,Drift Velocity,Hard,90,"In a wire of a given material, the current is doubled and the cross-sectional area is halved. The drift velocity of the electrons becomes:",4 times,2 times,one-fourth,unchanged,A
+Physics,Current Electricity,Wheatstone Bridge,Hard,90,"A balanced Wheatstone bridge has P = 10 ohm, Q = 20 ohm and R = 15 ohm (with P/Q = R/S). The value of S is:",30 ohm,10 ohm,25 ohm,7.5 ohm,A
+Physics,Current Electricity,Cells in Parallel,Hard,120,"Two cells of emf 2 V and 4 V, with internal resistances 1 ohm and 2 ohm respectively, are joined in parallel (like terminals together). The equivalent emf of the combination is:",2 V,2.67 V,6 V,3 V,B
+Physics,Current Electricity,Temperature Coefficient,Hard,90,The resistance of a wire is 20 ohm at 20 C and 24 ohm at 120 C. Its temperature coefficient of resistance is:,0.0002 per C,0.002 per C,0.2 per C,0.02 per C,B

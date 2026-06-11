@@ -1,97 +1,97 @@
 subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Biology,Breathing and Exchange of Gases,Lungs,Easy,45,"The primary organs of respiration in humans are the:",lungs,kidneys,heart,liver,A
-Biology,Breathing and Exchange of Gases,Diaphragm,Easy,45,"The muscular partition between the thorax and abdomen that assists in breathing is the:",diaphragm,pleura,trachea,larynx,A
-Biology,Breathing and Exchange of Gases,Alveoli,Easy,45,"The thin-walled sacs in the lungs where gas exchange occurs are the:",alveoli,nephrons,neurons,villi,A
-Biology,Breathing and Exchange of Gases,Trachea,Easy,45,"The tube that carries air from the throat toward the lungs is the:",trachea,oesophagus,aorta,urethra,A
-Biology,Breathing and Exchange of Gases,Oxygen Transport,Medium,55,"Oxygen is transported in the blood mainly by:",haemoglobin,plasma alone,white blood cells,platelets,A
-Biology,Breathing and Exchange of Gases,Gas Exchange,Medium,55,"The exchange of gases between the alveoli and the blood takes place by:",diffusion,active transport,osmosis,filtration,A
-Biology,Breathing and Exchange of Gases,Carbon Dioxide Transport,Medium,55,"Most of the carbon dioxide is transported in the blood in the form of:",bicarbonate ions,dissolved gas only,particles bound to platelets,solid crystals,A
-Biology,Breathing and Exchange of Gases,Inspiration,Medium,55,"During inspiration (breathing in), the diaphragm:",contracts and flattens,relaxes and domes upward,remains stationary,dissolves,A
-Biology,Breathing and Exchange of Gases,Respiratory Pigment,Hard,80,"The respiratory pigment haemoglobin is contained within the:",red blood cells,white blood cells,plasma,platelets,A
-Biology,Breathing and Exchange of Gases,Partial Pressure,Hard,80,"The partial pressure of oxygen is highest in the:",alveoli,body tissues,veins,right atrium,A
-Biology,Breathing and Exchange of Gases,Tissue Respiration,Hard,80,"The exchange of gases between the blood and the body tissues is called:",internal respiration,external respiration,breathing,ventilation,A
-Biology,Breathing and Exchange of Gases,Surface Area,Hard,80,"The structures that provide a very large surface area for gaseous exchange in the lungs are the:",alveoli,bronchi,bronchioles,glottis,A
-Biology,Body Fluids and Circulation,Blood,Easy,45,"The fluid connective tissue that transports materials throughout the body is:",blood,lymph,plasma alone,water,A
-Biology,Body Fluids and Circulation,Haemoglobin,Easy,45,"The pigment that gives blood its red colour is:",haemoglobin,melanin,chlorophyll,bilirubin,A
-Biology,Body Fluids and Circulation,Heart Chambers,Easy,45,"The number of chambers in the human heart is:",4,2,3,1,A
-Biology,Body Fluids and Circulation,Platelets,Easy,45,"The blood cells that help in clotting are the:",platelets,red blood cells,white blood cells,plasma cells,A
-Biology,Body Fluids and Circulation,Arteries,Medium,55,"The blood vessels that carry blood away from the heart are the:",arteries,veins,capillaries,venules,A
-Biology,Body Fluids and Circulation,Blood Groups,Medium,55,"The blood group regarded as the universal donor is:",O negative,AB positive,A positive,B negative,A
-Biology,Body Fluids and Circulation,White Blood Cells,Medium,55,"The white blood cells are chiefly involved in:",defence against infection,oxygen transport,clotting,digestion,A
-Biology,Body Fluids and Circulation,Plasma,Medium,55,"The liquid portion of blood, without the cells, is called:",plasma,serum,lymph,bile,A
-Biology,Body Fluids and Circulation,Aorta,Hard,80,"The largest artery in the human body is the:",aorta,pulmonary vein,vena cava,carotid artery,A
-Biology,Body Fluids and Circulation,Pacemaker,Hard,80,"The natural pacemaker of the human heart is the:",SA node,AV node,Purkinje fibres,bundle of His,A
-Biology,Body Fluids and Circulation,Blood Groups,Hard,80,"The blood group regarded as the universal recipient is:",AB positive,O negative,A negative,B positive,A
-Biology,Body Fluids and Circulation,Venous Return,Hard,80,"Deoxygenated blood from the body returns to the right atrium of the heart through the:",vena cava,aorta,pulmonary vein,carotid artery,A
-Biology,Excretory Products and their Elimination,Kidneys,Easy,45,"The main excretory organs in humans are the:",kidneys,lungs,liver,skin,A
-Biology,Excretory Products and their Elimination,Nephron,Easy,45,"The structural and functional unit of the kidney is the:",nephron,neuron,alveolus,villus,A
-Biology,Excretory Products and their Elimination,Urea,Easy,45,"The chief nitrogenous waste excreted by humans is:",urea,ammonia,uric acid,glucose,A
-Biology,Excretory Products and their Elimination,Bladder,Easy,45,"Urine produced by the kidneys is temporarily stored in the:",urinary bladder,kidney,ureter,urethra,A
-Biology,Excretory Products and their Elimination,Glomerulus,Medium,55,"The filtration of blood in the nephron occurs in the:",glomerulus,loop of Henle,collecting duct,bladder,A
-Biology,Excretory Products and their Elimination,Ureotelism,Medium,55,"Animals that excrete urea as their main nitrogenous waste are called:",ureotelic,ammonotelic,uricotelic,none of these,A
-Biology,Excretory Products and their Elimination,Ureter,Medium,55,"The tube that carries urine from the kidney to the urinary bladder is the:",ureter,urethra,nephron,aorta,A
-Biology,Excretory Products and their Elimination,Reabsorption,Medium,55,"The reabsorption of useful substances from the filtrate occurs mainly in the:",renal tubule,glomerulus,bladder,ureter,A
-Biology,Excretory Products and their Elimination,Ultrafiltration,Hard,80,"Ultrafiltration of blood in the nephron takes place in the:",Bowman's capsule,collecting duct,ureter,urethra,A
-Biology,Excretory Products and their Elimination,Ammonotelism,Hard,80,"Aquatic animals that excrete ammonia as their main waste are called:",ammonotelic,ureotelic,uricotelic,osmotic,A
-Biology,Excretory Products and their Elimination,Uricotelism,Hard,80,"Birds and reptiles excrete their nitrogenous waste mainly as:",uric acid,urea,ammonia,glucose,A
-Biology,Excretory Products and their Elimination,ADH,Hard,80,"The hormone that regulates the reabsorption of water in the kidney tubules is:",ADH (antidiuretic hormone),insulin,adrenaline,thyroxine,A
-Biology,Locomotion and Movement,Skeleton,Easy,45,"The framework of bones that supports and gives shape to the body is the:",skeleton,muscle,cartilage,skin,A
-Biology,Locomotion and Movement,Joints,Easy,45,"The point at which two or more bones meet is called a:",joint,tendon,ligament,nerve,A
-Biology,Locomotion and Movement,Muscle Action,Easy,45,"Muscles produce movement primarily by:",contraction,secretion,absorption,conduction,A
-Biology,Locomotion and Movement,Number of Bones,Easy,50,"The number of bones in the adult human body is:",206,300,150,250,A
-Biology,Locomotion and Movement,Muscle Proteins,Medium,55,"The two contractile proteins of muscle are:",actin and myosin,keratin and collagen,albumin and globulin,insulin and glucagon,A
-Biology,Locomotion and Movement,Ball and Socket Joint,Medium,55,"The joint at the shoulder that permits movement in all directions is a:",ball and socket joint,hinge joint,pivot joint,gliding joint,A
-Biology,Locomotion and Movement,Sarcomere,Medium,55,"The functional contractile unit of a muscle fibre is the:",sarcomere,nephron,neuron,alveolus,A
-Biology,Locomotion and Movement,Hinge Joint,Medium,55,"The joint at the elbow, which allows movement in only one plane, is a:",hinge joint,ball and socket joint,pivot joint,saddle joint,A
-Biology,Locomotion and Movement,Calcium,Hard,80,"The mineral ion essential for muscle contraction is:",calcium,sodium,iron,iodine,A
-Biology,Locomotion and Movement,Sliding Filament Theory,Hard,80,"The sliding filament theory explains the mechanism of:",muscle contraction,nerve impulse conduction,bone formation,blood clotting,A
-Biology,Locomotion and Movement,Myoglobin,Hard,80,"The protein that stores oxygen in muscle tissue is:",myoglobin,haemoglobin,actin,collagen,A
-Biology,Locomotion and Movement,Femur,Hard,80,"The longest bone in the human body is the:",femur,humerus,tibia,stapes,A
-Biology,Neural Control and Coordination,Neuron,Easy,45,"The structural and functional unit of the nervous system is the:",neuron,nephron,alveolus,sarcomere,A
-Biology,Neural Control and Coordination,Brain,Easy,45,"The main control centre of the body is the:",brain,heart,liver,kidney,A
-Biology,Neural Control and Coordination,Dendrite,Easy,45,"The part of a neuron that receives incoming signals is the:",dendrite,axon,cell body,myelin,A
-Biology,Neural Control and Coordination,Synapse,Easy,45,"The junction between two neurons across which an impulse passes is the:",synapse,node,ganglion,nerve,A
-Biology,Neural Control and Coordination,Cerebrum,Medium,55,"The largest part of the human brain is the:",cerebrum,cerebellum,medulla,pons,A
-Biology,Neural Control and Coordination,Cerebellum,Medium,55,"The part of the brain that controls balance and coordination of movements is the:",cerebellum,cerebrum,medulla,hypothalamus,A
-Biology,Neural Control and Coordination,Axon,Medium,55,"The long process of a neuron that carries impulses away from the cell body is the:",axon,dendrite,synapse,nucleus,A
-Biology,Neural Control and Coordination,Reflex Action,Medium,55,"A rapid, automatic response to a stimulus is called a:",reflex action,voluntary action,learned response,conditioned act,A
-Biology,Neural Control and Coordination,Neurotransmitters,Hard,80,"The chemical substances that transmit nerve impulses across a synapse are:",neurotransmitters,hormones,enzymes,antibodies,A
-Biology,Neural Control and Coordination,Medulla,Hard,80,"The part of the brain that controls involuntary activities such as heartbeat and breathing is the:",medulla oblongata,cerebrum,cerebellum,corpus callosum,A
-Biology,Neural Control and Coordination,Myelin Sheath,Hard,80,"The insulating fatty covering around certain axons is the:",myelin sheath,synapse,dendrite,cell body,A
-Biology,Neural Control and Coordination,Reflex Arc,Hard,80,"A simple reflex action is mediated mainly through the:",spinal cord,cerebrum,cerebellum,hypothalamus,A
-Biology,Chemical Coordination and Integration,Hormones,Easy,45,"The chemical messengers secreted by endocrine glands are called:",hormones,enzymes,neurotransmitters,antibodies,A
-Biology,Chemical Coordination and Integration,Pituitary,Easy,45,"The endocrine gland often called the master gland is the:",pituitary gland,thyroid gland,adrenal gland,pancreas,A
-Biology,Chemical Coordination and Integration,Insulin,Easy,45,"The hormone that regulates the level of glucose in the blood is:",insulin,thyroxine,adrenaline,oestrogen,A
-Biology,Chemical Coordination and Integration,Thyroid,Easy,45,"The endocrine gland located in the neck that secretes thyroxine is the:",thyroid gland,pituitary gland,adrenal gland,pancreas,A
-Biology,Chemical Coordination and Integration,Pancreas,Medium,55,"The hormone insulin is secreted by the:",pancreas,liver,thyroid gland,adrenal gland,A
-Biology,Chemical Coordination and Integration,Adrenaline,Medium,55,"The hormone commonly referred to as the fight-or-flight hormone is:",adrenaline,insulin,thyroxine,oestrogen,A
-Biology,Chemical Coordination and Integration,Iodine Deficiency,Medium,55,"A dietary deficiency of iodine, needed to make thyroxine, can cause:",goitre,diabetes,dwarfism,gigantism,A
-Biology,Chemical Coordination and Integration,Testosterone,Medium,55,"The hormone responsible for male secondary sexual characteristics is:",testosterone,oestrogen,progesterone,insulin,A
-Biology,Chemical Coordination and Integration,Diabetes,Hard,80,"A deficiency of the hormone insulin leads to the disease:",diabetes mellitus,goitre,anaemia,rickets,A
-Biology,Chemical Coordination and Integration,Adrenal Cortex,Hard,80,"A hormone secreted by the adrenal cortex is:",cortisol,insulin,thyroxine,growth hormone,A
-Biology,Chemical Coordination and Integration,Growth Hormone,Hard,80,"Growth hormone is secreted by the:",pituitary gland,thyroid gland,pancreas,adrenal gland,A
-Biology,Chemical Coordination and Integration,Oestrogen,Hard,80,"The principal female sex hormone secreted by the ovaries is:",oestrogen,testosterone,insulin,thyroxine,A
-Biology,Reproduction in Organisms,Reproduction,Easy,45,"The biological process by which organisms produce offspring of their own kind is:",reproduction,respiration,digestion,excretion,A
-Biology,Reproduction in Organisms,Asexual Reproduction,Easy,45,"Reproduction involving a single parent and no fusion of gametes is called:",asexual reproduction,sexual reproduction,fertilization,gamete fusion,A
-Biology,Reproduction in Organisms,Sexual Reproduction,Easy,45,"Reproduction involving the fusion of male and female gametes is called:",sexual reproduction,asexual reproduction,budding,binary fission,A
-Biology,Reproduction in Organisms,Fertilization,Easy,45,"The fusion of a male gamete with a female gamete is called:",fertilization,pollination,germination,segmentation,A
-Biology,Reproduction in Organisms,Binary Fission,Medium,55,"Binary fission is a form of ____ reproduction.",asexual,sexual,internal,external,A
-Biology,Reproduction in Organisms,Offspring,Medium,55,"Offspring produced by asexual reproduction are genetically:",identical to the parent,different from the parent,always sterile,always haploid,A
-Biology,Reproduction in Organisms,Budding,Medium,55,"Budding as a method of asexual reproduction is seen in:",Hydra and yeast,humans,birds,mammals,A
-Biology,Reproduction in Organisms,Life Span,Medium,55,"The period from birth to the natural death of an organism is called its:",life span,gestation period,juvenile phase,senescence,A
-Biology,Reproduction in Organisms,Vegetative Propagation,Hard,80,"Vegetative propagation in plants is a type of ____ reproduction.",asexual,sexual,gametic,spore-based sexual,A
-Biology,Reproduction in Organisms,Zygote,Hard,80,"The zygote is formed as a direct result of:",fertilization,mitosis,budding,fragmentation,A
-Biology,Reproduction in Organisms,Hermaphrodites,Hard,80,"Organisms that possess both male and female reproductive organs are called:",hermaphrodites,unisexual organisms,dioecious organisms,sterile organisms,A
-Biology,Reproduction in Organisms,External Fertilization,Hard,80,"External fertilization is commonly seen in:",aquatic animals such as fishes and amphibians,mammals,birds,reptiles,A
-Biology,Sexual Reproduction in Flowering Plants,Stamen,Easy,45,"The male reproductive part (androecium) of a flower is the:",stamen,pistil,sepal,petal,A
-Biology,Sexual Reproduction in Flowering Plants,Pollination,Easy,45,"The transfer of pollen grains from the anther to the stigma is called:",pollination,fertilization,germination,dispersal,A
-Biology,Sexual Reproduction in Flowering Plants,Anther,Easy,45,"Pollen grains are produced in the:",anther,ovary,stigma,style,A
-Biology,Sexual Reproduction in Flowering Plants,Female Gamete,Easy,45,"The female gamete of a flowering plant is the:",egg,pollen grain,anther,sepal,A
-Biology,Sexual Reproduction in Flowering Plants,Anemophily,Medium,55,"Pollination brought about by wind is called:",anemophily,entomophily,hydrophily,ornithophily,A
-Biology,Sexual Reproduction in Flowering Plants,Entomophily,Medium,55,"Pollination brought about by insects is called:",entomophily,anemophily,hydrophily,zoophily,A
-Biology,Sexual Reproduction in Flowering Plants,Stigma,Medium,55,"The part of the pistil that receives the pollen grains is the:",stigma,ovary,anther,filament,A
-Biology,Sexual Reproduction in Flowering Plants,Seed Formation,Medium,55,"After fertilization, the ovule develops into the:",seed,fruit,flower,pollen,A
-Biology,Sexual Reproduction in Flowering Plants,Double Fertilization,Hard,80,"The fusion of one male gamete with the egg and another with the polar nuclei is called:",double fertilization,self-pollination,parthenogenesis,apomixis,A
-Biology,Sexual Reproduction in Flowering Plants,Endosperm,Hard,80,"The nutritive tissue formed in the seed as a result of triple fusion is the:",endosperm,cotyledon,testa,pericarp,A
-Biology,Sexual Reproduction in Flowering Plants,Self Pollination,Hard,80,"The transfer of pollen to the stigma of the same flower is called:",self-pollination,cross-pollination,anemophily,entomophily,A
-Biology,Sexual Reproduction in Flowering Plants,Parthenocarpy,Hard,80,"The development of a fruit without fertilization is called:",parthenocarpy,parthenogenesis,apomixis,polyembryony,A
+Biology,Breathing and Exchange of Gases,Lungs,Easy,45,The primary organs of respiration in humans are the:,liver,kidneys,lungs,heart,C
+Biology,Breathing and Exchange of Gases,Diaphragm,Easy,45,The muscular partition between the thorax and abdomen that assists in breathing is the:,larynx,diaphragm,trachea,pleura,B
+Biology,Breathing and Exchange of Gases,Alveoli,Easy,45,The thin-walled sacs in the lungs where gas exchange occurs are the:,neurons,nephrons,villi,alveoli,D
+Biology,Breathing and Exchange of Gases,Trachea,Easy,45,The tube that carries air from the throat toward the lungs is the:,aorta,trachea,oesophagus,urethra,B
+Biology,Breathing and Exchange of Gases,Oxygen Transport,Medium,55,Oxygen is transported in the blood mainly by:,haemoglobin,plasma alone,platelets,white blood cells,A
+Biology,Breathing and Exchange of Gases,Gas Exchange,Medium,55,The exchange of gases between the alveoli and the blood takes place by:,osmosis,filtration,diffusion,active transport,C
+Biology,Breathing and Exchange of Gases,Carbon Dioxide Transport,Medium,55,Most of the carbon dioxide is transported in the blood in the form of:,solid crystals,dissolved gas only,particles bound to platelets,bicarbonate ions,D
+Biology,Breathing and Exchange of Gases,Inspiration,Medium,55,"During inspiration (breathing in), the diaphragm:",relaxes and domes upward,dissolves,contracts and flattens,remains stationary,C
+Biology,Breathing and Exchange of Gases,Respiratory Pigment,Hard,80,The respiratory pigment haemoglobin is contained within the:,platelets,red blood cells,plasma,white blood cells,B
+Biology,Breathing and Exchange of Gases,Partial Pressure,Hard,80,The partial pressure of oxygen is highest in the:,right atrium,veins,alveoli,body tissues,C
+Biology,Breathing and Exchange of Gases,Tissue Respiration,Hard,80,The exchange of gases between the blood and the body tissues is called:,breathing,internal respiration,external respiration,ventilation,B
+Biology,Breathing and Exchange of Gases,Surface Area,Hard,80,The structures that provide a very large surface area for gaseous exchange in the lungs are the:,alveoli,glottis,bronchioles,bronchi,A
+Biology,Body Fluids and Circulation,Blood,Easy,45,The fluid connective tissue that transports materials throughout the body is:,water,plasma alone,blood,lymph,C
+Biology,Body Fluids and Circulation,Haemoglobin,Easy,45,The pigment that gives blood its red colour is:,bilirubin,chlorophyll,haemoglobin,melanin,C
+Biology,Body Fluids and Circulation,Heart Chambers,Easy,45,The number of chambers in the human heart is:,1,3,4,2,C
+Biology,Body Fluids and Circulation,Platelets,Easy,45,The blood cells that help in clotting are the:,plasma cells,white blood cells,red blood cells,platelets,D
+Biology,Body Fluids and Circulation,Arteries,Medium,55,The blood vessels that carry blood away from the heart are the:,veins,capillaries,arteries,venules,C
+Biology,Body Fluids and Circulation,Blood Groups,Medium,55,The blood group regarded as the universal donor is:,O negative,A positive,AB positive,B negative,A
+Biology,Body Fluids and Circulation,White Blood Cells,Medium,55,The white blood cells are chiefly involved in:,oxygen transport,defence against infection,clotting,digestion,B
+Biology,Body Fluids and Circulation,Plasma,Medium,55,"The liquid portion of blood, without the cells, is called:",plasma,serum,bile,lymph,A
+Biology,Body Fluids and Circulation,Aorta,Hard,80,The largest artery in the human body is the:,vena cava,aorta,pulmonary vein,carotid artery,B
+Biology,Body Fluids and Circulation,Pacemaker,Hard,80,The natural pacemaker of the human heart is the:,AV node,bundle of His,SA node,Purkinje fibres,C
+Biology,Body Fluids and Circulation,Blood Groups,Hard,80,The blood group regarded as the universal recipient is:,O negative,B positive,A negative,AB positive,D
+Biology,Body Fluids and Circulation,Venous Return,Hard,80,Deoxygenated blood from the body returns to the right atrium of the heart through the:,vena cava,aorta,pulmonary vein,carotid artery,A
+Biology,Excretory Products and their Elimination,Kidneys,Easy,45,The main excretory organs in humans are the:,skin,lungs,liver,kidneys,D
+Biology,Excretory Products and their Elimination,Nephron,Easy,45,The structural and functional unit of the kidney is the:,nephron,villus,neuron,alveolus,A
+Biology,Excretory Products and their Elimination,Urea,Easy,45,The chief nitrogenous waste excreted by humans is:,ammonia,urea,uric acid,glucose,B
+Biology,Excretory Products and their Elimination,Bladder,Easy,45,Urine produced by the kidneys is temporarily stored in the:,urethra,kidney,ureter,urinary bladder,D
+Biology,Excretory Products and their Elimination,Glomerulus,Medium,55,The filtration of blood in the nephron occurs in the:,glomerulus,bladder,collecting duct,loop of Henle,A
+Biology,Excretory Products and their Elimination,Ureotelism,Medium,55,Animals that excrete urea as their main nitrogenous waste are called:,ammonotelic,none of these,ureotelic,uricotelic,C
+Biology,Excretory Products and their Elimination,Ureter,Medium,55,The tube that carries urine from the kidney to the urinary bladder is the:,aorta,ureter,urethra,nephron,B
+Biology,Excretory Products and their Elimination,Reabsorption,Medium,55,The reabsorption of useful substances from the filtrate occurs mainly in the:,renal tubule,glomerulus,ureter,bladder,A
+Biology,Excretory Products and their Elimination,Ultrafiltration,Hard,80,Ultrafiltration of blood in the nephron takes place in the:,urethra,ureter,Bowman's capsule,collecting duct,C
+Biology,Excretory Products and their Elimination,Ammonotelism,Hard,80,Aquatic animals that excrete ammonia as their main waste are called:,ammonotelic,ureotelic,uricotelic,osmotic,A
+Biology,Excretory Products and their Elimination,Uricotelism,Hard,80,Birds and reptiles excrete their nitrogenous waste mainly as:,urea,ammonia,uric acid,glucose,C
+Biology,Excretory Products and their Elimination,ADH,Hard,80,The hormone that regulates the reabsorption of water in the kidney tubules is:,insulin,thyroxine,ADH (antidiuretic hormone),adrenaline,C
+Biology,Locomotion and Movement,Skeleton,Easy,45,The framework of bones that supports and gives shape to the body is the:,skin,skeleton,muscle,cartilage,B
+Biology,Locomotion and Movement,Joints,Easy,45,The point at which two or more bones meet is called a:,nerve,ligament,joint,tendon,C
+Biology,Locomotion and Movement,Muscle Action,Easy,45,Muscles produce movement primarily by:,conduction,contraction,absorption,secretion,B
+Biology,Locomotion and Movement,Number of Bones,Easy,50,The number of bones in the adult human body is:,250,300,206,150,C
+Biology,Locomotion and Movement,Muscle Proteins,Medium,55,The two contractile proteins of muscle are:,actin and myosin,insulin and glucagon,keratin and collagen,albumin and globulin,A
+Biology,Locomotion and Movement,Ball and Socket Joint,Medium,55,The joint at the shoulder that permits movement in all directions is a:,gliding joint,hinge joint,pivot joint,ball and socket joint,D
+Biology,Locomotion and Movement,Sarcomere,Medium,55,The functional contractile unit of a muscle fibre is the:,sarcomere,neuron,nephron,alveolus,A
+Biology,Locomotion and Movement,Hinge Joint,Medium,55,"The joint at the elbow, which allows movement in only one plane, is a:",pivot joint,ball and socket joint,saddle joint,hinge joint,D
+Biology,Locomotion and Movement,Calcium,Hard,80,The mineral ion essential for muscle contraction is:,iodine,calcium,iron,sodium,B
+Biology,Locomotion and Movement,Sliding Filament Theory,Hard,80,The sliding filament theory explains the mechanism of:,nerve impulse conduction,blood clotting,bone formation,muscle contraction,D
+Biology,Locomotion and Movement,Myoglobin,Hard,80,The protein that stores oxygen in muscle tissue is:,actin,myoglobin,haemoglobin,collagen,B
+Biology,Locomotion and Movement,Femur,Hard,80,The longest bone in the human body is the:,femur,tibia,stapes,humerus,A
+Biology,Neural Control and Coordination,Neuron,Easy,45,The structural and functional unit of the nervous system is the:,alveolus,neuron,nephron,sarcomere,B
+Biology,Neural Control and Coordination,Brain,Easy,45,The main control centre of the body is the:,brain,kidney,liver,heart,A
+Biology,Neural Control and Coordination,Dendrite,Easy,45,The part of a neuron that receives incoming signals is the:,dendrite,axon,cell body,myelin,A
+Biology,Neural Control and Coordination,Synapse,Easy,45,The junction between two neurons across which an impulse passes is the:,synapse,ganglion,node,nerve,A
+Biology,Neural Control and Coordination,Cerebrum,Medium,55,The largest part of the human brain is the:,pons,cerebrum,medulla,cerebellum,B
+Biology,Neural Control and Coordination,Cerebellum,Medium,55,The part of the brain that controls balance and coordination of movements is the:,cerebrum,cerebellum,medulla,hypothalamus,B
+Biology,Neural Control and Coordination,Axon,Medium,55,The long process of a neuron that carries impulses away from the cell body is the:,synapse,axon,nucleus,dendrite,B
+Biology,Neural Control and Coordination,Reflex Action,Medium,55,"A rapid, automatic response to a stimulus is called a:",learned response,voluntary action,reflex action,conditioned act,C
+Biology,Neural Control and Coordination,Neurotransmitters,Hard,80,The chemical substances that transmit nerve impulses across a synapse are:,neurotransmitters,antibodies,enzymes,hormones,A
+Biology,Neural Control and Coordination,Medulla,Hard,80,The part of the brain that controls involuntary activities such as heartbeat and breathing is the:,cerebrum,corpus callosum,cerebellum,medulla oblongata,D
+Biology,Neural Control and Coordination,Myelin Sheath,Hard,80,The insulating fatty covering around certain axons is the:,cell body,synapse,dendrite,myelin sheath,D
+Biology,Neural Control and Coordination,Reflex Arc,Hard,80,A simple reflex action is mediated mainly through the:,cerebrum,hypothalamus,cerebellum,spinal cord,D
+Biology,Chemical Coordination and Integration,Hormones,Easy,45,The chemical messengers secreted by endocrine glands are called:,hormones,antibodies,enzymes,neurotransmitters,A
+Biology,Chemical Coordination and Integration,Pituitary,Easy,45,The endocrine gland often called the master gland is the:,pituitary gland,thyroid gland,pancreas,adrenal gland,A
+Biology,Chemical Coordination and Integration,Insulin,Easy,45,The hormone that regulates the level of glucose in the blood is:,oestrogen,thyroxine,adrenaline,insulin,D
+Biology,Chemical Coordination and Integration,Thyroid,Easy,45,The endocrine gland located in the neck that secretes thyroxine is the:,thyroid gland,adrenal gland,pancreas,pituitary gland,A
+Biology,Chemical Coordination and Integration,Pancreas,Medium,55,The hormone insulin is secreted by the:,adrenal gland,thyroid gland,pancreas,liver,C
+Biology,Chemical Coordination and Integration,Adrenaline,Medium,55,The hormone commonly referred to as the fight-or-flight hormone is:,insulin,adrenaline,thyroxine,oestrogen,B
+Biology,Chemical Coordination and Integration,Iodine Deficiency,Medium,55,"A dietary deficiency of iodine, needed to make thyroxine, can cause:",diabetes,goitre,gigantism,dwarfism,B
+Biology,Chemical Coordination and Integration,Testosterone,Medium,55,The hormone responsible for male secondary sexual characteristics is:,testosterone,insulin,oestrogen,progesterone,A
+Biology,Chemical Coordination and Integration,Diabetes,Hard,80,A deficiency of the hormone insulin leads to the disease:,anaemia,diabetes mellitus,rickets,goitre,B
+Biology,Chemical Coordination and Integration,Adrenal Cortex,Hard,80,A hormone secreted by the adrenal cortex is:,growth hormone,insulin,thyroxine,cortisol,D
+Biology,Chemical Coordination and Integration,Growth Hormone,Hard,80,Growth hormone is secreted by the:,thyroid gland,pituitary gland,pancreas,adrenal gland,B
+Biology,Chemical Coordination and Integration,Oestrogen,Hard,80,The principal female sex hormone secreted by the ovaries is:,thyroxine,testosterone,oestrogen,insulin,C
+Biology,Reproduction in Organisms,Reproduction,Easy,45,The biological process by which organisms produce offspring of their own kind is:,digestion,reproduction,respiration,excretion,B
+Biology,Reproduction in Organisms,Asexual Reproduction,Easy,45,Reproduction involving a single parent and no fusion of gametes is called:,fertilization,asexual reproduction,sexual reproduction,gamete fusion,B
+Biology,Reproduction in Organisms,Sexual Reproduction,Easy,45,Reproduction involving the fusion of male and female gametes is called:,sexual reproduction,budding,binary fission,asexual reproduction,A
+Biology,Reproduction in Organisms,Fertilization,Easy,45,The fusion of a male gamete with a female gamete is called:,segmentation,germination,fertilization,pollination,C
+Biology,Reproduction in Organisms,Binary Fission,Medium,55,Binary fission is a form of ____ reproduction.,internal,sexual,asexual,external,C
+Biology,Reproduction in Organisms,Offspring,Medium,55,Offspring produced by asexual reproduction are genetically:,always sterile,identical to the parent,always haploid,different from the parent,B
+Biology,Reproduction in Organisms,Budding,Medium,55,Budding as a method of asexual reproduction is seen in:,Hydra and yeast,humans,birds,mammals,A
+Biology,Reproduction in Organisms,Life Span,Medium,55,The period from birth to the natural death of an organism is called its:,gestation period,juvenile phase,life span,senescence,C
+Biology,Reproduction in Organisms,Vegetative Propagation,Hard,80,Vegetative propagation in plants is a type of ____ reproduction.,gametic,spore-based sexual,asexual,sexual,C
+Biology,Reproduction in Organisms,Zygote,Hard,80,The zygote is formed as a direct result of:,fertilization,budding,mitosis,fragmentation,A
+Biology,Reproduction in Organisms,Hermaphrodites,Hard,80,Organisms that possess both male and female reproductive organs are called:,sterile organisms,hermaphrodites,dioecious organisms,unisexual organisms,B
+Biology,Reproduction in Organisms,External Fertilization,Hard,80,External fertilization is commonly seen in:,mammals,reptiles,birds,aquatic animals such as fishes and amphibians,D
+Biology,Sexual Reproduction in Flowering Plants,Stamen,Easy,45,The male reproductive part (androecium) of a flower is the:,stamen,petal,sepal,pistil,A
+Biology,Sexual Reproduction in Flowering Plants,Pollination,Easy,45,The transfer of pollen grains from the anther to the stigma is called:,fertilization,pollination,germination,dispersal,B
+Biology,Sexual Reproduction in Flowering Plants,Anther,Easy,45,Pollen grains are produced in the:,anther,ovary,stigma,style,A
+Biology,Sexual Reproduction in Flowering Plants,Female Gamete,Easy,45,The female gamete of a flowering plant is the:,egg,anther,pollen grain,sepal,A
+Biology,Sexual Reproduction in Flowering Plants,Anemophily,Medium,55,Pollination brought about by wind is called:,anemophily,hydrophily,ornithophily,entomophily,A
+Biology,Sexual Reproduction in Flowering Plants,Entomophily,Medium,55,Pollination brought about by insects is called:,entomophily,anemophily,hydrophily,zoophily,A
+Biology,Sexual Reproduction in Flowering Plants,Stigma,Medium,55,The part of the pistil that receives the pollen grains is the:,stigma,anther,ovary,filament,A
+Biology,Sexual Reproduction in Flowering Plants,Seed Formation,Medium,55,"After fertilization, the ovule develops into the:",flower,fruit,seed,pollen,C
+Biology,Sexual Reproduction in Flowering Plants,Double Fertilization,Hard,80,The fusion of one male gamete with the egg and another with the polar nuclei is called:,apomixis,parthenogenesis,double fertilization,self-pollination,C
+Biology,Sexual Reproduction in Flowering Plants,Endosperm,Hard,80,The nutritive tissue formed in the seed as a result of triple fusion is the:,testa,pericarp,endosperm,cotyledon,C
+Biology,Sexual Reproduction in Flowering Plants,Self Pollination,Hard,80,The transfer of pollen to the stigma of the same flower is called:,anemophily,cross-pollination,entomophily,self-pollination,D
+Biology,Sexual Reproduction in Flowering Plants,Parthenocarpy,Hard,80,The development of a fruit without fertilization is called:,polyembryony,parthenocarpy,apomixis,parthenogenesis,B
