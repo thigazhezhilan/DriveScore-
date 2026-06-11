@@ -26,6 +26,8 @@ import {
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import { Neuro } from "@/components/mascot/Neuro";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
+import { LevelCard } from "@/components/home/LevelCard";
+import type { RatingSummary } from "@/lib/db/ratings";
 
 type MockItem = {
   id: string;
@@ -39,9 +41,11 @@ type MockItem = {
 export function HomeClient({
   studentName,
   mocks,
+  rating,
 }: {
   studentName: string | null;
   mocks: MockItem[];
+  rating: RatingSummary | null;
 }) {
   const reduce = useReducedMotion();
   const firstName = studentName ? studentName.split(" ")[0] : null;
@@ -88,6 +92,9 @@ export function HomeClient({
             </div>
           </div>
         </section>
+
+        {/* Skill level — Elo-based, motivating, no raw rank ladder */}
+        {rating && <LevelCard rating={rating} />}
 
         {/* SynapTest practice — self-practice over the global bank */}
         <section className="animate-fade-up mt-4" style={{ animationDelay: "90ms" }}>

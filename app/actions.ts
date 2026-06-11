@@ -13,6 +13,7 @@ import {
   saveAttempt,
 } from "@/lib/db/queries";
 import { getVisibleMock } from "@/lib/db/mocks";
+import { applyRatingUpdates } from "@/lib/db/ratings";
 import { getCurrentStudent } from "@/lib/auth";
 import { buildReport } from "@/lib/grade";
 import type { Attempt } from "@/lib/types";
@@ -64,6 +65,15 @@ export async function submitAttempt(
     maxMarks: report.maxScore,
     accuracy: report.accuracyPct,
   });
+
+  // Update the student's skill ratings from this attempt. Best-effort: grading
+  // and the report are the sacred path, so a rating failure must never fail the
+  // submission — log and carry on.
+  try {
+    await applyRatingUpdates(attemptId, student.id, report.items);
+  } catch (err) {
+    console.error("Rating update failed for attempt", attemptId, err);
+  }
 
   return { attemptId };
 }

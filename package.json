@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx lib/diagnose.test.ts",
+    "test": "tsx lib/diagnose.test.ts && tsx lib/rating.test.ts",
     "db:seed": "tsx scripts/seed.ts"
   },
   "dependencies": {

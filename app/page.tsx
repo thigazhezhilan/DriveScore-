@@ -6,8 +6,9 @@
  * the student's batch (RLS-scoped) and hands them to the client <HomeClient>.
  */
 
-import { requireRole } from "@/lib/auth";
+import { requireRole, getCurrentStudent } from "@/lib/auth";
 import { listPublishedMocksForStudent, type StudentMock } from "@/lib/db/mocks";
+import { getRatingSummary, type RatingSummary } from "@/lib/db/ratings";
 import { HomeClient } from "@/components/home/HomeClient";
 
 export const dynamic = "force-dynamic";
@@ -23,5 +24,17 @@ export default async function HomePage() {
     mocks = [];
   }
 
-  return <HomeClient studentName={me.profile.fullName} mocks={mocks} />;
+  // Skill rating (null until the student has a graded attempt). Never let a
+  // rating-read failure take down the home screen.
+  let rating: RatingSummary | null = null;
+  try {
+    const student = await getCurrentStudent();
+    if (student) rating = await getRatingSummary(student.id);
+  } catch {
+    rating = null;
+  }
+
+  return (
+    <HomeClient studentName={me.profile.fullName} mocks={mocks} rating={rating} />
+  );
 }
