@@ -20,8 +20,13 @@ import {
   Shuffle,
   Sparkles,
 } from "lucide-react";
-import { requireRole } from "@/lib/auth";
+import { requireRole, getCurrentStudent } from "@/lib/auth";
 import { listGlobalSyllabus, NEET_PATTERN } from "@/lib/db/practice";
+import {
+  getChapterRatings,
+  chapterRatingKey,
+  type ChapterRating,
+} from "@/lib/db/ratings";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { startFullMock } from "./actions";
 
@@ -34,6 +39,16 @@ const SUBJECT_ICON = {
 } as const;
 
 const TOTAL_NEET = NEET_PATTERN.reduce((s, p) => s + p.count, 0);
+
+/** Per-level accent for the small lesson rating badges. */
+const LEVEL_BADGE: Record<string, string> = {
+  Aspirant: "bg-white/10 text-paper/70",
+  Achiever: "bg-energy/15 text-energy",
+  Scholar: "bg-energy/15 text-energy",
+  Ranker: "bg-reward/15 text-reward",
+  Topper: "bg-reward/15 text-reward",
+  "White Coat": "bg-accent2/20 text-[#B7AEFF]",
+};
 
 export default async function PracticePage({
   searchParams,
@@ -48,6 +63,15 @@ export default async function PracticePage({
     syllabus = await listGlobalSyllabus(track);
   } catch {
     syllabus = [];
+  }
+
+  // Per-chapter ratings for the logged-in student (empty until they practise).
+  let chapterRatings = new Map<string, ChapterRating>();
+  try {
+    const student = await getCurrentStudent();
+    if (student) chapterRatings = await getChapterRatings(student.id);
+  } catch {
+    chapterRatings = new Map();
   }
 
   const errorMsg =
@@ -167,7 +191,11 @@ export default async function PracticePage({
                     </summary>
 
                     <div className="divide-y divide-white/[0.06] border-t border-white/[0.06]">
-                      {s.chapters.map((c) => (
+                      {s.chapters.map((c) => {
+                        const cr = chapterRatings.get(
+                          chapterRatingKey(s.subject, c.chapter),
+                        );
+                        return (
                         <div
                           key={c.chapter}
                           className="flex items-center gap-3 px-4 py-2.5"
@@ -180,6 +208,17 @@ export default async function PracticePage({
                               {c.questionCount} {c.questionCount === 1 ? "question" : "questions"}
                             </p>
                           </div>
+                          {cr && (
+                            <span
+                              className={`inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold ${
+                                LEVEL_BADGE[cr.level] ?? LEVEL_BADGE.Aspirant
+                              }`}
+                              title={`${cr.level} · rating ${cr.rating}`}
+                            >
+                              {cr.level}
+                              <span className="tabular-nums opacity-70">{cr.rating}</span>
+                            </span>
+                          )}
                           <Link
                             href={`/practice/climb?subject=${encodeURIComponent(s.subject)}&chapter=${encodeURIComponent(c.chapter)}&source=${track}`}
                             className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-energy/15 px-3.5 py-2 text-xs font-bold text-energy transition hover:bg-energy/25"
@@ -187,7 +226,8 @@ export default async function PracticePage({
                             Practice <Play className="h-3.5 w-3.5" />
                           </Link>
                         </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </details>
                 );

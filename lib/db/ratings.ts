@@ -23,9 +23,11 @@ import { getServiceClient } from "./client";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
   applyAttempt,
+  applyByBucket,
   levelFor,
   overallRating,
   START_RATING,
+  type BucketInput,
   type RatingInput,
   type SubjectState,
 } from "@/lib/rating";
@@ -166,6 +168,82 @@ export async function applyRatingUpdates(
       .upsert(events, { onConflict: "attempt_id,question_id", ignoreDuplicates: true });
     if (evErr) throw evErr;
   }
+
+  // 5. Per-chapter (lesson-by-lesson) ratings — same Elo, finer grain.
+  await applyChapterRatings(supabase, studentId, items, inputs, now);
+}
+
+/** Bucket key for a chapter rating row. */
+const chapterKey = (subject: string, chapter: string) => `${subject}|${chapter}`;
+
+/**
+ * Update the student's per-chapter ratings from one attempt, reusing the shared
+ * bucket engine. Called from applyRatingUpdates with the same `inputs` (so the
+ * anti-farming/blank rules match the subject ratings exactly).
+ */
+async function applyChapterRatings(
+  supabase: ReturnType<typeof getServiceClient>,
+  studentId: string,
+  items: GradedItem[],
+  inputs: RatingInput[],
+  now: string,
+): Promise<void> {
+  // The distinct (subject, chapter) pairs this attempt touched.
+  const pairs = new Map<string, { subject: Subject; chapter: string }>();
+  for (const it of items) {
+    pairs.set(chapterKey(it.question.subject, it.question.chapter), {
+      subject: it.question.subject,
+      chapter: it.question.chapter,
+    });
+  }
+  if (pairs.size === 0) return;
+
+  // Load existing chapter ratings for just those chapters.
+  const { data: rows, error } = await supabase
+    .from("student_chapter_ratings")
+    .select("subject, chapter, rating, level, questions_rated")
+    .eq("student_id", studentId)
+    .in("chapter", [...new Set([...pairs.values()].map((p) => p.chapter))]);
+  if (error) throw error;
+
+  const current: Record<string, SubjectState> = {};
+  const prevLevel = new Map<string, string>();
+  for (const r of rows ?? []) {
+    const key = chapterKey(r.subject as string, r.chapter as string);
+    current[key] = {
+      rating: Number(r.rating),
+      questionsRated: r.questions_rated as number,
+    };
+    prevLevel.set(key, r.level as string);
+  }
+
+  // Run the same engine, keyed by subject|chapter.
+  const bucketInputs: BucketInput[] = items.map((it, i) => ({
+    bucket: chapterKey(it.question.subject, it.question.chapter),
+    difficulty: it.question.difficulty,
+    attempted: inputs[i].attempted,
+    correct: inputs[i].correct,
+    previouslyCorrect: inputs[i].previouslyCorrect,
+  }));
+  const { final } = applyByBucket(current, bucketInputs);
+
+  // Upsert only the chapters this attempt actually touched.
+  const upserts = [...pairs.entries()].map(([key, { subject, chapter }]) => {
+    const state = final[key] ?? { rating: START_RATING, questionsRated: 0 };
+    return {
+      student_id: studentId,
+      subject,
+      chapter,
+      rating: state.rating,
+      questions_rated: state.questionsRated,
+      level: levelFor(state.rating, prevLevel.get(key) ?? null).name,
+      updated_at: now,
+    };
+  });
+  const { error: upErr } = await supabase
+    .from("student_chapter_ratings")
+    .upsert(upserts, { onConflict: "student_id,subject,chapter" });
+  if (upErr) throw upErr;
 }
 
 // ─────────────────────────────── Reads ──────────────────────────────────────
@@ -236,4 +314,36 @@ export async function getRatingSummary(
   }
 
   return { overall, subjects, recentDelta };
+}
+
+export type ChapterRating = { rating: number; level: string };
+
+/**
+ * The student's per-chapter ratings (RLS-scoped), keyed by `subject|chapter`
+ * for O(1) lookup while rendering the practice lesson list. Chapters the
+ * student hasn't practised yet are simply absent from the map.
+ */
+export async function getChapterRatings(
+  studentId: string,
+): Promise<Map<string, ChapterRating>> {
+  const supabase = createSupabaseServerClient(); // RLS: student reads own rows
+  const { data, error } = await supabase
+    .from("student_chapter_ratings")
+    .select("subject, chapter, rating, level")
+    .eq("student_id", studentId);
+  if (error) throw error;
+
+  const map = new Map<string, ChapterRating>();
+  for (const r of data ?? []) {
+    map.set(`${r.subject}|${r.chapter}`, {
+      rating: Math.round(Number(r.rating)),
+      level: r.level as string,
+    });
+  }
+  return map;
+}
+
+/** Shared bucket key for a chapter rating: `subject|chapter`. */
+export function chapterRatingKey(subject: string, chapter: string): string {
+  return `${subject}|${chapter}`;
 }

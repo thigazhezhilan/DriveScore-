@@ -227,6 +227,62 @@ export type RatingDelta = {
   ratingAfter: number;
 };
 
+/**
+ * Generic per-question input keyed by an arbitrary BUCKET (a subject, or a
+ * `subject|chapter` pair). The same Elo math drives every grain.
+ */
+export type BucketInput = {
+  bucket: string;
+  difficulty: Difficulty;
+  attempted: boolean;
+  correct: boolean;
+  previouslyCorrect: boolean;
+};
+
+export type BucketDelta = {
+  bucket: string;
+  delta: number;
+  ratingAfter: number;
+  /** Index back into the input array (to recover questionId/subject/etc). */
+  index: number;
+};
+
+/**
+ * Apply a sequence of matches grouped by an arbitrary bucket key. This is the
+ * shared primitive behind both per-subject and per-chapter ratings, so the
+ * skip/anti-farming rules can never drift between grains.
+ *
+ * Buckets absent from `current` start at the default rating. Blanks are skipped
+ * (no match); previously-aced questions record a zero delta (anti-farming).
+ */
+export function applyByBucket(
+  current: Record<string, SubjectState>,
+  inputs: BucketInput[],
+): { final: Record<string, SubjectState>; deltas: BucketDelta[] } {
+  const final: Record<string, SubjectState> = {};
+  for (const key of Object.keys(current)) final[key] = { ...current[key] };
+
+  const deltas: BucketDelta[] = [];
+  inputs.forEach((inp, index) => {
+    if (!inp.attempted) return; // blank → no match played
+    if (!final[inp.bucket]) {
+      final[inp.bucket] = { rating: START_RATING, questionsRated: 0 };
+    }
+    const state = final[inp.bucket];
+
+    if (inp.previouslyCorrect) {
+      deltas.push({ bucket: inp.bucket, delta: 0, ratingAfter: state.rating, index });
+      return;
+    }
+
+    const res = applyOne(state, questionRating(inp.difficulty), inp.correct);
+    final[inp.bucket] = { rating: res.rating, questionsRated: res.questionsRated };
+    deltas.push({ bucket: inp.bucket, delta: res.delta, ratingAfter: res.rating, index });
+  });
+
+  return { final, deltas };
+}
+
 export type AttemptResult = {
   /** One entry per ATTEMPTED question, in input order (blanks omitted). */
   deltas: RatingDelta[];
@@ -249,57 +305,44 @@ export function applyAttempt(
   current: Record<Subject, SubjectState>,
   inputs: RatingInput[],
 ): AttemptResult {
-  const next: Record<Subject, SubjectState> = {
-    Physics: { ...current.Physics },
-    Chemistry: { ...current.Chemistry },
-    Biology: { ...current.Biology },
-  };
-
   const overallBefore = overallRating({
-    Physics: next.Physics.rating,
-    Chemistry: next.Chemistry.rating,
-    Biology: next.Biology.rating,
+    Physics: current.Physics.rating,
+    Chemistry: current.Chemistry.rating,
+    Biology: current.Biology.rating,
   });
 
-  const deltas: RatingDelta[] = [];
-  for (const inp of inputs) {
-    if (!inp.attempted) continue; // blank → no match played
+  // Run the shared bucket engine keyed by subject.
+  const { final, deltas: bucketDeltas } = applyByBucket(current, inputs.map((inp) => ({
+    bucket: inp.subject,
+    difficulty: inp.difficulty,
+    attempted: inp.attempted,
+    correct: inp.correct,
+    previouslyCorrect: inp.previouslyCorrect,
+  })));
 
-    const state = next[inp.subject];
+  const finalSubjects: Record<Subject, SubjectState> = {
+    Physics: final.Physics,
+    Chemistry: final.Chemistry,
+    Biology: final.Biology,
+  };
 
-    // Anti-farming: already aced this question before → record a 0-delta event.
-    if (inp.previouslyCorrect) {
-      deltas.push({
-        questionId: inp.questionId,
-        subject: inp.subject,
-        delta: 0,
-        ratingAfter: state.rating,
-      });
-      continue;
-    }
-
-    const res = applyOne(state, questionRating(inp.difficulty), inp.correct);
-    next[inp.subject] = {
-      rating: res.rating,
-      questionsRated: res.questionsRated,
-    };
-    deltas.push({
-      questionId: inp.questionId,
-      subject: inp.subject,
-      delta: res.delta,
-      ratingAfter: res.rating,
-    });
-  }
+  // Re-attach the per-question identity to each delta.
+  const deltas: RatingDelta[] = bucketDeltas.map((d) => ({
+    questionId: inputs[d.index].questionId,
+    subject: inputs[d.index].subject,
+    delta: d.delta,
+    ratingAfter: d.ratingAfter,
+  }));
 
   const overallAfter = overallRating({
-    Physics: next.Physics.rating,
-    Chemistry: next.Chemistry.rating,
-    Biology: next.Biology.rating,
+    Physics: finalSubjects.Physics.rating,
+    Chemistry: finalSubjects.Chemistry.rating,
+    Biology: finalSubjects.Biology.rating,
   });
 
   return {
     deltas,
-    finalSubjects: next,
+    finalSubjects,
     overallBefore,
     overallAfter,
     totalDelta: deltas.reduce((s, d) => s + d.delta, 0),

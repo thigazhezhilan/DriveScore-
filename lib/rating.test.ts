@@ -9,6 +9,7 @@
 import assert from "node:assert/strict";
 import {
   applyAttempt,
+  applyByBucket,
   applyOne,
   CALIBRATION_QUESTIONS,
   DEMOTION_BUFFER,
@@ -231,6 +232,45 @@ test("overallBefore/After reflect the exam weighting after an attempt", () => {
   ]);
   assert.equal(res.overallBefore, START_RATING);
   assert.ok(res.overallAfter > res.overallBefore);
+});
+
+// ── Generic bucket engine (drives per-chapter ratings) ─────────────────────────
+
+test("applyByBucket creates missing buckets at the start rating", () => {
+  const { final, deltas } = applyByBucket(
+    {},
+    [
+      {
+        bucket: "Physics|Motion in a Plane",
+        difficulty: "Medium",
+        attempted: true,
+        correct: true,
+        previouslyCorrect: false,
+      },
+    ],
+  );
+  assert.ok(final["Physics|Motion in a Plane"].rating > START_RATING);
+  assert.equal(deltas[0].index, 0);
+  assert.equal(deltas[0].bucket, "Physics|Motion in a Plane");
+});
+
+test("applyByBucket routes matches to independent buckets", () => {
+  const { final } = applyByBucket({}, [
+    { bucket: "A", difficulty: "Easy", attempted: true, correct: false, previouslyCorrect: false },
+    { bucket: "B", difficulty: "Hard", attempted: true, correct: true, previouslyCorrect: false },
+  ]);
+  assert.ok(final.A.rating < START_RATING);
+  assert.ok(final.B.rating > START_RATING);
+});
+
+test("applyByBucket honours blanks and anti-farming like applyAttempt", () => {
+  const { final, deltas } = applyByBucket({}, [
+    { bucket: "A", difficulty: "Easy", attempted: false, correct: false, previouslyCorrect: false },
+    { bucket: "A", difficulty: "Hard", attempted: true, correct: true, previouslyCorrect: true },
+  ]);
+  assert.equal(deltas.length, 1); // blank skipped
+  assert.equal(deltas[0].delta, 0); // anti-farming zero
+  assert.equal(final.A?.rating ?? START_RATING, START_RATING);
 });
 
 console.log(`\n${passed} checks passed.\n`);

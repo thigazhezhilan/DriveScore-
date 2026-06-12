@@ -61,7 +61,7 @@ export function LevelCard({ rating }: { rating: RatingSummary }) {
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-paper/45">
-                Your level
+                Overall level
               </p>
               <h2 className={`font-display text-2xl font-extrabold leading-none ${style.text}`}>
                 {overall.level}
