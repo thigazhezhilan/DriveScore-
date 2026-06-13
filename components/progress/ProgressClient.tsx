@@ -68,7 +68,19 @@ function StandingRow({ c }: { c: ChapterStanding }) {
   );
 }
 
-export function ProgressClient({ progress }: { progress: StudentProgress }) {
+export function ProgressClient({
+  progress,
+  eyebrow = "Your progress",
+  title = "Are you improving?",
+  backHref = "/",
+  backLabel = "Home",
+}: {
+  progress: StudentProgress;
+  eyebrow?: string;
+  title?: string;
+  backHref?: string;
+  backLabel?: string;
+}) {
   const { trend, recent, strengths, weaknesses, attemptCount } = progress;
 
   const series: ChartSeries[] = trend.map((s) => ({
@@ -91,15 +103,15 @@ export function ProgressClient({ progress }: { progress: StudentProgress }) {
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-energy/80">
-                Your progress
+                {eyebrow}
               </p>
               <h1 className="font-display text-lg font-extrabold text-paper">
-                Are you improving?
+                {title}
               </h1>
             </div>
           </div>
-          <Link href="/" className="btn-ghost-dark px-3 py-2 text-xs">
-            <ArrowLeft className="h-4 w-4" /> Home
+          <Link href={backHref} className="btn-ghost-dark px-3 py-2 text-xs">
+            <ArrowLeft className="h-4 w-4" /> {backLabel}
           </Link>
         </header>
 
