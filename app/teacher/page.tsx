@@ -117,8 +117,8 @@ export default async function TeacherPage() {
   const centreId = me.profile.centreId;
   const insights = centreId
     ? await getTeacherClassInsights(centreId)
-    : { students: [], leaderboard: [], weakChapters: [], stats: { totalStudents: 0, withLogins: 0, activeThisWeek: 0, ratedStudents: 0, avgRating: null, attemptsThisWeek: 0 }, batches: [] };
-  const { students, leaderboard, weakChapters, stats, batches } = insights;
+    : { students: [], leaderboard: [], weakChapters: [], stats: { totalStudents: 0, withLogins: 0, activeThisWeek: 0, ratedStudents: 0, avgRating: null, attemptsThisWeek: 0 } };
+  const { students, leaderboard, weakChapters, stats } = insights;
 
   const statCards = [
     { label: "Students", value: fmt(stats.totalStudents), sub: `${stats.withLogins} with login` },
@@ -259,7 +259,7 @@ export default async function TeacherPage() {
                     </span>
                     <Link href={`/teacher/students/${s.id}`} className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold text-paper hover:text-energy">{s.name}</p>
-                      <p className="truncate text-[11px] text-paper/45">{s.batchName}</p>
+                      {s.level && <p className="truncate text-[11px] text-paper/45">{s.level}</p>}
                     </Link>
                     <DeltaBadge delta={s.weeklyDelta} />
                     <span className={`shrink-0 font-display text-sm font-extrabold tabular-nums ${LEVEL_TEXT[s.level ?? ""] ?? "text-paper"}`}>
@@ -274,7 +274,7 @@ export default async function TeacherPage() {
 
         {/* Add student */}
         <section className="animate-fade-up mt-6">
-          <CreateStudentForm batches={batches} />
+          <CreateStudentForm />
         </section>
 
         {/* Students roster */}
@@ -302,7 +302,7 @@ export default async function TeacherPage() {
                       {s.name}
                     </Link>
                     <p className="text-xs text-paper/50">
-                      {s.batchName} · {s.attempts} {s.attempts === 1 ? "test" : "tests"} · active {relTime(s.lastActive)}
+                      {s.attempts} {s.attempts === 1 ? "test" : "tests"} · active {relTime(s.lastActive)}
                     </p>
                   </div>
 

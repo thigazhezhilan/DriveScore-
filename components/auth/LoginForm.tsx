@@ -135,10 +135,14 @@ export function LoginForm({
     </div>
   );
 
-  const noteColor = theme === "dark" ? "text-paper/50" : "text-ink/45";
+  const noteColor = theme === "dark" ? "text-paper/60" : "text-ink/50";
+  const linkColor = theme === "dark" ? "text-energy" : "text-teal-deep";
   const note = (
     <p className={`animate-fade-up mt-5 text-center text-xs ${noteColor}`}>
-      Accounts are created by your coaching centre. No public sign-up.
+      New to SynapTest?{" "}
+      <Link href="/signup" className={`font-semibold ${linkColor} hover:underline`}>
+        Create an account
+      </Link>
     </p>
   );
 

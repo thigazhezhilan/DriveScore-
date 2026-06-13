@@ -12,7 +12,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth";
-import { createStudentAccount, listBatchesForCentre } from "@/lib/db/queries";
+import { createStudentAccount } from "@/lib/db/queries";
 import { createCentre, createTeacherAccount } from "@/lib/db/admin";
 
 // ─────────────────────────── Teacher: create student ─────────────────────────
@@ -40,22 +40,15 @@ export async function createStudent(
 
   const fullName = String(formData.get("fullName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
-  const batchId = String(formData.get("batchId") ?? "");
 
-  if (!fullName || !email || !batchId) {
-    return { error: "Name, email and batch are all required.", created: null };
-  }
-
-  const batches = await listBatchesForCentre(centreId);
-  if (!batches.some((b) => b.id === batchId)) {
-    return { error: "Pick a valid batch.", created: null };
+  if (!fullName || !email) {
+    return { error: "Name and email are both required.", created: null };
   }
 
   try {
     const result = await createStudentAccount({
       fullName,
       email,
-      batchId,
       centreId,
       tempPassword: tempPassword(),
     });
@@ -74,7 +67,7 @@ export async function createStudent(
 
 export type CreateCentreState = {
   error: string | null;
-  created: { id: string; name: string } | null;
+  created: { id: string; name: string; joinCode: string } | null;
 };
 
 export async function createCentreAction(

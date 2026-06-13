@@ -65,8 +65,19 @@ export default async function AdminCentreDetailPage({
         <StatCard icon={<GraduationCap className="h-4 w-4" />} label="Students" value={centre.students.length} />
       </section>
 
-      {/* Centre ID (for creating teacher) */}
-      <section className="animate-fade-up mt-4">
+      {/* Join code (share with the teacher so they can sign up) + Centre ID */}
+      <section className="animate-fade-up mt-4 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-xl border border-teal/20 bg-teal/[0.05] px-4 py-2.5">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-deep">
+            Teacher join code
+          </p>
+          <p className="mt-0.5 font-mono text-lg font-bold tracking-widest text-ink">
+            {centre.joinCode ?? "—"}
+          </p>
+          <p className="text-[11px] text-ink/50">
+            Share with the teacher — they enter it when signing up.
+          </p>
+        </div>
         <div className="rounded-xl border border-black/[0.06] bg-black/[0.02] px-4 py-2.5">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/45">Centre ID</p>
           <p className="mt-0.5 break-all font-mono text-xs text-ink/70">{centre.id}</p>
@@ -93,7 +104,6 @@ export default async function AdminCentreDetailPage({
               >
                 <div className="min-w-0">
                   <p className="truncate font-medium text-ink">{s.name}</p>
-                  <p className="text-xs text-ink/50">{s.batchName}</p>
                 </div>
                 {s.latestAttemptId ? (
                   <Link

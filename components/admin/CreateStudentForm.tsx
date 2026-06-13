@@ -29,11 +29,7 @@ function SubmitButton() {
   );
 }
 
-export function CreateStudentForm({
-  batches,
-}: {
-  batches: { id: string; name: string }[];
-}) {
+export function CreateStudentForm() {
   const [state, formAction] = useFormState(createStudent, initial);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -46,8 +42,9 @@ export function CreateStudentForm({
     <div className="card-glass p-5">
       <h2 className="font-display font-semibold text-paper">Add a student</h2>
       <p className="mt-0.5 text-xs text-paper/55">
-        Creates a login they can use immediately. You&apos;ll see a temporary
-        password once — share it with the student.
+        Most students sign themselves up. Use this to add one manually — they
+        join your centre and get a login immediately. You&apos;ll see a temporary
+        password once.
       </p>
 
       <form ref={formRef} action={formAction} className="mt-4 space-y-3">
@@ -64,21 +61,6 @@ export function CreateStudentForm({
           placeholder="student@email.com"
           className="field-dark"
         />
-        <select
-          name="batchId"
-          required
-          defaultValue=""
-          className="field-dark [&>option]:bg-[#0c2b24] [&>option]:text-paper"
-        >
-          <option value="" disabled>
-            Select batch…
-          </option>
-          {batches.map((b) => (
-            <option key={b.id} value={b.id}>
-              {b.name}
-            </option>
-          ))}
-        </select>
 
         {state.error && (
           <p className="rounded-lg bg-pop/15 px-3 py-2 text-sm font-medium text-[#FF9A91]">

@@ -67,11 +67,9 @@ export async function saveMockAction(input: SaveMockInput): Promise<SaveMockResu
     return { ok: false, error: "Some selected questions aren't in your bank." };
   }
 
-  if (status === "published") {
-    if (!batchId) return { ok: false, error: "Assign a batch before publishing." };
-    if (questionIds.length === 0) {
-      return { ok: false, error: "Add at least one question before publishing." };
-    }
+  if (status === "published" && questionIds.length === 0) {
+    // Published mocks are visible to the whole centre — no batch required.
+    return { ok: false, error: "Add at least one question before publishing." };
   }
 
   try {
@@ -107,7 +105,7 @@ export async function setMockStatusAction(
     if (status === "published") {
       const mock = await getMockForEdit(centreId, id);
       if (!mock) return { error: "Mock not found." };
-      if (!mock.batchId) return { error: "Assign a batch before publishing." };
+      // Publishing makes the mock visible to the whole centre (no batch needed).
       if (mock.questionIds.length === 0) {
         return { error: "Add at least one question before publishing." };
       }

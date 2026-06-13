@@ -143,7 +143,13 @@ async function main() {
   // 4. Students (includes the "Aarav Menon" stand-in used in the report).
   const { data: insertedStudents, error: sErr } = await supabase
     .from("students")
-    .insert(DEMO_STUDENTS.map((s) => ({ batch_id: batch.id, name: s.name })))
+    .insert(
+      DEMO_STUDENTS.map((s) => ({
+        batch_id: batch.id,
+        centre_id: centre.id, // centre is the unit of membership (batch optional)
+        name: s.name,
+      })),
+    )
     .select("id, name");
   if (sErr) throw sErr;
   console.log(`  • ${DEMO_STUDENTS.length} students created`);

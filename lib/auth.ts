@@ -76,7 +76,7 @@ export async function requireRole(role: AuthRole): Promise<CurrentUser> {
 export async function getCurrentStudent(): Promise<{
   id: string;
   name: string;
-  batchId: string;
+  centreId: string | null;
 } | null> {
   const me = await getCurrentUser();
   if (!me || me.profile.role !== "student") return null;

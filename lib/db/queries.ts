@@ -311,16 +311,16 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 /** The `students` row linked to a given login profile, if any. */
 export async function getStudentByProfileId(
   profileId: string,
-): Promise<{ id: string; name: string; batchId: string } | null> {
+): Promise<{ id: string; name: string; centreId: string | null } | null> {
   const supabase = getServiceClient();
   const { data, error } = await supabase
     .from("students")
-    .select("id, name, batch_id")
+    .select("id, name, centre_id")
     .eq("profile_id", profileId)
     .maybeSingle();
   if (error) throw error;
   if (!data) return null;
-  return { id: data.id, name: data.name, batchId: data.batch_id };
+  return { id: data.id, name: data.name, centreId: data.centre_id ?? null };
 }
 
 /** Batches for a centre (for the admin's batch picker / teacher lookups). */
@@ -452,7 +452,6 @@ export async function getBatchForTeacher(
 export async function createStudentAccount(params: {
   fullName: string;
   email: string;
-  batchId: string;
   centreId: string;
   tempPassword: string;
 }): Promise<{ email: string; tempPassword: string }> {
@@ -477,9 +476,9 @@ export async function createStudentAccount(params: {
   });
   if (pErr) throw pErr;
 
-  // 3. Student row, linked to the profile + assigned to the batch.
+  // 3. Student row, linked to the profile + the centre (no batch).
   const { error: sErr } = await supabase.from("students").insert({
-    batch_id: params.batchId,
+    centre_id: params.centreId,
     name: params.fullName,
     profile_id: userId,
   });

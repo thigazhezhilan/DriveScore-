@@ -2,9 +2,9 @@ import "server-only";
 
 /**
  * Teacher class-insights data layer — turns the per-student rating data into a
- * batch-level view for the centre manager (the B2B buyer). All reads are
+ * centre-level view for the centre manager (the B2B buyer). All reads are
  * RLS-scoped: the teacher's user-session client only returns rows for students
- * in batches they own.
+ * in their own centre.
  *
  * One call, all bulk queries (no N+1), assembled in memory:
  *   - per-student standing (level, rating, activity, weekly change)
@@ -14,7 +14,6 @@ import "server-only";
  */
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { listBatchesForCentre } from "./queries";
 import type { Subject } from "@/lib/types";
 
 /** A student rated below "Scholar" on a chapter is counted as struggling. */
@@ -24,7 +23,6 @@ const WEEK_MS = 7 * 86400000;
 export type ClassStudent = {
   id: string;
   name: string;
-  batchName: string;
   hasLogin: boolean;
   rating: number | null; // overall rating; null until first graded attempt
   level: string | null;
@@ -56,15 +54,12 @@ export type TeacherInsights = {
   leaderboard: ClassStudent[];
   weakChapters: WeakChapter[];
   stats: ClassStats;
-  batches: { id: string; name: string }[];
 };
 
 export async function getTeacherClassInsights(
   centreId: string,
 ): Promise<TeacherInsights> {
   const sb = createSupabaseServerClient();
-  const batches = await listBatchesForCentre(centreId);
-  const batchName = new Map(batches.map((b) => [b.id, b.name]));
   const emptyStats: ClassStats = {
     totalStudents: 0,
     withLogins: 0,
@@ -73,22 +68,12 @@ export async function getTeacherClassInsights(
     avgRating: null,
     attemptsThisWeek: 0,
   };
-  const base = {
-    students: [],
-    leaderboard: [],
-    weakChapters: [],
-    stats: emptyStats,
-    batches: batches.map((b) => ({ id: b.id, name: b.name })),
-  };
-  if (batches.length === 0) return base;
+  const base = { students: [], leaderboard: [], weakChapters: [], stats: emptyStats };
 
   const { data: studentRows, error: sErr } = await sb
     .from("students")
-    .select("id, name, batch_id, profile_id")
-    .in(
-      "batch_id",
-      batches.map((b) => b.id),
-    )
+    .select("id, name, profile_id")
+    .eq("centre_id", centreId)
     .order("created_at", { ascending: true });
   if (sErr) throw sErr;
   const studentList = studentRows ?? [];
@@ -146,7 +131,6 @@ export async function getTeacherClassInsights(
     return {
       id: sid,
       name: s.name as string,
-      batchName: batchName.get(s.batch_id as string) ?? "—",
       hasLogin: s.profile_id !== null,
       rating: ov?.rating ?? null,
       level: ov?.level ?? null,
@@ -200,5 +184,5 @@ export async function getTeacherClassInsights(
     attemptsThisWeek,
   };
 
-  return { students, leaderboard, weakChapters, stats, batches: base.batches };
+  return { students, leaderboard, weakChapters, stats };
 }

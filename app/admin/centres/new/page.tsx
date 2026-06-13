@@ -58,10 +58,14 @@ export default function NewCentrePage() {
                 <p className="font-semibold">Centre created</p>
               </div>
               <p className="mt-2 text-sm text-emerald-800">
-                <strong>{state.created.name}</strong> is ready.{" "}
-                <Link href="/admin/teachers/new" className="underline">
-                  Create a teacher account for it →
-                </Link>
+                <strong>{state.created.name}</strong> is ready. Share its teacher
+                join code so the teacher can sign up:
+              </p>
+              <p className="mt-2 rounded-lg bg-white px-3 py-2 text-center font-mono text-lg font-bold tracking-widest text-ink">
+                {state.created.joinCode}
+              </p>
+              <p className="mt-2 text-xs text-emerald-800/80">
+                Students just pick this centre by name — no code needed.
               </p>
             </div>
           ) : (
