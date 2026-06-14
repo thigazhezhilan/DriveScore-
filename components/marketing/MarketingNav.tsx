@@ -4,7 +4,8 @@
  * Shared sticky navbar for the marketing site.
  *
  * Desktop: logo + section links + a prominent "Book a demo" CTA and a subtle
- * "Log in" link (→ /login). Mobile: collapses to an accessible hamburger menu.
+ * "Log in" link (→ /welcome#student-login). Mobile: collapses to an accessible
+ * hamburger menu.
  * The current section is highlighted via usePathname.
  *
  * Client component because it owns the mobile-menu open state and reads the

@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "tsx lib/diagnose.test.ts && tsx lib/rating.test.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "db:seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
@@ -28,6 +30,7 @@
     "three": "^0.169.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
     "@types/node": "20.14.12",
     "@types/papaparse": "^5.5.2",

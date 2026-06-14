@@ -66,7 +66,7 @@ export function MarketingFooter() {
             </li>
             <li>
               <Link
-                href="/login"
+                href="/welcome#student-login"
                 className="text-sm text-paper/70 transition hover:text-energy"
               >
                 Log in
