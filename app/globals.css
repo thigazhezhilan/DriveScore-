@@ -198,3 +198,49 @@ body {
 .grain-overlay {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Liquid flow — the signature motion language for the marketing site.
+   Morphing organic blobs (animated border-radius), a slow gradient-mesh drift,
+   and a fluid hover fill for CTAs. All freeze gracefully under reduced motion
+   via the global rule near the top of this file (animations → ~0s).
+   Self-contained — additive to the cinematic landing language above.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* The whole gradient-mesh field drifts so the colour never sits still. */
+@keyframes mesh-drift {
+  0%, 100% { background-position: 0% 50%, 100% 50%, 50% 0%; }
+  50%      { background-position: 100% 50%, 0% 50%, 50% 100%; }
+}
+
+/* Flowing mint→teal mesh field — three soft radial stops drifting against each
+   other. Lives behind content on the inner marketing pages. */
+.liquid-mesh {
+  background-color: #06140f;
+  background-image:
+    radial-gradient(40rem 40rem at 15% 20%, rgba(0,224,184,0.16), transparent 60%),
+    radial-gradient(38rem 38rem at 85% 30%, rgba(13,148,136,0.18), transparent 62%),
+    radial-gradient(46rem 46rem at 50% 100%, rgba(0,184,154,0.12), transparent 60%);
+  background-size: 200% 200%, 200% 200%, 200% 200%;
+  animation: mesh-drift 28s ease-in-out infinite;
+}
+
+/* Liquid fill that wells up from the bottom of a ghost CTA on hover. */
+.btn-liquid {
+  @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl
+    border border-energy/40 bg-white/[0.03] px-5 py-3.5 font-display text-base font-bold
+    text-paper transition-[color,transform] duration-300 ease-out hover:-translate-y-0.5
+    hover:text-focusink active:scale-[0.97];
+}
+.btn-liquid::before {
+  content: "";
+  @apply pointer-events-none absolute inset-x-0 bottom-0 -z-0 h-0 bg-energy
+    transition-[height] duration-300 ease-out;
+}
+.btn-liquid:hover::before { height: 100%; }
+.btn-liquid > * { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-mesh { animation: none; }
+  .btn-liquid::before { transition: none; }
+}

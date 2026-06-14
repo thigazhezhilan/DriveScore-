@@ -6,7 +6,7 @@
  *   - /teacher/* (sub) — unauthed → /teacher
  *   - /admin    (exact) — passes through; the page shows its own login form
  *   - /admin/*  (sub)  — unauthed → /admin
- *   - /welcome         — always public (marketing + student login)
+ *   - /welcome + marketing pages — always public (the marketing site)
  *   - everything else  — unauthed → /welcome
  */
 
@@ -14,7 +14,14 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 const PUBLIC_PATHS = [
+  // Marketing site (route group `(marketing)`) — all login-free.
   "/welcome",
+  "/about",
+  "/features",
+  "/for-centres",
+  "/contact",
+  "/faq",
+  // Auth flows.
   "/login",
   "/signup",
   "/forgot-password",
