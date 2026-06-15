@@ -14,6 +14,13 @@
 .DS_Store
 *.pem
 
+# Android signing material — NEVER commit (private keys + passwords)
+*.keystore
+*.jks
+signing-key-info.txt
+D_S - Google Play package*/
+*Google Play package*/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

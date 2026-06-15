@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.drivescore.app",
+      "sha256_cert_fingerprints": [
+        "0B:5F:10:3E:F8:50:AB:30:04:67:8C:98:CC:AE:85:3E:E9:8F:37:21:0C:2D:46:F5:8B:11:41:AC:2A:A4:77:E3"
+      ]
+    }
+  }
+]
