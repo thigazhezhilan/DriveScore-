@@ -16,7 +16,7 @@
  *   6. otherwise (Medium/Hard, worked it)-> CONCEPT_GAP (a real gap)
  */
 
-import type { DiagnosisCategory, Question } from "./types";
+import type { DiagnosisCategory, DiagnosisResult, Question } from "./types";
 
 /** A question is "slow" when time spent exceeds 140% of par. */
 export const SLOW_FACTOR = 1.4;
@@ -71,6 +71,133 @@ export function diagnose(
   return "CONCEPT_GAP";
 }
 
+// ───────────────────────── Confidence (v2) ──────────────────────────────────
+//
+// `diagnose()` above is the unchanged, fully-tested category classifier. The
+// detailed variant below WRAPS it: it reuses the exact same category decision,
+// then (a) upgrades a wrong answer to SELF_DOUBT when first-answer data shows
+// the student had it right and changed it, and (b) attaches a 0–100 confidence
+// that reflects how far the signal sits from the boundary with the runner-up
+// category. Confidence uses ONLY within-attempt signals (timing vs. par,
+// difficulty, first-vs-final answer) — no cross-attempt/cross-student data,
+// per the no-data-tier guardrails.
+
+const clamp = (n: number, lo: number, hi: number): number =>
+  Math.max(lo, Math.min(hi, n));
+
+/**
+ * Classify a single attempt AND score how confident that classification is.
+ *
+ * Backwards-compatible by construction: when `firstPickedIndex` is omitted or
+ * null, the category is exactly what `diagnose()` returns. SELF_DOUBT only ever
+ * appears when first-answer data is present.
+ *
+ * @param firstPickedIndex the first option the student touched, or null/undefined
+ */
+export function diagnoseDetailed(
+  q: Question,
+  pickedIndex: number | null,
+  timeSec: number,
+  firstPickedIndex?: number | null,
+): DiagnosisResult {
+  const base = diagnose(q, pickedIndex, timeSec);
+
+  // SELF_DOUBT: only on a WRONG final answer, and only when first-answer data
+  // exists and shows the first touch was correct. Blanks (TIME_MANAGEMENT) and
+  // correct answers are never overridden.
+  const wrongFinal = pickedIndex !== null && pickedIndex !== q.answerIndex;
+  const hadItFirst =
+    firstPickedIndex !== null &&
+    firstPickedIndex !== undefined &&
+    firstPickedIndex === q.answerIndex;
+  if (wrongFinal && hadItFirst) {
+    return {
+      category: "SELF_DOUBT",
+      confidence: 95,
+      confidenceReason:
+        "You selected the correct option first, then changed it to a wrong one.",
+    };
+  }
+
+  const slowThreshold = q.parTimeSec * SLOW_FACTOR;
+  const rushThreshold = q.parTimeSec * RUSH_FACTOR;
+
+  switch (base) {
+    case "TIME_MANAGEMENT":
+      // A blank is a directly observed fact — high confidence in the category.
+      return {
+        category: base,
+        confidence: 90,
+        confidenceReason: "No answer was recorded for this question.",
+      };
+
+    case "SOLID": {
+      // Boundary is TOO_SLOW at the slow threshold. The more time to spare, the
+      // clearer it's a clean solve.
+      const margin =
+        slowThreshold > 0 ? (slowThreshold - timeSec) / slowThreshold : 1;
+      return {
+        category: base,
+        confidence: clamp(Math.round(55 + margin * 44), 55, 99),
+        confidenceReason: "Correct and comfortably within the time budget.",
+      };
+    }
+
+    case "TOO_SLOW": {
+      // Boundary is SOLID at the slow threshold. Just over par → borderline;
+      // far over par → unmistakably slow.
+      const over =
+        slowThreshold > 0 ? (timeSec - slowThreshold) / slowThreshold : 0;
+      return {
+        category: base,
+        confidence: clamp(Math.round(50 + over * 100), 50, 95),
+        confidenceReason: "Correct, but well over the expected time.",
+      };
+    }
+
+    case "CARELESS": {
+      // Forced by Easy + wrong. A fast slip reads as careless; a slow miss on an
+      // easy question is more ambiguous (could be a real gap), so lower it.
+      const ratio = q.parTimeSec > 0 ? timeSec / q.parTimeSec : 0;
+      return {
+        category: base,
+        confidence: clamp(Math.round(90 - ratio * 40), 45, 90),
+        confidenceReason: "Wrong on an easy question — usually a slip.",
+      };
+    }
+
+    case "GUESS": {
+      // Boundary is CONCEPT_GAP at the rush threshold. The faster below it, the
+      // more clearly it was a guess rather than worked-out.
+      const margin =
+        rushThreshold > 0 ? (rushThreshold - timeSec) / rushThreshold : 0;
+      return {
+        category: base,
+        confidence: clamp(Math.round(55 + margin * 40), 55, 97),
+        confidenceReason: "Wrong and answered too fast to have worked it out.",
+      };
+    }
+
+    case "CONCEPT_GAP":
+    default: {
+      // Boundary is GUESS at the rush threshold (below). More working time, and
+      // a Hard question, both strengthen "genuine gap".
+      const over =
+        rushThreshold > 0 ? (timeSec - rushThreshold) / rushThreshold : 1;
+      const hardBonus = q.difficulty === "Hard" ? 15 : 0;
+      return {
+        category: "CONCEPT_GAP",
+        confidence: clamp(
+          Math.round(50 + Math.min(over, 1) * 30 + hardBonus),
+          50,
+          95,
+        ),
+        confidenceReason: "Wrong after genuinely working on it.",
+      };
+    }
+  }
+}
+
 /** Display metadata for each category. Drives the report UI. */
 export const CATEGORY_META: Record<
   DiagnosisCategory,
@@ -93,6 +220,13 @@ export const CATEGORY_META: Record<
     title: "Guessing",
     advice:
       "Answered too fast without really working it out. On hard questions, slow down and use elimination instead of guessing.",
+    color: "guess",
+    isProblem: true,
+  },
+  SELF_DOUBT: {
+    title: "Self-Doubt",
+    advice:
+      "You had these right, then talked yourself out of them. Trust your first instinct — only change an answer when you have a concrete reason.",
     color: "guess",
     isProblem: true,
   },
@@ -125,6 +259,7 @@ export const CATEGORY_META: Record<
 /** Stable display order for the problem categories. */
 export const PROBLEM_ORDER: DiagnosisCategory[] = [
   "CONCEPT_GAP",
+  "SELF_DOUBT",
   "GUESS",
   "CARELESS",
   "TOO_SLOW",

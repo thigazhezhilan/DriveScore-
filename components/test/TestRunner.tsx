@@ -46,6 +46,9 @@ export function TestRunner({
 
   // Answers accumulate locally until the student finishes the whole mock.
   const answersRef = useRef<Attempt[]>([]);
+  // The FIRST option touched per question id (for SELF_DOUBT diagnosis). Never
+  // overwritten once set, so changing your mind later doesn't erase the instinct.
+  const firstPickedRef = useRef<Map<string, number>>(new Map());
   // Wall-clock timestamp when the current question was first shown.
   const shownAtRef = useRef<number>(Date.now());
 
@@ -61,6 +64,19 @@ export function TestRunner({
 
   const question = questions[index];
 
+  // Select/clear an option, recording the first real selection for this question.
+  const handlePick = useCallback(
+    (i: number) => {
+      if (!question) return;
+      const next = picked === i ? null : i;
+      if (next !== null && !firstPickedRef.current.has(question.id)) {
+        firstPickedRef.current.set(question.id, next);
+      }
+      setPicked(next);
+    },
+    [picked, question],
+  );
+
   const goNext = useCallback(() => {
     if (!question || isPending) return;
 
@@ -71,7 +87,12 @@ export function TestRunner({
     );
     answersRef.current = [
       ...answersRef.current.filter((a) => a.questionId !== question.id),
-      { questionId: question.id, pickedIndex: picked, timeSec },
+      {
+        questionId: question.id,
+        pickedIndex: picked,
+        timeSec,
+        firstPickedIndex: firstPickedRef.current.get(question.id) ?? null,
+      },
     ];
 
     const isLast = index === questions.length - 1;
@@ -193,7 +214,7 @@ export function TestRunner({
                   return (
                     <motion.button
                       key={i}
-                      onClick={() => setPicked(selected ? null : i)}
+                      onClick={() => handlePick(i)}
                       aria-pressed={selected}
                       whileTap={reduce ? undefined : { scale: 0.975 }}
                       className={`flex items-center gap-3 rounded-2xl border p-3.5 text-left transition ${

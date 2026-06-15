@@ -17,6 +17,8 @@ import type { Report } from "@/lib/grade";
 import { fmtTime } from "@/lib/grade";
 import { ScoreRing } from "./ScoreRing";
 import { DiagnosisGroups } from "./DiagnosisGroups";
+import { RootCauses } from "./RootCauses";
+import { ArchetypeBadge } from "./ArchetypeBadge";
 import { Confetti } from "./Confetti";
 import { Neuro } from "@/components/mascot/Neuro";
 
@@ -100,6 +102,20 @@ export function StudentView({ report }: { report: Report }) {
           <Stat label="Blank" value={report.blankCount} tone="text-ink/45" />
         </div>
       </motion.section>
+
+      {/* Pacing archetype (header insight) — hidden when there's too little data. */}
+      {report.archetype && (
+        <motion.section variants={item}>
+          <ArchetypeBadge archetype={report.archetype} />
+        </motion.section>
+      )}
+
+      {/* Lead with impact: where the marks actually went. */}
+      {report.rootCauses.length > 0 && (
+        <motion.section variants={item}>
+          <RootCauses rootCauses={report.rootCauses} />
+        </motion.section>
+      )}
 
       {/* The centrepiece: grouped diagnosis */}
       <motion.section variants={item}>

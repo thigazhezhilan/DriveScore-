@@ -40,6 +40,13 @@ export type Attempt = {
   pickedIndex: number | null;
   /** Seconds the student spent on this question. */
   timeSec: number;
+  /**
+   * The FIRST option the student touched on this question, before any changes.
+   * Captured client-side and persisted server-side; null when the question was
+   * never touched or for older attempts saved before this was tracked. Used
+   * ONLY for the SELF_DOUBT diagnosis — grading always uses `pickedIndex`.
+   */
+  firstPickedIndex?: number | null;
 };
 
 /** The diagnosis buckets produced by the engine. */
@@ -49,6 +56,27 @@ export type DiagnosisCategory =
   | "CARELESS"
   | "TOO_SLOW"
   | "TIME_MANAGEMENT"
+  /**
+   * Had the correct answer first, then changed it to a wrong one. Only ever
+   * produced when first-answer data exists; older attempts fall back to the
+   * classic categories above.
+   */
+  | "SELF_DOUBT"
   | "SOLID";
+
+/**
+ * A single diagnosis enriched with a confidence score. `diagnose()` returns the
+ * bare category (unchanged); `diagnoseDetailed()` returns this.
+ */
+export type DiagnosisResult = {
+  category: DiagnosisCategory;
+  /** 0–100: how strongly the signals point to this category vs. the runner-up. */
+  confidence: number;
+  /** One-line, human-readable justification for the confidence. */
+  confidenceReason: string;
+};
+
+/** Whole-attempt pacing personality, derived from timing + correctness. */
+export type SpeedArchetype = "SNIPER" | "GAMBLER" | "BALANCED" | "PANICKER";
 
 export type Role = "student" | "teacher" | "parent";

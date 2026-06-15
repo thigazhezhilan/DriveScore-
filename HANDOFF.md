@@ -11,6 +11,35 @@
 
 ## ✅ Done this session (NOT yet committed — see bottom)
 
+### 0. Diagnosis Engine v2 + Mastery Road v1 (added 2026-06-16)
+- **Diagnosis Engine v2 ("No-Data Tier")** — `lib/diagnose.ts` gained
+  `diagnoseDetailed()` (original `diagnose()` untouched, still used for
+  grading). Adds per-diagnosis **confidence score + reason**
+  (`components/report/ConfidencePill.tsx`), a new **SELF_DOUBT** category
+  (needs nullable `answers.first_answer_index`, migration
+  `supabase/migrations/0015_first_answer.sql`, captured client-side in
+  `components/test/TestRunner.tsx`), **Speed Archetypes**
+  (SNIPER/GAMBLER/BALANCED/PANICKER, `components/report/ArchetypeBadge.tsx`),
+  and **Root Cause Ranking** ("Where your marks went",
+  `components/report/RootCauses.tsx`). Surfaced in Student/Teacher/Parent
+  report views. Tests: `lib/diagnose.v2.test.ts`, `lib/grade.test.ts`.
+- **Mastery Road v1** — new student screen at **`/road`** (linked from home
+  via a "Mastery Road" card in `components/home/HomeClient.tsx`). Game-like
+  per-chapter progress map with 4 gates (FOUNDATION → APPLICATION →
+  NEET_LEVEL → HARD), "earned twice" clearing (≥4 strong answers, ≥2
+  sessions, ≥70% accuracy — stricter for HARD), decay regression to
+  NEEDS_REINFORCEMENT, and a single cross-chapter "frontier" quest with a
+  generated practice mock. Pure engine + config constants in `lib/mastery.ts`
+  (`STRONG_ANSWERS_TO_CLEAR=4`, `MIN_SESSIONS_TO_CLEAR=2`, `CLEAR_ACCURACY=0.7`,
+  `REGRESSION_ACCURACY=0.55`, `PRESCRIPTION_SIZE=8`). Data layer
+  `lib/db/mastery.ts` (computed fresh from existing attempts/answers — **no
+  migration needed for this part**). Server action `app/road/actions.ts`, UI
+  `components/road/RoadClient.tsx`, page `app/road/page.tsx`. Tests:
+  `lib/mastery.test.ts` (12 cases). Deliberately has **no global "% to NEET"**
+  meter anywhere.
+- Status: all 74 unit tests pass, `tsc --noEmit` clean, `next build` clean.
+  Migration `0015_first_answer.sql` is **NOT yet applied** to the live DB.
+
 ### 1. Rebrand SynapTest → DriveScore (everywhere)
 - Global rename across all UI, metadata, manifest, package.json, docs.
 - Left untouched on purpose: `synaptest.test` **seed login emails** (real demo
@@ -129,3 +158,17 @@ removes the pause; upgrade when there are real daily users.
   `app/layout.tsx`, `package.json`, `tailwind.config.ts`, docs, `scripts/seed.ts`,
   `app/signup/actions.ts` (friendly errors), `app/admin/page.tsx` (join-code badge).
 - Already committed earlier: `034a678` centre-based self-signup + migration 0013.
+
+### Diagnosis Engine v2 + Mastery Road (2026-06-16, also uncommitted)
+- New: `supabase/migrations/0015_first_answer.sql`, `lib/grade.test.ts`,
+  `lib/diagnose.v2.test.ts`, `components/report/ConfidencePill.tsx`,
+  `components/report/RootCauses.tsx`, `components/report/ArchetypeBadge.tsx`,
+  `lib/mastery.ts`, `lib/mastery.test.ts`, `lib/db/mastery.ts`,
+  `app/road/page.tsx`, `app/road/actions.ts`, `components/road/RoadClient.tsx`.
+- Modified: `lib/types.ts`, `lib/diagnose.ts`, `lib/grade.ts`,
+  `lib/db/queries.ts`, `lib/db/practice.ts`, `components/test/TestRunner.tsx`,
+  `components/categoryStyles.ts`, `components/report/DiagnosisGroups.tsx`,
+  `components/report/StudentView.tsx`, `components/report/TeacherView.tsx`,
+  `components/report/ParentView.tsx`, `components/home/HomeClient.tsx`,
+  `app/admin/page.tsx`, `package.json` (test script).
+- Migration `0015_first_answer.sql` not yet applied to live DB.

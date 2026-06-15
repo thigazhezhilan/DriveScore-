@@ -16,10 +16,8 @@ export function ParentView({ report }: { report: Report }) {
   const firstName = student.name.split(" ")[0];
 
   const needsWork = report.weakChapters.slice(0, 2);
-  const focus =
-    report.groups.length > 0
-      ? CATEGORY_META[report.groups[0].category]
-      : null;
+  const focusGroup = report.groups.length > 0 ? report.groups[0] : null;
+  const focus = focusGroup ? CATEGORY_META[focusGroup.category] : null;
 
   const now = new Date();
   const time = now.toLocaleTimeString("en-IN", {
@@ -97,6 +95,13 @@ export function ParentView({ report }: { report: Report }) {
                 ? focus.advice
                 : "Keep up the steady practice — no red flags this week."}
             </p>
+            {focus && focusGroup && (
+              <p className="mt-1.5 text-xs font-medium text-[#0b2e16]/55">
+                Based on {focusGroup.items.length}{" "}
+                {focusGroup.items.length === 1 ? "question" : "questions"} ·{" "}
+                {focusGroup.avgConfidence}% confidence
+              </p>
+            )}
           </div>
 
           <p className="mt-3 text-sm leading-relaxed">

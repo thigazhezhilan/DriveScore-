@@ -40,6 +40,14 @@ export const CATEGORY_STYLES: Record<DiagnosisCategory, CategoryStyle> = {
     softBg: "bg-fuchsia-50/60",
     dot: "bg-fuchsia-500",
   },
+  SELF_DOUBT: {
+    text: "text-purple-600",
+    chipBg: "bg-purple-50",
+    chipText: "text-purple-700",
+    border: "border-l-purple-500",
+    softBg: "bg-purple-50/60",
+    dot: "bg-purple-500",
+  },
   CARELESS: {
     text: "text-amber-600",
     chipBg: "bg-amber-50",

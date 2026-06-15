@@ -44,6 +44,7 @@ export const dynamic = "force-dynamic";
 /** Inline hex per diagnosis bucket (Tailwind can't do dynamic class names). */
 const DIAG_COLOR: Record<DiagnosisCategory, string> = {
   CONCEPT_GAP: "#e11d48",
+  SELF_DOUBT: "#9333ea",
   GUESS: "#f97316",
   CARELESS: "#f59e0b",
   TOO_SLOW: "#6366f1",

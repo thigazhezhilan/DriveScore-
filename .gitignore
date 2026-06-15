@@ -24,6 +24,7 @@ D_S - Google Play package*/
 # Sensitive local-only docs — keep OUT of the public repo
 MARKET-STRATEGY-ANALYSIS.md
 PROJECT-SNAPSHOT.md
+DriveScore_Architecture.txt
 
 # debug
 npm-debug.log*

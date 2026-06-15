@@ -19,6 +19,7 @@ import {
   Dumbbell,
   LineChart,
   Lock,
+  Mountain,
   RotateCcw,
   Timer,
 } from "lucide-react";
@@ -89,8 +90,8 @@ export function HomeClient({
         {/* Skill level — Elo-based, motivating, no raw rank ladder */}
         {rating && <LevelCard rating={rating} />}
 
-        {/* Quick actions — practice + progress (side by side on laptop) */}
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        {/* Quick actions — practice + road + progress (side by side on laptop) */}
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <Link
             href="/practice"
             className="card-glass animate-fade-up group flex items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
@@ -103,6 +104,23 @@ export function HomeClient({
               <p className="font-display font-bold text-paper">Practice anytime</p>
               <p className="text-xs text-paper/55">
                 Lesson-by-lesson tests &amp; full NEET mocks
+              </p>
+            </div>
+            <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
+          </Link>
+
+          <Link
+            href="/road"
+            className="card-glass animate-fade-up group flex items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
+            style={{ animationDelay: "95ms" }}
+          >
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-reward/20 text-reward">
+              <Mountain className="h-5 w-5" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="font-display font-bold text-paper">Mastery Road</p>
+              <p className="text-xs text-paper/55">
+                Conquer each chapter, gate by gate
               </p>
             </div>
             <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />

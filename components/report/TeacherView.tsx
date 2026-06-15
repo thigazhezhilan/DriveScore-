@@ -12,6 +12,8 @@ import type { Report } from "@/lib/grade";
 import { fmtTime } from "@/lib/grade";
 import { CATEGORY_META } from "@/lib/diagnose";
 import { CATEGORY_STYLES, SUBJECT_STYLES } from "@/components/categoryStyles";
+import { RootCauses } from "./RootCauses";
+import { ConfidencePill } from "./ConfidencePill";
 import { DEMO_STUDENTS } from "@/data/questions";
 
 export function TeacherView({ report }: { report: Report }) {
@@ -89,6 +91,9 @@ export function TeacherView({ report }: { report: Report }) {
         </table>
       </section>
 
+      {/* Where the marks went — root-cause ranking by impact. */}
+      <RootCauses rootCauses={report.rootCauses} title="Where the marks went" />
+
       {/* What to re-teach */}
       <section>
         <div className="mb-2.5 flex items-center gap-2">
@@ -124,6 +129,7 @@ export function TeacherView({ report }: { report: Report }) {
                         ×{wc.count}
                       </span>
                     )}
+                    <ConfidencePill confidence={wc.avgConfidence} />
                     <span className={`pill ${style.chipBg} ${style.chipText}`}>
                       <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
                       {meta.title}

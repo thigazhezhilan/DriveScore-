@@ -8,15 +8,17 @@
  * the student and (in compact form) teacher views.
  */
 
-import { AlertTriangle, Dices, Gauge, Hourglass, Snail } from "lucide-react";
+import { AlertTriangle, Dices, Gauge, Hourglass, Snail, Undo2 } from "lucide-react";
 import type { DiagnosisGroup } from "@/lib/grade";
 import type { DiagnosisCategory } from "@/lib/types";
 import { CATEGORY_META } from "@/lib/diagnose";
 import { CATEGORY_STYLES } from "@/components/categoryStyles";
+import { ConfidencePill } from "./ConfidencePill";
 import { fmtTime } from "@/lib/grade";
 
 const ICONS: Record<DiagnosisCategory, typeof AlertTriangle> = {
   CONCEPT_GAP: AlertTriangle,
+  SELF_DOUBT: Undo2,
   GUESS: Dices,
   CARELESS: Gauge,
   TOO_SLOW: Snail,
@@ -95,9 +97,15 @@ export function DiagnosisGroups({
                       {it.question.subject} · {it.question.chapter}
                     </p>
                   </div>
-                  <span className="shrink-0 text-[11px] font-medium tabular-nums text-ink/45">
-                    {fmtTime(it.attempt.timeSec)}
-                  </span>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <ConfidencePill
+                      confidence={it.confidence}
+                      reason={it.confidenceReason}
+                    />
+                    <span className="text-[11px] font-medium tabular-nums text-ink/45">
+                      {fmtTime(it.attempt.timeSec)}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>

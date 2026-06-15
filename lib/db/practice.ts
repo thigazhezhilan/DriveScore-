@@ -181,6 +181,79 @@ export async function generateFullMock(studentId: string): Promise<string | null
   return createGeneratedMock(studentId, "bank", "Full NEET Mock", ordered);
 }
 
+// ─────────────────── Mastery Road — gate prescriptions ───────────────────────
+
+/** Random global question ids for a chapter, optionally restricted to a set of
+ *  difficulties. Source-agnostic (pyq + ai) so a tier prescription is never
+ *  starved when one source is thin. */
+async function sampleChapterIdsByDifficulty(
+  subject: Subject,
+  chapter: string,
+  difficulties: Difficulty[] | null,
+  count: number,
+): Promise<string[]> {
+  const supabase = getServiceClient();
+  const ids: string[] = [];
+  for (let from = 0; ; from += 1000) {
+    let query = supabase
+      .from("questions")
+      .select("id")
+      .is("centre_id", null)
+      .eq("hidden", false)
+      .eq("subject", subject)
+      .eq("chapter", chapter)
+      .range(from, from + 999);
+    if (difficulties && difficulties.length > 0) {
+      query = query.in("difficulty", difficulties);
+    }
+    const { data, error } = await query;
+    if (error) throw error;
+    ids.push(...((data ?? []).map((r) => r.id as string)));
+    if (!data || data.length < 1000) break;
+  }
+  return shuffle(ids).slice(0, count);
+}
+
+/** How many global questions a chapter has at the given difficulties. */
+export async function countGateQuestions(
+  subject: Subject,
+  chapter: string,
+  difficulties: Difficulty[],
+): Promise<number> {
+  const supabase = getServiceClient();
+  const { count } = await supabase
+    .from("questions")
+    .select("*", { count: "exact", head: true })
+    .is("centre_id", null)
+    .eq("hidden", false)
+    .eq("subject", subject)
+    .eq("chapter", chapter)
+    .in("difficulty", difficulties);
+  return count ?? 0;
+}
+
+/**
+ * Generate a targeted "gate quest" practice mock: `count` questions in one
+ * chapter at the gate's difficulty tier. Falls back to any difficulty in the
+ * chapter if the exact tier is too thin, so the quest is never empty when the
+ * chapter has content. Returns null only if the chapter has no questions at all.
+ */
+export async function generateGateMock(
+  studentId: string,
+  subject: Subject,
+  chapter: string,
+  difficulties: Difficulty[],
+  title: string,
+  count: number,
+): Promise<string | null> {
+  let ids = await sampleChapterIdsByDifficulty(subject, chapter, difficulties, count);
+  if (ids.length === 0) {
+    ids = await sampleChapterIdsByDifficulty(subject, chapter, null, count);
+  }
+  if (ids.length === 0) return null;
+  return createMockFromQuestionIds(studentId, title, ids);
+}
+
 // ─────────────────── "Climb the Lesson" game mode (Stage 5) ───────────────────
 
 export type ClimbQuestion = PublicQuestion & { difficulty: Difficulty };

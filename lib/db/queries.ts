@@ -193,6 +193,8 @@ export async function saveAttempt(
     question_id: a.questionId,
     picked_index: a.pickedIndex,
     time_sec: a.timeSec,
+    // First-touched option (for SELF_DOUBT diagnosis). Never used for grading.
+    first_answer_index: a.firstPickedIndex ?? null,
   }));
 
   const { error: ansErr } = await supabase.from("answers").insert(rows);
@@ -261,7 +263,7 @@ export async function getAttempt(attemptId: string): Promise<LoadedAttempt | nul
 
   const { data: answerRows, error: ansErr } = await supabase
     .from("answers")
-    .select("question_id, picked_index, time_sec")
+    .select("question_id, picked_index, time_sec, first_answer_index")
     .eq("attempt_id", attemptId);
   if (ansErr) throw ansErr;
 
@@ -269,6 +271,7 @@ export async function getAttempt(attemptId: string): Promise<LoadedAttempt | nul
     questionId: r.question_id as string,
     pickedIndex: (r.picked_index as number | null) ?? null,
     timeSec: (r.time_sec as number) ?? 0,
+    firstPickedIndex: (r.first_answer_index as number | null) ?? null,
   }));
 
   return {
