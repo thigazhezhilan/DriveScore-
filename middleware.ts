@@ -16,7 +16,8 @@ export const config = {
      *  - _next/static, _next/image (Next internals)
      *  - favicon, manifest, service worker
      *  - the /icons folder and common image files
+     *  - /.well-known/ (Digital Asset Links etc. — must serve a clean 200)
      */
-    "/((?!_next/static|_next/image|favicon.ico|manifest.json|sw.js|icons/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|manifest.json|sw.js|icons/|\\.well-known/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
