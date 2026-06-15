@@ -21,6 +21,10 @@ signing-key-info.txt
 D_S - Google Play package*/
 *Google Play package*/
 
+# Sensitive local-only docs — keep OUT of the public repo
+MARKET-STRATEGY-ANALYSIS.md
+PROJECT-SNAPSHOT.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*
