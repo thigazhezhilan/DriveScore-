@@ -56,15 +56,21 @@ export async function listGlobalSyllabus(
   source: "pyq" | "ai" = "pyq",
 ): Promise<SubjectSyllabus[]> {
   const supabase = getServiceClient();
-  const { data, error } = await supabase
-    .from("questions")
-    .select("subject, chapter")
-    .is("centre_id", null)
-    .eq("source", source)
-    .eq("hidden", false);
-  if (error) throw error;
-
-  const rows = (data ?? []) as { subject: string; chapter: string }[];
+  // Paginate: Supabase caps a single select at 1000 rows. The global AI pool now
+  // exceeds 1000, so a single query would truncate and undercount later chapters.
+  const rows: { subject: string; chapter: string }[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase
+      .from("questions")
+      .select("subject, chapter")
+      .is("centre_id", null)
+      .eq("source", source)
+      .eq("hidden", false)
+      .range(from, from + 999);
+    if (error) throw error;
+    rows.push(...((data ?? []) as { subject: string; chapter: string }[]));
+    if (!data || data.length < 1000) break;
+  }
 
   return SUBJECTS.map((subject) => {
     const subjectRows = rows.filter((r) => r.subject === subject);
@@ -87,18 +93,25 @@ async function sampleGlobalIds(
   count: number,
 ): Promise<string[]> {
   const supabase = getServiceClient();
-  let query = supabase
-    .from("questions")
-    .select("id")
-    .is("centre_id", null)
-    .eq("source", "pyq") // the full NEET mock uses real past-paper questions only
-    .eq("hidden", false)
-    .eq("subject", subject);
-  if (chapter) query = query.eq("chapter", chapter);
+  // Paginate past Supabase's 1000-row cap so large pools (e.g. Biology) sample
+  // from the whole chapter/subject, not just the first 1000 rows.
+  const ids: string[] = [];
+  for (let from = 0; ; from += 1000) {
+    let query = supabase
+      .from("questions")
+      .select("id")
+      .is("centre_id", null)
+      .eq("source", "pyq") // the full NEET mock uses real past-paper questions only
+      .eq("hidden", false)
+      .eq("subject", subject)
+      .range(from, from + 999);
+    if (chapter) query = query.eq("chapter", chapter);
 
-  const { data, error } = await query;
-  if (error) throw error;
-  const ids = (data ?? []).map((r) => r.id as string);
+    const { data, error } = await query;
+    if (error) throw error;
+    ids.push(...((data ?? []).map((r) => r.id as string)));
+    if (!data || data.length < 1000) break;
+  }
   return shuffle(ids).slice(0, count);
 }
 
