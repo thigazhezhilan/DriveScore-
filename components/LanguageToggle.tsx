@@ -1,13 +1,11 @@
 "use client";
 
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Languages } from "lucide-react";
 import { setLanguage } from "@/app/language/actions";
 
 export function LanguageToggle({ dark = false }: { dark?: boolean }) {
-  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("language");
   const [isPending, startTransition] = useTransition();
@@ -16,7 +14,7 @@ export function LanguageToggle({ dark = false }: { dark?: boolean }) {
     const next = locale === "en" ? "ta" : "en";
     startTransition(async () => {
       await setLanguage(next as "en" | "ta");
-      router.refresh();
+      window.location.reload();
     });
   };
 
