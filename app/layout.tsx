@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Inter, Bricolage_Grotesque, Hanken_Grotesk, Montserrat } from "next/font/google";
+import {
+  Space_Grotesk,
+  Inter,
+  Bricolage_Grotesque,
+  Hanken_Grotesk,
+  Montserrat,
+  Noto_Sans_Tamil,
+} from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import { SessionProvider } from "@/lib/session";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
-// Teacher / admin / parent keep the original "calm clinical" pairing.
 const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
@@ -17,9 +25,6 @@ const body = Inter({
   display: "swap",
 });
 
-// Student-facing screens use a bolder, more energetic pairing. These variables
-// are remapped onto --font-display / --font-body inside `.student-skin` (see
-// globals.css), so only the student welcome / test / report pick them up.
 const studentDisplay = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",
@@ -32,12 +37,18 @@ const studentBody = Hanken_Grotesk({
   display: "swap",
 });
 
-// Brand font — used only by the DriveScore logo (mark + wordmark) so the
-// identity stays consistent regardless of the surrounding page typography.
 const brand = Montserrat({
   subsets: ["latin"],
   weight: ["700", "800", "900"],
   variable: "--font-brand",
+  display: "swap",
+});
+
+// Tamil script support — applied site-wide when locale is `ta`.
+const tamil = Noto_Sans_Tamil({
+  subsets: ["tamil"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-tamil",
   display: "swap",
 });
 
@@ -68,18 +79,23 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html
-      lang="en"
-      className={`${display.variable} ${body.variable} ${studentDisplay.variable} ${studentBody.variable} ${brand.variable}`}
+      lang={locale}
+      className={`${display.variable} ${body.variable} ${studentDisplay.variable} ${studentBody.variable} ${brand.variable} ${tamil.variable}`}
     >
       <body>
-        <SessionProvider>{children}</SessionProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <SessionProvider>{children}</SessionProvider>
+        </NextIntlClientProvider>
         <ServiceWorkerRegister />
       </body>
     </html>

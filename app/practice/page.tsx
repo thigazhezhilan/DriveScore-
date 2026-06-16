@@ -1,14 +1,3 @@
-/**
- * Student self-practice hub (`/practice`).
- *
- * Two DriveScore-provided pathways over the global question pool:
- *   1. Full NEET Mock  — shuffled 45 Phy + 45 Chem + 90 Bio, fresh each time.
- *   2. Lesson practice — pick a subject → chapter → focused test.
- *
- * Each "start" generates a personal mock and drops the student into the existing
- * test flow. Dark cinematic skin to match the student home.
- */
-
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -20,6 +9,7 @@ import {
   Shuffle,
   Sparkles,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { requireRole, getCurrentStudent } from "@/lib/auth";
 import { listGlobalSyllabus, NEET_PATTERN } from "@/lib/db/practice";
 import {
@@ -40,7 +30,6 @@ const SUBJECT_ICON = {
 
 const TOTAL_NEET = NEET_PATTERN.reduce((s, p) => s + p.count, 0);
 
-/** Per-level accent for the small lesson rating badges. */
 const LEVEL_BADGE: Record<string, string> = {
   Aspirant: "bg-white/10 text-paper/70",
   Achiever: "bg-energy/15 text-energy",
@@ -56,6 +45,8 @@ export default async function PracticePage({
   searchParams: { error?: string; track?: string };
 }) {
   await requireRole("student");
+  const tp = await getTranslations("practice");
+  const tc = await getTranslations("common");
 
   const track: "pyq" | "ai" = searchParams.track === "ai" ? "ai" : "pyq";
   let syllabus: Awaited<ReturnType<typeof listGlobalSyllabus>> = [];
@@ -65,7 +56,6 @@ export default async function PracticePage({
     syllabus = [];
   }
 
-  // Per-chapter ratings for the logged-in student (empty until they practise).
   let chapterRatings = new Map<string, ChapterRating>();
   try {
     const student = await getCurrentStudent();
@@ -76,10 +66,12 @@ export default async function PracticePage({
 
   const errorMsg =
     searchParams.error === "empty"
-      ? "That selection has no questions yet — try another, or check back soon."
+      ? tp("errorEmpty")
       : searchParams.error === "invalid"
-        ? "Please pick a valid subject and chapter."
+        ? tp("errorInvalid")
         : null;
+
+  const neetPattern = NEET_PATTERN.map((p) => `${p.count} ${p.subject.slice(0, 3)}`).join(" · ");
 
   return (
     <main className="student-skin landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
@@ -94,15 +86,15 @@ export default async function PracticePage({
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-energy/80">
-                DriveScore Practice
+                {tp("eyebrow")}
               </p>
               <h1 className="font-display text-lg font-extrabold text-paper">
-                Sharpen your prep
+                {tp("title")}
               </h1>
             </div>
           </div>
           <Link href="/" className="btn-ghost-dark px-3 py-2 text-xs">
-            <ArrowLeft className="h-4 w-4" /> Home
+            <ArrowLeft className="h-4 w-4" /> {tc("home")}
           </Link>
         </header>
 
@@ -126,14 +118,13 @@ export default async function PracticePage({
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-energy/80">
-                    Full NEET pattern
+                    {tp("fullMockEyebrow")}
                   </p>
                   <h2 className="font-display text-xl font-extrabold text-paper">
-                    Start a Full Mock
+                    {tp("fullMockTitle")}
                   </h2>
                   <p className="mt-1 text-sm text-paper/60">
-                    {TOTAL_NEET} questions ({NEET_PATTERN.map((p) => `${p.count} ${p.subject.slice(0, 3)}`).join(" · ")}),
-                    freshly shuffled every time.
+                    {tp("fullMockBody", { total: TOTAL_NEET, pattern: neetPattern })}
                   </p>
                 </div>
                 <Play className="h-6 w-6 shrink-0 text-energy transition group-hover:translate-x-0.5" />
@@ -145,7 +136,7 @@ export default async function PracticePage({
         {/* Lesson practice — two tracks */}
         <section className="animate-fade-up mt-8" style={{ animationDelay: "120ms" }}>
           <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-paper/45">
-            Practice by lesson
+            {tp("practiceByLesson")}
           </h3>
 
           {/* Track tabs: real past papers vs AI-generated */}
@@ -154,21 +145,19 @@ export default async function PracticePage({
               href="/practice?track=pyq"
               className={`rounded-xl px-3 py-2 text-center text-sm font-bold transition ${track === "pyq" ? "bg-energy text-focusink" : "text-paper/60 hover:text-paper"}`}
             >
-              Past Papers
+              {tp("pastPapers")}
             </Link>
             <Link
               href="/practice?track=ai"
               className={`rounded-xl px-3 py-2 text-center text-sm font-bold transition ${track === "ai" ? "bg-energy text-focusink" : "text-paper/60 hover:text-paper"}`}
             >
-              AI Practice
+              {tp("aiPractice")}
             </Link>
           </div>
 
           {syllabus.length === 0 ? (
             <div className="card-glass p-5 text-sm text-paper/60">
-              {track === "ai"
-                ? "No AI questions yet. Once generated, an adaptive easy→hard set appears here per chapter."
-                : "The DriveScore question bank is being prepared — lesson practice will appear here soon."}
+              {track === "ai" ? tp("noAI") : tp("noQuestions")}
             </div>
           ) : (
             <div className="grid gap-3">
@@ -183,8 +172,8 @@ export default async function PracticePage({
                       <div className="min-w-0 flex-1">
                         <p className="font-display font-bold text-paper">{s.subject}</p>
                         <p className="text-xs text-paper/55">
-                          {s.chapters.length} {s.chapters.length === 1 ? "chapter" : "chapters"} ·{" "}
-                          {s.questionCount} questions
+                          {tc("chapterCount", { count: s.chapters.length })} ·{" "}
+                          {tc("questionCount", { count: s.questionCount })}
                         </p>
                       </div>
                       <ChevronDown className="h-4 w-4 shrink-0 text-paper/40 transition" />
@@ -205,7 +194,7 @@ export default async function PracticePage({
                               {c.chapter}
                             </p>
                             <p className="text-[11px] text-paper/45">
-                              {c.questionCount} {c.questionCount === 1 ? "question" : "questions"}
+                              {tc("questionCount", { count: c.questionCount })}
                             </p>
                           </div>
                           {cr && (
@@ -223,7 +212,7 @@ export default async function PracticePage({
                             href={`/practice/climb?subject=${encodeURIComponent(s.subject)}&chapter=${encodeURIComponent(c.chapter)}&source=${track}`}
                             className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-energy/15 px-3.5 py-2 text-xs font-bold text-energy transition hover:bg-energy/25"
                           >
-                            Practice <Play className="h-3.5 w-3.5" />
+                            {tp("practiceBtn")} <Play className="h-3.5 w-3.5" />
                           </Link>
                         </div>
                         );

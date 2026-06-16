@@ -287,6 +287,7 @@ export type Profile = {
   role: "admin" | "teacher" | "student";
   centreId: string | null;
   fullName: string | null;
+  preferredLanguage: "en" | "ta";
 };
 
 /** Read a profile by auth user id (service client — bypasses RLS). */
@@ -294,7 +295,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
   const supabase = getServiceClient();
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, role, centre_id, full_name")
+    .select("id, role, centre_id, full_name, preferred_language")
     .eq("id", userId)
     .maybeSingle();
   if (error) throw error;
@@ -304,6 +305,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
     role: data.role,
     centreId: data.centre_id ?? null,
     fullName: data.full_name ?? null,
+    preferredLanguage: (data.preferred_language === "ta" ? "ta" : "en") as "en" | "ta",
   };
 }
 

@@ -1,16 +1,8 @@
 "use client";
 
-/**
- * Student home (client) — energetic welcome with the Neuro mascot.
- *
- * Lists published mocks for the student's batch. Each mock shows its attempt
- * state: Start / Retake (if teacher enabled extra attempts) / Completed.
- * Presentation only — the whole screen wears the dark cinematic skin so it
- * matches the welcome + login pages (`.student-skin` for fonts, aurora bg).
- */
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion"; // motion used in Neuro hero section
+import { useTranslations } from "next-intl";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Activity,
   ArrowRight,
@@ -24,6 +16,7 @@ import {
   Timer,
 } from "lucide-react";
 import { LogoutButton } from "@/components/auth/LogoutButton";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { Neuro } from "@/components/mascot/Neuro";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { LevelCard } from "@/components/home/LevelCard";
@@ -49,6 +42,8 @@ export function HomeClient({
   rating: RatingSummary | null;
 }) {
   const reduce = useReducedMotion();
+  const t = useTranslations("home");
+  const tc = useTranslations("common");
   const firstName = studentName ? studentName.split(" ")[0] : null;
 
   return (
@@ -56,10 +51,13 @@ export function HomeClient({
       <AuroraBackground />
 
       <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-5 pb-10 pt-7">
-        {/* Brand + sign out */}
+        {/* Brand + language toggle + sign out */}
         <header className="animate-fade-up flex items-center justify-between gap-3">
           <Logo size={40} wordmarkClassName="text-lg text-paper" />
-          <LogoutButton dark />
+          <div className="flex items-center gap-2">
+            <LanguageToggle dark />
+            <LogoutButton dark />
+          </div>
         </header>
 
         {/* Hero: Neuro + speech bubble */}
@@ -77,10 +75,14 @@ export function HomeClient({
               </motion.div>
               <div className="min-w-0 flex-1">
                 <div className="relative inline-block rounded-2xl rounded-bl-sm bg-energy px-3.5 py-2 text-sm font-bold text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]">
-                  {firstName ? `Hey ${firstName} — ready for today's mock?` : "Ready for today's mock?"}
+                  {firstName ? t("neuroBubble", { firstName }) : t("neuroBubbleNoName")}
                 </div>
                 <p className="mt-2 text-xs font-medium text-paper/65">
-                  I&apos;m <span className="font-bold text-energy">Neuro</span>, your study buddy. Let&apos;s find your wins.
+                  {t.rich("neuroIntro", {
+                    bold: (chunks) => (
+                      <span className="font-bold text-energy">{chunks}</span>
+                    ),
+                  })}
                 </p>
               </div>
             </div>
@@ -101,10 +103,8 @@ export function HomeClient({
               <Dumbbell className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-display font-bold text-paper">Practice anytime</p>
-              <p className="text-xs text-paper/55">
-                Lesson-by-lesson tests &amp; full NEET mocks
-              </p>
+              <p className="font-display font-bold text-paper">{t("practiceTitle")}</p>
+              <p className="text-xs text-paper/55">{t("practiceSubtitle")}</p>
             </div>
             <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
           </Link>
@@ -118,10 +118,8 @@ export function HomeClient({
               <Mountain className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-display font-bold text-paper">Mastery Road</p>
-              <p className="text-xs text-paper/55">
-                Conquer each chapter, gate by gate
-              </p>
+              <p className="font-display font-bold text-paper">{t("masteryTitle")}</p>
+              <p className="text-xs text-paper/55">{t("masterySubtitle")}</p>
             </div>
             <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
           </Link>
@@ -136,10 +134,8 @@ export function HomeClient({
                 <LineChart className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="font-display font-bold text-paper">Your progress</p>
-                <p className="text-xs text-paper/55">
-                  Rating trend, strongest &amp; weakest lessons
-                </p>
+                <p className="font-display font-bold text-paper">{t("progressTitle")}</p>
+                <p className="text-xs text-paper/55">{t("progressSubtitle")}</p>
               </div>
               <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
             </Link>
@@ -149,43 +145,40 @@ export function HomeClient({
         {/* Headline */}
         <section className="animate-fade-up mt-7" style={{ animationDelay: "120ms" }}>
           <h2 className="font-display text-[30px] font-extrabold leading-[1.05] tracking-tight text-paper">
-            Don&apos;t just score it.
+            {t("tagline1")}
             <span className="mt-1 block">
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-energy via-energy-soft to-reward bg-clip-text text-transparent">
-                  Diagnose
+                  {t("tagline2")}
                 </span>
                 <span className="absolute inset-x-0 bottom-1 z-0 h-3 -rotate-1 bg-reward/40" />
               </span>{" "}
-              it.
+              {t("tagline3")}
             </span>
           </h2>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
             <span className="pill bg-energy/15 text-energy">
-              <Timer className="h-3.5 w-3.5" /> Per-question timing
+              <Timer className="h-3.5 w-3.5" /> {t("pillTiming")}
             </span>
             <span className="pill bg-reward/15 text-reward">
-              <Activity className="h-3.5 w-3.5" /> 5-way diagnosis
+              <Activity className="h-3.5 w-3.5" /> {t("pillDiagnosis")}
             </span>
-            <span className="pill bg-accent2/20 text-[#B7AEFF]">+4 / −1 NEET marking</span>
+            <span className="pill bg-accent2/20 text-[#B7AEFF]">{t("pillMarking")}</span>
           </div>
         </section>
 
         {/* Assigned mocks */}
         <section className="animate-fade-up mt-8" style={{ animationDelay: "180ms" }}>
           <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-paper/45">
-            Your mocks
+            {t("yourMocks")}
           </h3>
 
           {mocks.length === 0 ? (
             <div className="card-glass-lg flex items-center gap-3 p-5">
               <Neuro mood="thinking" size={84} />
               <div>
-                <p className="font-display font-bold text-paper">No mocks assigned yet</p>
-                <p className="mt-1 text-sm text-paper/60">
-                  When your coaching centre publishes a mock to your batch, it&apos;ll
-                  show up right here. Hang tight!
-                </p>
+                <p className="font-display font-bold text-paper">{t("noMocksTitle")}</p>
+                <p className="mt-1 text-sm text-paper/60">{t("noMocksBody")}</p>
               </div>
             </div>
           ) : (
@@ -199,12 +192,10 @@ export function HomeClient({
                     <div className="min-w-0 flex-1">
                       <p className="font-display font-bold text-paper">{m.title}</p>
                       <div className="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-paper/55">
-                        <span>
-                          {m.questionCount} {m.questionCount === 1 ? "question" : "questions"}
-                        </span>
+                        <span>{tc("questionCount", { count: m.questionCount })}</span>
                         {m.attemptCount > 0 && (
                           <span className="pill bg-energy/15 text-energy">
-                            <CheckCircle2 className="h-3.5 w-3.5" /> Attempted
+                            <CheckCircle2 className="h-3.5 w-3.5" /> {t("attempted")}
                           </span>
                         )}
                       </div>
@@ -214,7 +205,7 @@ export function HomeClient({
                   <div className="mt-auto flex items-center gap-2 pt-3">
                     {m.attemptCount >= m.maxAttempts && m.attemptCount > 0 ? (
                       <div className="flex flex-1 items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-semibold text-paper/40">
-                        <Lock className="h-4 w-4" /> Completed
+                        <Lock className="h-4 w-4" /> {t("completed")}
                       </div>
                     ) : (
                       <Link
@@ -223,11 +214,11 @@ export function HomeClient({
                       >
                         {m.attemptCount > 0 ? (
                           <>
-                            Retake <RotateCcw className="h-4 w-4" />
+                            {t("retake")} <RotateCcw className="h-4 w-4" />
                           </>
                         ) : (
                           <>
-                            Start mock <ArrowRight className="h-4 w-4" />
+                            {t("startMock")} <ArrowRight className="h-4 w-4" />
                           </>
                         )}
                       </Link>
@@ -237,7 +228,7 @@ export function HomeClient({
                         href={`/report?attempt=${m.latestAttemptId}`}
                         className="btn-ghost-dark px-4 py-2.5 text-sm"
                       >
-                        <LineChart className="h-4 w-4 text-energy" /> Report
+                        <LineChart className="h-4 w-4 text-energy" /> {t("report")}
                       </Link>
                     )}
                   </div>

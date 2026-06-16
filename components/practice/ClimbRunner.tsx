@@ -13,6 +13,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   ArrowRight, CheckCircle2, Flag, Flame, Heart, Loader2, XCircle, Zap,
 } from "lucide-react";
@@ -43,6 +44,7 @@ export function ClimbRunner({
 }: {
   subject: string; chapter: string; source?: "pyq" | "ai";
 }) {
+  const t = useTranslations("practice");
   const router = useRouter();
   const [phase, setPhase] = useState<"loading" | "answering" | "feedback" | "finishing" | "error">("loading");
   const [hp, setHp] = useState(START_HP);
@@ -144,17 +146,17 @@ export function ClimbRunner({
     return (
       <main className="student-skin mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-5 text-paper">
         <Loader2 className="h-8 w-8 animate-spin text-energy" />
-        <p className="mt-4 font-display text-lg font-bold">Building your report…</p>
-        <p className="mt-1 text-sm text-paper/55">{xp} XP · best streak {maxStreak}</p>
+        <p className="mt-4 font-display text-lg font-bold">{t("buildingReport")}</p>
+        <p className="mt-1 text-sm text-paper/55">{t("buildingReportSub", { xp, maxStreak })}</p>
       </main>
     );
   }
   if (phase === "error") {
     return (
       <main className="student-skin mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-5 text-paper">
-        <p className="font-display text-lg font-bold">Couldn&apos;t build the report</p>
+        <p className="font-display text-lg font-bold">{t("reportBuildFailed")}</p>
         <p className="mt-2 rounded-lg bg-pop/15 px-3 py-2 text-sm text-[#FF9A91]">{err}</p>
-        <Link href="/practice" className="btn-ghost-dark mt-4 text-sm">Back to practice</Link>
+        <Link href="/practice" className="btn-ghost-dark mt-4 text-sm">{t("backToPractice")}</Link>
       </main>
     );
   }
@@ -234,18 +236,20 @@ export function ClimbRunner({
         {phase === "feedback" ? (
           <div className="flex items-center gap-3">
             <span className={`text-sm font-bold ${lastCorrect ? "text-energy" : "text-pop"}`}>
-              {lastCorrect ? `Correct! +${lastDelta} XP · +${HEAL} HP` : `Wrong — ${lastDelta} HP`}
+              {lastCorrect
+                ? t("feedbackCorrect", { xp: lastDelta, hp: HEAL })
+                : t("feedbackWrong", { delta: Math.abs(lastDelta) })}
             </span>
             <button
               onClick={() => { if (q && !reported) { setReported(true); reportClimbQuestion(q.id); } }}
               disabled={reported}
               className="inline-flex items-center gap-1 text-xs font-semibold text-paper/45 transition hover:text-pop disabled:opacity-50"
-              title="Report a wrong/bad question"
+              title={t("reportBtnTooltip")}
             >
-              <Flag className="h-3.5 w-3.5" /> {reported ? "Reported" : "Report"}
+              <Flag className="h-3.5 w-3.5" /> {reported ? t("reportedBtn") : t("reportBtn")}
             </button>
             <button onClick={next} className="btn-energy ml-auto flex-1 max-w-[50%] py-3">
-              {hp <= 0 ? "See report" : "Next"} <ArrowRight className="h-4 w-4" />
+              {hp <= 0 ? t("seeReport") : t("nextBtn")} <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         ) : (
@@ -254,7 +258,7 @@ export function ClimbRunner({
             disabled={picked === null || phase !== "answering"}
             className="btn-energy w-full py-3 disabled:opacity-40"
           >
-            Check answer
+            {t("checkAnswer")}
           </button>
         )}
       </div>

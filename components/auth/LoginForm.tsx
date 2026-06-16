@@ -2,6 +2,7 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { LogIn, Loader2, Lock, Mail } from "lucide-react";
 import { login, type LoginState } from "@/app/login/actions";
 import { Logo } from "@/components/brand/Logo";
@@ -10,15 +11,17 @@ const initial: LoginState = { error: null };
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const ta = useTranslations("auth");
+  const tc = useTranslations("common");
   return (
     <button type="submit" disabled={pending} className="btn-primary w-full">
       {pending ? (
         <>
-          Signing in <Loader2 className="h-4 w-4 animate-spin" />
+          {ta("signingIn")} <Loader2 className="h-4 w-4 animate-spin" />
         </>
       ) : (
         <>
-          Sign in <LogIn className="h-4 w-4" />
+          {tc("signIn")} <LogIn className="h-4 w-4" />
         </>
       )}
     </button>
@@ -30,6 +33,7 @@ export function LoginFormBody({ state, formAction }: {
   state: LoginState;
   formAction: (payload: FormData) => void;
 }) {
+  const t = useTranslations("auth");
   return (
     <form action={formAction} className="space-y-4">
       <div>
@@ -37,7 +41,7 @@ export function LoginFormBody({ state, formAction }: {
           htmlFor="email"
           className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-ink/50"
         >
-          Email
+          {t("email")}
         </label>
         <div className="relative">
           <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/35" />
@@ -47,7 +51,7 @@ export function LoginFormBody({ state, formAction }: {
             type="email"
             autoComplete="email"
             required
-            placeholder="you@centre.com"
+            placeholder={t("emailPlaceholder")}
             className="w-full rounded-xl border border-black/10 bg-white py-3 pl-10 pr-3 text-sm text-ink outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/30"
           />
         </div>
@@ -58,7 +62,7 @@ export function LoginFormBody({ state, formAction }: {
           htmlFor="password"
           className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-ink/50"
         >
-          Password
+          {t("password")}
         </label>
         <div className="relative">
           <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/35" />
@@ -77,7 +81,7 @@ export function LoginFormBody({ state, formAction }: {
             href="/forgot-password"
             className="text-xs font-semibold text-teal-deep hover:underline"
           >
-            Forgot password?
+            {t("forgotPassword")}
           </Link>
         </div>
       </div>
@@ -87,7 +91,7 @@ export function LoginFormBody({ state, formAction }: {
           role="alert"
           className="rounded-lg bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700"
         >
-          {state.error}
+          {state.error.startsWith("error") ? t(state.error as Parameters<typeof t>[0]) : state.error}
         </p>
       )}
 
@@ -113,6 +117,7 @@ export function LoginForm({
   theme?: "light" | "dark";
 }) {
   const [state, formAction] = useFormState(login, initial);
+  const t = useTranslations("auth");
 
   const header = (
     <div className="animate-fade-up mb-8">
@@ -125,7 +130,7 @@ export function LoginForm({
           theme === "dark" ? "text-energy" : "text-teal-deep"
         }`}
       >
-        Sign in to your account
+        {t("signInToAccount")}
       </p>
     </div>
   );
@@ -140,9 +145,9 @@ export function LoginForm({
   const linkColor = theme === "dark" ? "text-energy" : "text-teal-deep";
   const note = (
     <p className={`animate-fade-up mt-5 text-center text-xs ${noteColor}`}>
-      New to DriveScore?{" "}
+      {t("newToDS")}{" "}
       <Link href="/signup" className={`font-semibold ${linkColor} hover:underline`}>
-        Create an account
+        {t("createAnAccount")}
       </Link>
     </p>
   );

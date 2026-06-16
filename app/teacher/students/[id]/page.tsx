@@ -7,6 +7,7 @@
  */
 
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireRole } from "@/lib/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getStudentProgress, type StudentProgress } from "@/lib/db/progress";
@@ -28,6 +29,7 @@ export default async function TeacherStudentPage({
   params: { id: string };
 }) {
   await requireRole("teacher");
+  const tt = await getTranslations("teacher");
 
   // RLS scopes this to the teacher's own students; anything else → no row.
   const sb = createSupabaseServerClient();
@@ -48,10 +50,10 @@ export default async function TeacherStudentPage({
   return (
     <ProgressClient
       progress={progress}
-      eyebrow="Student progress"
+      eyebrow={tt("studentProgress")}
       title={student.name as string}
       backHref="/teacher"
-      backLabel="Dashboard"
+      backLabel={tt("dashboard")}
     />
   );
 }

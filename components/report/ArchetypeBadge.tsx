@@ -1,10 +1,6 @@
-/**
- * The student's pacing archetype, shown on the report header.
- *
- * Pure presentation over `report.archetype`. Renders nothing when there wasn't
- * enough data to classify (a no-data report stays clean rather than guessing).
- */
+"use client";
 
+import { useTranslations } from "next-intl";
 import { Crosshair, Dices, Scale, TimerReset } from "lucide-react";
 import type { Archetype } from "@/lib/grade";
 import type { SpeedArchetype } from "@/lib/types";
@@ -20,6 +16,8 @@ const STYLE: Record<
 };
 
 export function ArchetypeBadge({ archetype }: { archetype: Archetype | null }) {
+  const t = useTranslations("archetype");
+  const tr = useTranslations("report");
   if (!archetype) return null;
   const s = STYLE[archetype.type];
   const Icon = s.icon;
@@ -32,12 +30,12 @@ export function ArchetypeBadge({ archetype }: { archetype: Archetype | null }) {
       <div className="min-w-0">
         <div className="flex items-center gap-2">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/45">
-            Your pacing style
+            {tr("yourPacingStyle")}
           </p>
-          <span className={`pill ${s.chip}`}>{archetype.label}</span>
+          <span className={`pill ${s.chip}`}>{t(`${archetype.type}.label`)}</span>
         </div>
         <p className="mt-1 text-sm leading-relaxed text-ink/70">
-          {archetype.description}
+          {t(`${archetype.type}.description`)}
         </p>
       </div>
     </div>

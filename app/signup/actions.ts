@@ -64,10 +64,10 @@ export async function signUpAccount(
   const joinCode = String(formData.get("joinCode") ?? "").trim();
 
   if (!fullName || !email || !password || !centreId) {
-    return { error: "Please fill in every field and pick your centre.", sent: false };
+    return { error: "errorFillAll", sent: false };
   }
   if (password.length < 8) {
-    return { error: "Password must be at least 8 characters.", sent: false };
+    return { error: "errorPasswordLength", sent: false };
   }
 
   const service = getServiceClient();
@@ -78,11 +78,11 @@ export async function signUpAccount(
     .select("id, join_code")
     .eq("id", centreId)
     .maybeSingle();
-  if (!centre) return { error: "Pick a valid centre.", sent: false };
+  if (!centre) return { error: "errorInvalidCentre", sent: false };
   if (role === "teacher") {
     const expected = String(centre.join_code ?? "").trim().toUpperCase();
     if (!expected || joinCode.toUpperCase() !== expected) {
-      return { error: "That teacher join code is incorrect.", sent: false };
+      return { error: "errorBadJoinCode", sent: false };
     }
   }
 
@@ -103,12 +103,12 @@ export async function signUpAccount(
     if (/already.*regist|exists/i.test(suErr.message)) {
       const existingRole = await findRegisteredRole(service, email);
       const as = existingRole ? ` as ${ROLE_LABEL[existingRole] ?? "a user"}` : "";
-      return { error: `That email is already registered${as}. Try signing in instead.`, sent: false };
+      return { error: "errorEmailRegistered", sent: false };
     }
     return { error: suErr.message, sent: false };
   }
   const userId = signUp.user?.id;
-  if (!userId) return { error: "Could not create the account. Try again.", sent: false };
+  if (!userId) return { error: "errorCreateFailed", sent: false };
 
   // Set role + centre server-side (service key bypasses RLS).
   const { error: pErr } = await service.from("profiles").upsert({
@@ -124,7 +124,7 @@ export async function signUpAccount(
     if (pErr.code === "23503") {
       const existingRole = await findRegisteredRole(service, email);
       const as = existingRole ? ` as ${ROLE_LABEL[existingRole] ?? "a user"}` : "";
-      return { error: `That email is already registered${as}. Try signing in instead.`, sent: false };
+      return { error: "errorEmailRegistered", sent: false };
     }
     return { error: pErr.message, sent: false };
   }

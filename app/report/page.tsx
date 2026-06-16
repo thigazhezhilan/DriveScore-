@@ -1,22 +1,10 @@
-/**
- * Report screen (server component).
- *
- * Loads a persisted attempt by id (`/report?attempt=<id>`) from the database,
- * then runs the EXISTING pure `buildReport` (which calls `diagnose`) on it —
- * so the diagnosis category is computed at read time, never stored. The graded
- * `Report` is handed to the client <ReportTabs> for the three-view toggle.
- *
- * Because the report is rebuilt from the DB on every load, refreshing or
- * revisiting the URL shows the same diagnosis — proving persistence.
- */
-
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getAttempt, getStudentByProfileId } from "@/lib/db/queries";
 import { buildReport } from "@/lib/grade";
 import { requireUser } from "@/lib/auth";
 import { ReportTabs } from "@/components/report/ReportTabs";
 
-// Reads the database per-request — never prerender at build time.
 export const dynamic = "force-dynamic";
 
 export default async function ReportPage({
@@ -25,6 +13,8 @@ export default async function ReportPage({
   searchParams: { attempt?: string; xp?: string; streak?: string };
 }) {
   const me = await requireUser();
+  const tr = await getTranslations("report");
+  const tc = await getTranslations("common");
   const attemptId = searchParams.attempt;
   const gameStats = searchParams.xp
     ? { xp: Number(searchParams.xp) || 0, streak: Number(searchParams.streak) || 0 }
@@ -33,8 +23,9 @@ export default async function ReportPage({
   if (!attemptId) {
     return (
       <Notice
-        title="No attempt selected"
-        detail="Take a mock first — your report opens automatically when you finish."
+        title={tr("noAttemptTitle")}
+        detail={tr("noAttemptBody")}
+        backLabel={tc("backToHome")}
       />
     );
   }
@@ -44,23 +35,21 @@ export default async function ReportPage({
     if (!loaded) {
       return (
         <Notice
-          title="Report not found"
-          detail="That attempt doesn't exist (or was cleared). Try taking the mock again."
+          title={tr("notFoundTitle")}
+          detail={tr("notFoundBody")}
+          backLabel={tc("backToHome")}
         />
       );
     }
 
-    // Access control:
-    //  - admin: cross-centre god-mode — can view any report
-    //  - teacher: only reports within their own centre
-    //  - student: only their own attempt
     if (me.profile.role === "student") {
       const student = await getStudentByProfileId(me.id);
       if (!student || student.id !== loaded.studentId) {
         return (
           <Notice
-            title="Not your report"
-            detail="You can only view your own mock reports."
+            title={tr("notYoursTitle")}
+            detail={tr("notYoursBody")}
+            backLabel={tc("backToHome")}
           />
         );
       }
@@ -71,18 +60,16 @@ export default async function ReportPage({
       ) {
         return (
           <Notice
-            title="Outside your centre"
-            detail="You can only view reports for students in your own coaching centre."
+            title={tr("outsideCentreTitle")}
+            detail={tr("outsideCentreBody")}
+            backLabel={tc("backToHome")}
           />
         );
       }
     }
-    // admin: no centre check — falls through to display the report
 
     const report = buildReport(loaded.questions, loaded.attempts);
 
-    // Redact the answer key before serialising to the browser. The report
-    // views don't use `answerIndex`; grading already happened server-side.
     const redact = <T extends { question: { answerIndex: number } }>(it: T): T => ({
       ...it,
       question: { ...it.question, answerIndex: -1 },
@@ -98,8 +85,9 @@ export default async function ReportPage({
   } catch (err) {
     return (
       <Notice
-        title="Couldn't load the report"
-        detail="The database may not be configured or seeded. See .env.example and run the migration + `npm run db:seed`."
+        title={tr("loadErrorTitle")}
+        detail={tr("loadErrorBody")}
+        backLabel={tc("backToHome")}
         error={err instanceof Error ? err.message : String(err)}
       />
     );
@@ -109,10 +97,12 @@ export default async function ReportPage({
 function Notice({
   title,
   detail,
+  backLabel,
   error,
 }: {
   title: string;
   detail: string;
+  backLabel: string;
   error?: string;
 }) {
   return (
@@ -126,7 +116,7 @@ function Notice({
           </p>
         )}
         <Link href="/" className="btn-ghost mt-5 inline-flex text-sm">
-          Back to home
+          {backLabel}
         </Link>
       </div>
     </main>

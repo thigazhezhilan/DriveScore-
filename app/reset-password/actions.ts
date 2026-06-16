@@ -23,10 +23,10 @@ export async function updatePassword(
   const confirm = String(formData.get("confirm") ?? "");
 
   if (password.length < 8) {
-    return { error: "Password must be at least 8 characters." };
+    return { error: "errorPasswordLength" };
   }
   if (password !== confirm) {
-    return { error: "The two passwords don't match." };
+    return { error: "errorPasswordsNoMatch" };
   }
 
   const supabase = createSupabaseServerClient();
@@ -34,7 +34,7 @@ export async function updatePassword(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return { error: "Your reset link has expired. Request a new one." };
+    return { error: "errorResetExpired" };
   }
 
   const { error } = await supabase.auth.updateUser({ password });

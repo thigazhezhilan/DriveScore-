@@ -1,18 +1,7 @@
 "use client";
 
-/**
- * Skill-level card for the student home.
- *
- * Shows the student's OVERALL level + rating, a progress bar to the next band,
- * the net change from their last attempt, and per-subject level chips. This is
- * the only surface for the rating system in v1 — deliberately no leaderboard or
- * rank number, so it motivates without the demoralisation of a raw ladder.
- *
- * Presentation only: every number comes pre-computed from the server
- * (lib/rating.ts + lib/db/ratings.ts). See docs/rating-system-spec.md.
- */
-
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight, Stethoscope, TrendingDown } from "lucide-react";
 import type { RatingSummary } from "@/lib/db/ratings";
 import { levelProgress } from "@/lib/rating";
@@ -38,6 +27,7 @@ const fmt = (n: number) => n.toLocaleString("en-IN");
 
 export function LevelCard({ rating }: { rating: RatingSummary }) {
   const reduce = useReducedMotion();
+  const t = useTranslations("home");
   const { overall, subjects, recentDelta } = rating;
   const style = LEVEL_STYLE[overall.level] ?? LEVEL_STYLE.Aspirant;
   const prog = levelProgress(overall.rating);
@@ -61,7 +51,7 @@ export function LevelCard({ rating }: { rating: RatingSummary }) {
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-paper/45">
-                Overall level
+                {t("overallLevel")}
               </p>
               <h2 className={`font-display text-2xl font-extrabold leading-none ${style.text}`}>
                 {overall.level}
@@ -103,8 +93,8 @@ export function LevelCard({ rating }: { rating: RatingSummary }) {
           </div>
           <p className="mt-1.5 text-[11px] font-medium text-paper/50">
             {prog.next
-              ? `${fmt(prog.pointsToNext ?? 0)} to ${prog.next.name}`
-              : "Top level reached — White Coat 🥼"}
+              ? t("pointsToNext", { points: fmt(prog.pointsToNext ?? 0), next: prog.next.name })
+              : t("topLevelReached")}
           </p>
         </div>
 

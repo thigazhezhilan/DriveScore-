@@ -5,6 +5,7 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { requireRole } from "@/lib/auth";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { ClimbRunner } from "@/components/practice/ClimbRunner";
@@ -17,6 +18,7 @@ export default async function ClimbPage({
   searchParams: { subject?: string; chapter?: string; source?: string };
 }) {
   await requireRole("student");
+  const tp = await getTranslations("practice");
   const subject = searchParams.subject ?? "";
   const chapter = searchParams.chapter ?? "";
   const source = searchParams.source === "ai" ? "ai" : "pyq";
@@ -26,9 +28,9 @@ export default async function ClimbPage({
       <main className="student-skin landing-skin relative grid min-h-dvh place-items-center bg-[#06140f] px-5 text-paper">
         <AuroraBackground />
         <div className="card-glass relative z-10 p-6 text-center">
-          <p className="text-sm text-paper/70">Pick a chapter to climb.</p>
+          <p className="text-sm text-paper/70">{tp("noChapterSelected")}</p>
           <Link href="/practice" className="btn-ghost-dark mt-4 inline-flex text-sm">
-            <ArrowLeft className="h-4 w-4" /> Practice
+            <ArrowLeft className="h-4 w-4" /> {tp("title")}
           </Link>
         </div>
       </main>

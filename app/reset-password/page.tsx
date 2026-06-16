@@ -8,12 +8,14 @@
 
 import Link from "next/link";
 import { KeyRound } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 
 export const dynamic = "force-dynamic";
 
 export default async function ResetPasswordPage() {
+  const t = await getTranslations("auth");
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -27,10 +29,10 @@ export default async function ResetPasswordPage() {
         </div>
         <div>
           <h1 className="font-display text-xl font-bold tracking-tight text-ink">
-            {user ? "Choose a new password" : "Link expired"}
+            {user ? t("chooseNewPassword") : t("linkExpiredTitle")}
           </h1>
           <p className="text-xs font-medium text-teal-deep">
-            {user ? "Almost done" : "Request a fresh reset link"}
+            {user ? t("almostDone") : t("requestFreshLink")}
           </p>
         </div>
       </div>
@@ -40,14 +42,13 @@ export default async function ResetPasswordPage() {
       ) : (
         <div className="card animate-fade-up p-6 text-center">
           <p className="text-sm text-ink/60">
-            This password reset link is invalid or has expired. Reset links are
-            single-use and valid for 1 hour.
+            {t("expiredResetBody")}
           </p>
           <Link
             href="/forgot-password"
             className="btn-primary mt-5 inline-flex w-full justify-center"
           >
-            Request a new link
+            {t("requestNewLink")}
           </Link>
         </div>
       )}

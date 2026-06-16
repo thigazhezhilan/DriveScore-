@@ -161,6 +161,25 @@ body {
   font-family: var(--font-hanken), system-ui, sans-serif;
 }
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Tamil locale — swap ALL font stacks to Noto Sans Tamil.
+   Targets the html[lang="ta"] attribute set by next-intl in the root layout.
+   Specificity order matters: .student-skin and .landing-skin come before this
+   in the cascade, so we must override both.
+   ────────────────────────────────────────────────────────────────────────── */
+html[lang="ta"],
+html[lang="ta"] body {
+  font-family: var(--font-tamil), "Noto Sans Tamil", system-ui, sans-serif;
+}
+
+html[lang="ta"] .student-skin,
+html[lang="ta"] .landing-skin {
+  --font-display: var(--font-tamil);
+  --font-body: var(--font-tamil);
+  font-family: var(--font-tamil), "Noto Sans Tamil", system-ui, sans-serif;
+  letter-spacing: 0; /* Tamil script does not use negative letter-spacing */
+}
+
 /* Aurora blobs drift slowly. The global reduced-motion rule above freezes
    these into a static (still gorgeous) gradient automatically. */
 @keyframes drift-a {

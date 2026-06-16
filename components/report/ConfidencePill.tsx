@@ -1,10 +1,6 @@
-/**
- * A tiny chip showing how confident the engine is in a diagnosis (0–100).
- *
- * Pure presentation. The colour bands give an at-a-glance read (green = sure,
- * amber = likely, slate = tentative); the `reason` shows on hover/focus as the
- * native tooltip so the number is always explainable.
- */
+"use client";
+
+import { useTranslations } from "next-intl";
 
 type Band = { ring: string; text: string; bg: string };
 
@@ -23,14 +19,16 @@ export function ConfidencePill({
   confidence: number;
   reason?: string;
 }) {
+  const t = useTranslations("report");
   const b = band(confidence);
+  const label = t("confidenceSure", { pct: confidence });
   return (
     <span
       title={reason}
       aria-label={`Diagnosis confidence ${confidence}%${reason ? `: ${reason}` : ""}`}
       className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold tabular-nums ring-1 ${b.bg} ${b.text} ${b.ring}`}
     >
-      {confidence}% sure
+      {label}
     </span>
   );
 }

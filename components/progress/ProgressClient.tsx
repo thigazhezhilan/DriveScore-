@@ -1,13 +1,7 @@
 "use client";
 
-/**
- * Student progress dashboard (client). Composes the rating-trend worm chart
- * with two supporting panels — chapter strengths/weaknesses and recent
- * attempts. Presentation only; all numbers are pre-computed on the server
- * (lib/db/progress.ts). Dark cinematic skin to match the rest of the student UI.
- */
-
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ArrowLeft, ArrowUpRight, LineChart, TrendingDown, TrendingUp } from "lucide-react";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { TrendChart, type ChartSeries } from "@/components/progress/TrendChart";
@@ -70,10 +64,10 @@ function StandingRow({ c }: { c: ChapterStanding }) {
 
 export function ProgressClient({
   progress,
-  eyebrow = "Your progress",
-  title = "Are you improving?",
+  eyebrow,
+  title,
   backHref = "/",
-  backLabel = "Home",
+  backLabel,
 }: {
   progress: StudentProgress;
   eyebrow?: string;
@@ -81,7 +75,13 @@ export function ProgressClient({
   backHref?: string;
   backLabel?: string;
 }) {
+  const t = useTranslations("progress");
+  const tc = useTranslations("common");
   const { trend, recent, strengths, weaknesses, attemptCount } = progress;
+
+  const displayEyebrow = eyebrow ?? t("eyebrow");
+  const displayTitle = title ?? t("title");
+  const displayBackLabel = backLabel ?? tc("home");
 
   const series: ChartSeries[] = trend.map((s) => ({
     label: s.subject,
@@ -103,15 +103,15 @@ export function ProgressClient({
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-energy/80">
-                {eyebrow}
+                {displayEyebrow}
               </p>
               <h1 className="font-display text-lg font-extrabold text-paper">
-                {title}
+                {displayTitle}
               </h1>
             </div>
           </div>
           <Link href={backHref} className="btn-ghost-dark px-3 py-2 text-xs">
-            <ArrowLeft className="h-4 w-4" /> {backLabel}
+            <ArrowLeft className="h-4 w-4" /> {displayBackLabel}
           </Link>
         </header>
 
@@ -120,7 +120,7 @@ export function ProgressClient({
         <section className="animate-fade-up lg:col-span-2" style={{ animationDelay: "60ms" }}>
           <div className="card-glass-lg p-5">
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="font-display font-bold text-paper">Skill rating over time</h2>
+              <h2 className="font-display font-bold text-paper">{t("skillRating")}</h2>
             </div>
 
             {hasTrend ? (
@@ -137,8 +137,7 @@ export function ProgressClient({
               </>
             ) : (
               <p className="rounded-xl bg-white/[0.04] px-4 py-6 text-center text-sm text-paper/60">
-                Take a couple of practice tests and your rating trend will appear
-                here — one climbing line per subject, from day one to today.
+                {t("noTrend")}
               </p>
             )}
           </div>
@@ -149,7 +148,7 @@ export function ProgressClient({
           <section className="animate-fade-up grid gap-4 sm:grid-cols-2 lg:grid-cols-1" style={{ animationDelay: "120ms" }}>
             <div className="card-glass min-w-0 p-4">
               <h3 className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-energy">
-                <TrendingUp className="h-4 w-4" /> Strongest lessons
+                <TrendingUp className="h-4 w-4" /> {t("strongestLessons")}
               </h3>
               <div className="grid gap-3">
                 {strengths.map((c) => (
@@ -159,7 +158,7 @@ export function ProgressClient({
             </div>
             <div className="card-glass min-w-0 p-4">
               <h3 className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#FF9A91]">
-                <TrendingDown className="h-4 w-4" /> Needs work
+                <TrendingDown className="h-4 w-4" /> {t("needsWork")}
               </h3>
               <div className="grid gap-3">
                 {weaknesses.length > 0 ? (
@@ -167,9 +166,7 @@ export function ProgressClient({
                     <StandingRow key={`${c.subject}-${c.chapter}`} c={c} />
                   ))
                 ) : (
-                  <p className="text-xs text-paper/50">
-                    Practice more chapters to surface your weak spots.
-                  </p>
+                  <p className="text-xs text-paper/50">{t("noWeakSpots")}</p>
                 )}
               </div>
             </div>
@@ -181,7 +178,7 @@ export function ProgressClient({
         {recent.length > 0 && (
           <section className="animate-fade-up mt-6" style={{ animationDelay: "180ms" }}>
             <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-paper/45">
-              Recent tests
+              {t("recentTests")}
             </h3>
             <div className="grid gap-2">
               {recent.map((a) => (
@@ -193,7 +190,7 @@ export function ProgressClient({
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold text-paper">{a.title}</p>
                     <p className="text-[11px] text-paper/50">
-                      {fmtDate(a.date)} · {a.marks}/{a.maxMarks} marks
+                      {fmtDate(a.date)} · {t("marksDisplay", { marks: a.marks, maxMarks: a.maxMarks })}
                     </p>
                   </div>
                   {a.delta !== 0 && (

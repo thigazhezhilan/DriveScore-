@@ -10,6 +10,7 @@
  * "% to becoming a doctor" meter.
  */
 
+import { getTranslations } from "next-intl/server";
 import { requireRole, getCurrentStudent } from "@/lib/auth";
 import { getStudentRoad, type RoadData } from "@/lib/db/mastery";
 import { RoadClient } from "@/components/road/RoadClient";
@@ -22,6 +23,7 @@ export default async function RoadPage({
   searchParams: { error?: string };
 }) {
   await requireRole("student");
+  const t = await getTranslations("road");
 
   let data: RoadData = { road: { subjects: [], frontier: null, reinforcements: [] }, prescription: null };
   try {
@@ -33,9 +35,9 @@ export default async function RoadPage({
 
   const error =
     searchParams.error === "empty"
-      ? "That chapter doesn't have practice questions yet — try another quest."
+      ? t("errorEmpty")
       : searchParams.error === "invalid"
-        ? "Something went wrong starting that quest. Please try again."
+        ? t("errorInvalid")
         : null;
 
   return <RoadClient data={data} error={error} />;

@@ -1,20 +1,8 @@
 "use client";
 
-/**
- * The interactive test runner (client) — "focus mode" presentation.
- *
- * The flow/logic is UNCHANGED from Milestone 2a: one question at a time, NEET
- * pattern, a per-question timer that records seconds spent on EACH question,
- * and on Finish the answers go to the `submitAttempt` server action which
- * grades + persists them and returns the attempt id.
- *
- * This pass is presentation only: an immersive dark surface, tactile option
- * feedback, a smooth progress fill, slide/fade transitions between questions,
- * and a timer that pulses once you go over par — all reduced-motion-safe.
- */
-
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
@@ -38,6 +26,7 @@ export function TestRunner({
 }) {
   const router = useRouter();
   const reduce = useReducedMotion();
+  const t = useTranslations("test");
   const [isPending, startTransition] = useTransition();
 
   const [index, setIndex] = useState(0);
@@ -111,7 +100,7 @@ export function TestRunner({
   if (!question) {
     return (
       <main className="student-skin grid min-h-dvh place-items-center bg-focusink px-6 text-center text-sm text-paper/60">
-        Loading the mock…
+        {t("loading")}
       </main>
     );
   }
@@ -136,10 +125,8 @@ export function TestRunner({
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1">
             <div className="mb-1.5 flex items-center justify-between text-xs font-semibold text-paper/55">
-              <span>
-                Question {index + 1} of {total}
-              </span>
-              <span>{progressPct}% done</span>
+              <span>{t("questionOf", { current: index + 1, total })}</span>
+              <span>{t("percentDone", { pct: progressPct })}</span>
             </div>
             <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
               <motion.div
@@ -173,7 +160,7 @@ export function TestRunner({
             <Clock className="h-4 w-4" />
             {fmtTime(elapsed)}
             <span className="text-[10px] font-medium text-paper/40">
-              / par {fmtTime(question.parTimeSec)}
+              {t("parTime", { time: fmtTime(question.parTimeSec) })}
             </span>
           </div>
         </div>
@@ -249,7 +236,7 @@ export function TestRunner({
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-sm font-semibold text-paper/85 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <SkipForward className="h-4 w-4" />
-            Clear / leave blank
+            {t("clearBlank")}
           </button>
           <motion.button
             onClick={goNext}
@@ -259,21 +246,23 @@ export function TestRunner({
           >
             {isPending ? (
               <>
-                Saving <Loader2 className="h-4 w-4 animate-spin" />
+                {t("saving")} <Loader2 className="h-4 w-4 animate-spin" />
               </>
             ) : isLast ? (
               <>
-                Finish <Flag className="h-4 w-4" />
+                {t("finish")} <Flag className="h-4 w-4" />
               </>
             ) : (
               <>
-                Next <ArrowRight className="h-4 w-4" />
+                {t("next")} <ArrowRight className="h-4 w-4" />
               </>
             )}
           </motion.button>
         </div>
         <p className="mt-2.5 text-center text-[11px] text-paper/40">
-          Unanswered questions are graded as <strong>left blank</strong> (0 marks).
+          {t.rich("blankNote", {
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </p>
       </main>
     </div>

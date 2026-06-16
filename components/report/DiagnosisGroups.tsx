@@ -1,17 +1,9 @@
 "use client";
 
-/**
- * The grouped "why" — the product's visual centrepiece.
- *
- * Renders each problem category as a colour-coded card: the title, the advice,
- * and the list of chapter/concept items that fell into that bucket. Shared by
- * the student and (in compact form) teacher views.
- */
-
+import { useTranslations } from "next-intl";
 import { AlertTriangle, Dices, Gauge, Hourglass, Snail, Undo2 } from "lucide-react";
 import type { DiagnosisGroup } from "@/lib/grade";
 import type { DiagnosisCategory } from "@/lib/types";
-import { CATEGORY_META } from "@/lib/diagnose";
 import { CATEGORY_STYLES } from "@/components/categoryStyles";
 import { ConfidencePill } from "./ConfidencePill";
 import { fmtTime } from "@/lib/grade";
@@ -33,15 +25,16 @@ export function DiagnosisGroups({
   groups: DiagnosisGroup[];
   compact?: boolean;
 }) {
+  const t = useTranslations("diagnosis");
+  const tr = useTranslations("report");
+
   if (groups.length === 0) {
     return (
       <div className="card border-l-4 border-l-emerald-500 p-5">
         <p className="font-display font-semibold text-emerald-700">
-          No problem areas flagged 🎉
+          {tr("noProblemAreas")}
         </p>
-        <p className="mt-1 text-sm text-ink/60">
-          Every question was answered correctly and on time. Outstanding.
-        </p>
+        <p className="mt-1 text-sm text-ink/60">{tr("noProblemAreasBody")}</p>
       </div>
     );
   }
@@ -49,7 +42,6 @@ export function DiagnosisGroups({
   return (
     <div className="grid gap-3.5">
       {groups.map((group, gi) => {
-        const meta = CATEGORY_META[group.category];
         const style = CATEGORY_STYLES[group.category];
         const Icon = ICONS[group.category];
         return (
@@ -67,17 +59,15 @@ export function DiagnosisGroups({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <h4 className="font-display font-semibold text-ink">
-                    {meta.title}
+                    {t(`${group.category}.title`)}
                   </h4>
-                  <span
-                    className={`pill ${style.chipBg} ${style.chipText}`}
-                  >
+                  <span className={`pill ${style.chipBg} ${style.chipText}`}>
                     {group.items.length}
                   </span>
                 </div>
                 {!compact && (
                   <p className="mt-0.5 text-xs leading-relaxed text-ink/60">
-                    {meta.advice}
+                    {t(`${group.category}.advice`)}
                   </p>
                 )}
               </div>

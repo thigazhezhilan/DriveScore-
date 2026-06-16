@@ -19,7 +19,7 @@ export async function requestReset(
   formData: FormData,
 ): Promise<ForgotState> {
   const email = String(formData.get("email") ?? "").trim();
-  if (!email) return { error: "Enter your email address.", sent: false };
+  if (!email) return { error: "errorEnterEmail", sent: false };
 
   const origin =
     headers().get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "";

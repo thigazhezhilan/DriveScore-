@@ -9,6 +9,7 @@
  */
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getProfile } from "@/lib/db/queries";
 import { landingFor } from "@/lib/auth";
@@ -23,7 +24,7 @@ export async function login(
   const password = String(formData.get("password") ?? "");
 
   if (!email || !password) {
-    return { error: "Enter your email and password." };
+    return { error: "errorEmailPassword" };
   }
 
   const supabase = createSupabaseServerClient();
@@ -33,7 +34,7 @@ export async function login(
   });
 
   if (error || !data.user) {
-    return { error: "Incorrect email or password." };
+    return { error: "errorWrongCredentials" };
   }
 
   // Resolve role server-side (service client bypasses RLS) and route.
@@ -42,8 +43,18 @@ export async function login(
     // Authenticated but no profile/role assigned — treat as a setup problem.
     await supabase.auth.signOut();
     return {
-      error: "Your account has no role assigned. Contact your coaching centre.",
+      error: "errorNoRole",
     };
+  }
+
+  // Sync the UI language from the user's saved preference so the first load
+  // after login respects their chosen language even if the cookie was cleared.
+  if (profile.preferredLanguage === "ta") {
+    cookies().set("NEXT_LOCALE", "ta", {
+      maxAge: 60 * 60 * 24 * 365,
+      path: "/",
+      sameSite: "lax",
+    });
   }
 
   redirect(landingFor(profile.role));
