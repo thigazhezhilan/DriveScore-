@@ -30,6 +30,8 @@ DriveScore_Architecture.txt
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.run.log
+physics-bank-run.log
 
 # local env files
 .env*.local

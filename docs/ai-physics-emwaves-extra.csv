@@ -1,0 +1,3 @@
+subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
+Physics,Electromagnetic Waves,Gamma Rays vs Radio Waves Comparison,Easy,45,"Compared to radio waves, gamma rays have:",Much longer wavelength and much lower frequency,Much shorter wavelength and much higher frequency,The same wavelength,Lower energy per photon,B
+Physics,Electromagnetic Waves,Visible Region Detected by Human Eye,Easy,45,The human eye can directly detect electromagnetic waves only in the:,Radio wave region,Visible light region,X-ray region,Microwave region,B

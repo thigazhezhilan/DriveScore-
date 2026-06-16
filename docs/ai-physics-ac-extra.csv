@@ -1,0 +1,4 @@
+subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
+Physics,Alternating Current,AC Generator Energy Conversion,Easy,45,An AC generator converts:,Chemical energy into electrical energy,Mechanical energy into electrical energy,Electrical energy into mechanical energy,Thermal energy into electrical energy,B
+Physics,Alternating Current,Phasor Diagram for Inductor Voltage,Medium,75,"In a phasor diagram for a series LCR circuit, the voltage phasor across the inductor is drawn:",In phase with the current phasor,90 degrees ahead of the current phasor,90 degrees behind the current phasor,180 degrees opposite to the current phasor,B
+Physics,Alternating Current,Impedance at Very High Frequency,Medium,90,"In a series LCR circuit, as the frequency of the AC source tends to infinity, the impedance of the circuit tends to:",Zero,A value equal to R,Infinity,A value equal to XC,C
