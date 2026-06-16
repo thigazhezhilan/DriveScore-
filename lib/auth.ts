@@ -1,14 +1,6 @@
 import "server-only";
 
-/**
- * Server-side auth helpers.
- *
- * Identifies the current user from the session cookie (via the user-scoped SSR
- * client) and loads their profile/student row from the database (via the
- * service client, which bypasses RLS). Pages and layouts use these to gate by
- * role and to scope data to "me".
- */
-
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
@@ -41,8 +33,11 @@ export function landingFor(role: Profile["role"]): string {
 /**
  * The current authenticated user + profile, or null if signed out / without a
  * profile row. Does not redirect.
+ *
+ * Wrapped in React cache() so multiple server components in the same render
+ * share one result instead of each making 2 round trips to Supabase.
  */
-export async function getCurrentUser(): Promise<CurrentUser | null> {
+export const getCurrentUser = cache(async function (): Promise<CurrentUser | null> {
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -53,7 +48,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
   if (!profile) return null;
 
   return { id: user.id, email: user.email ?? null, profile };
-}
+});
 
 /** Require any logged-in user with a profile, else go to /welcome. */
 export async function requireUser(): Promise<CurrentUser> {
@@ -73,7 +68,7 @@ export async function requireRole(role: AuthRole): Promise<CurrentUser> {
 }
 
 /** The `students` row for the current user (student role), or null. */
-export async function getCurrentStudent(): Promise<{
+export const getCurrentStudent = cache(async function (): Promise<{
   id: string;
   name: string;
   centreId: string | null;
@@ -81,4 +76,4 @@ export async function getCurrentStudent(): Promise<{
   const me = await getCurrentUser();
   if (!me || me.profile.role !== "student") return null;
   return getStudentByProfileId(me.id);
-}
+});

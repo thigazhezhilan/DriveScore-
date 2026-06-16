@@ -270,11 +270,19 @@ export async function getRatingSummary(
 ): Promise<RatingSummary | null> {
   const supabase = createSupabaseServerClient(); // RLS: student reads own rows
 
-  const { data: rows, error } = await supabase
-    .from("student_ratings")
-    .select("subject, rating, level")
-    .eq("student_id", studentId);
-  if (error) throw error;
+  // Fetch ratings + latest attempt ID in parallel.
+  const [ratingsRes, latestRes] = await Promise.all([
+    supabase.from("student_ratings").select("subject, rating, level").eq("student_id", studentId),
+    supabase
+      .from("attempts")
+      .select("id")
+      .eq("student_id", studentId)
+      .not("submitted_at", "is", null)
+      .order("submitted_at", { ascending: false })
+      .limit(1),
+  ]);
+  if (ratingsRes.error) throw ratingsRes.error;
+  const rows = ratingsRes.data;
   if (!rows || rows.length === 0) return null;
 
   const bySubject = new Map(rows.map((r) => [r.subject as string, r]));
@@ -297,14 +305,7 @@ export async function getRatingSummary(
 
   // Net change from the most recent attempt (for the "+24" badge).
   let recentDelta = 0;
-  const { data: latest } = await supabase
-    .from("attempts")
-    .select("id")
-    .eq("student_id", studentId)
-    .not("submitted_at", "is", null)
-    .order("submitted_at", { ascending: false })
-    .limit(1);
-  const latestId = latest?.[0]?.id as string | undefined;
+  const latestId = latestRes.data?.[0]?.id as string | undefined;
   if (latestId) {
     const { data: events } = await supabase
       .from("rating_events")

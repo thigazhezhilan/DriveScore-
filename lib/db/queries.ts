@@ -66,32 +66,28 @@ export type MockWithQuestions = {
   questions: Question[];
 };
 
-/** A mock + its questions, ordered by `position`. */
+/** A mock + its questions, ordered by `position`. Single joined query. */
 export async function getMockWithQuestions(
   mockId: string,
 ): Promise<MockWithQuestions> {
   const supabase = getServiceClient();
 
-  const { data: mock, error: mockErr } = await supabase
+  const { data: mock, error } = await supabase
     .from("mocks")
-    .select("id, title")
+    .select(
+      "id, title, mock_questions(position, questions(id,subject,chapter,concept,difficulty,par_time_sec,text,options,answer_index,image_url))",
+    )
     .eq("id", mockId)
     .single();
-  if (mockErr) throw mockErr;
+  if (error) throw error;
 
-  const { data: rows, error: qErr } = await supabase
-    .from("mock_questions")
-    .select("position, questions(*)")
-    .eq("mock_id", mockId)
-    .order("position", { ascending: true });
-  if (qErr) throw qErr;
-
-  const questions = (rows ?? [])
-    .map((r) => r.questions as unknown as QuestionRow | null)
+  const questions = ((mock.mock_questions as unknown as { position: number; questions: QuestionRow }[]) ?? [])
+    .sort((a, b) => a.position - b.position)
+    .map((r) => r.questions)
     .filter((q): q is QuestionRow => q !== null)
     .map(toQuestion);
 
-  return { id: mock.id, title: mock.title, questions };
+  return { id: mock.id as string, title: mock.title as string, questions };
 }
 
 /**
@@ -230,9 +226,6 @@ export type LoadedAttempt = {
  * time, not stored.
  */
 export async function getAttempt(attemptId: string): Promise<LoadedAttempt | null> {
-  // User-scoped: RLS decides whether this attempt is visible to the caller.
-  // If not permitted, the row simply doesn't come back (-> null -> denied),
-  // so this holds even if the server-side ownership check were removed.
   const supabase = getUserClient();
 
   const { data: attempt, error: aErr } = await supabase
@@ -243,31 +236,34 @@ export async function getAttempt(attemptId: string): Promise<LoadedAttempt | nul
   if (aErr) throw aErr;
   if (!attempt) return null;
 
-  // Resolve the owning centre via student → batch (for access checks).
-  let centreId: string | null = null;
-  const { data: studentRow } = await supabase
-    .from("students")
-    .select("batch_id")
-    .eq("id", attempt.student_id)
-    .maybeSingle();
-  if (studentRow?.batch_id) {
+  // Run the three independent reads in parallel instead of sequentially.
+  const [studentRes, questionsResult, answersRes] = await Promise.all([
+    supabase
+      .from("students")
+      .select("centre_id, batch_id")
+      .eq("id", attempt.student_id)
+      .maybeSingle(),
+    getMockWithQuestions(attempt.mock_id as string),
+    supabase
+      .from("answers")
+      .select("question_id, picked_index, time_sec, first_answer_index")
+      .eq("attempt_id", attemptId),
+  ]);
+  if (answersRes.error) throw answersRes.error;
+
+  // centre_id is directly on students since migration 0013; batch fallback for
+  // older rows that were created before the column was backfilled.
+  let centreId: string | null = (studentRes.data?.centre_id as string | null) ?? null;
+  if (!centreId && studentRes.data?.batch_id) {
     const { data: batchRow } = await supabase
       .from("batches")
       .select("centre_id")
-      .eq("id", studentRow.batch_id)
+      .eq("id", studentRes.data.batch_id)
       .maybeSingle();
     centreId = (batchRow?.centre_id as string | null) ?? null;
   }
 
-  const { questions } = await getMockWithQuestions(attempt.mock_id as string);
-
-  const { data: answerRows, error: ansErr } = await supabase
-    .from("answers")
-    .select("question_id, picked_index, time_sec, first_answer_index")
-    .eq("attempt_id", attemptId);
-  if (ansErr) throw ansErr;
-
-  const attempts: Attempt[] = (answerRows ?? []).map((r) => ({
+  const attempts: Attempt[] = (answersRes.data ?? []).map((r) => ({
     questionId: r.question_id as string,
     pickedIndex: (r.picked_index as number | null) ?? null,
     timeSec: (r.time_sec as number) ?? 0,
@@ -276,7 +272,7 @@ export async function getAttempt(attemptId: string): Promise<LoadedAttempt | nul
 
   return {
     attemptId: attempt.id as string,
-    questions,
+    questions: questionsResult.questions,
     attempts,
     submittedAt: (attempt.submitted_at as string | null) ?? null,
     studentId: attempt.student_id as string,
@@ -372,25 +368,30 @@ export async function listStudentsForCentre(
   if (error) throw error;
 
   const rows = students ?? [];
-  // Latest submitted attempt per student (small data set — fetch per student).
-  const result: StudentListRow[] = [];
-  for (const s of rows) {
-    const { data: latest } = await supabase
-      .from("attempts")
-      .select("id, submitted_at")
-      .eq("student_id", s.id)
-      .not("submitted_at", "is", null)
-      .order("submitted_at", { ascending: false })
-      .limit(1);
-    result.push({
-      id: s.id,
-      name: s.name,
-      batchName: batchName.get(s.batch_id) ?? "—",
-      hasLogin: s.profile_id !== null,
-      latestAttemptId: latest?.[0]?.id ?? null,
-    });
+  if (rows.length === 0) return [];
+
+  // One bulk query for all students' latest attempts instead of N per-student queries.
+  const studentIds = rows.map((s) => s.id as string);
+  const { data: allAttempts } = await supabase
+    .from("attempts")
+    .select("id, student_id")
+    .in("student_id", studentIds)
+    .not("submitted_at", "is", null)
+    .order("submitted_at", { ascending: false });
+
+  const latestByStudent = new Map<string, string>();
+  for (const a of allAttempts ?? []) {
+    const sid = a.student_id as string;
+    if (!latestByStudent.has(sid)) latestByStudent.set(sid, a.id as string);
   }
-  return result;
+
+  return rows.map((s) => ({
+    id: s.id,
+    name: s.name,
+    batchName: batchName.get(s.batch_id) ?? "—",
+    hasLogin: s.profile_id !== null,
+    latestAttemptId: latestByStudent.get(s.id) ?? null,
+  }));
 }
 
 /** Students in a specific batch (for the teacher dashboard). */
@@ -412,24 +413,30 @@ export async function listStudentsForBatch(
     .order("created_at", { ascending: true });
   if (error) throw error;
 
-  const result: StudentListRow[] = [];
-  for (const s of students ?? []) {
-    const { data: latest } = await supabase
-      .from("attempts")
-      .select("id, submitted_at")
-      .eq("student_id", s.id)
-      .not("submitted_at", "is", null)
-      .order("submitted_at", { ascending: false })
-      .limit(1);
-    result.push({
-      id: s.id,
-      name: s.name,
-      batchName,
-      hasLogin: s.profile_id !== null,
-      latestAttemptId: latest?.[0]?.id ?? null,
-    });
+  const rows = students ?? [];
+  if (rows.length === 0) return [];
+
+  const studentIds = rows.map((s) => s.id as string);
+  const { data: allAttempts } = await supabase
+    .from("attempts")
+    .select("id, student_id")
+    .in("student_id", studentIds)
+    .not("submitted_at", "is", null)
+    .order("submitted_at", { ascending: false });
+
+  const latestByStudent = new Map<string, string>();
+  for (const a of allAttempts ?? []) {
+    const sid = a.student_id as string;
+    if (!latestByStudent.has(sid)) latestByStudent.set(sid, a.id as string);
   }
-  return result;
+
+  return rows.map((s) => ({
+    id: s.id,
+    name: s.name,
+    batchName,
+    hasLogin: s.profile_id !== null,
+    latestAttemptId: latestByStudent.get(s.id) ?? null,
+  }));
 }
 
 /** The batch a teacher owns (one per teacher for now). */
