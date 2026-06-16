@@ -18,6 +18,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { NAV_LINKS, DEMO_MAILTO } from "@/lib/marketing";
 
 export function MarketingNav() {
@@ -69,6 +70,7 @@ export function MarketingNav() {
 
         {/* Desktop actions */}
         <div className="hidden items-center gap-2 lg:flex">
+          <LanguageToggle dark />
           <Link
             href="/welcome#student-login"
             className="rounded-xl px-3.5 py-2 text-sm font-semibold text-paper/70 transition hover:bg-white/5 hover:text-paper"
@@ -115,6 +117,9 @@ export function MarketingNav() {
               </Link>
             ))}
             <div className="mt-2 flex flex-col gap-2 border-t border-white/10 pt-3">
+              <div className="flex justify-center py-1">
+                <LanguageToggle dark />
+              </div>
               <Link
                 href="/welcome#student-login"
                 className="rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-center text-base font-semibold text-paper transition hover:bg-white/10"
