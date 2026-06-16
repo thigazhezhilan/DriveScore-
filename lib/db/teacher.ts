@@ -14,7 +14,14 @@ import "server-only";
  */
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import type { Subject } from "@/lib/types";
+import type { Difficulty, Subject } from "@/lib/types";
+import {
+  rollupAnswersToDiagnosis,
+  type AnswerForRollup,
+  type DiagnosisCounts,
+} from "../teacher-rollup";
+
+export type { DiagnosisCounts };
 
 /** A student rated below "Scholar" on a chapter is counted as struggling. */
 const SCHOLAR_FLOOR = 1050;
@@ -54,6 +61,8 @@ export type TeacherInsights = {
   leaderboard: ClassStudent[];
   weakChapters: WeakChapter[];
   stats: ClassStats;
+  /** Per-chapter diagnosis breakdown keyed by "subject|chapter". Additive — does not affect other fields. */
+  diagnosisByChapter: Record<string, DiagnosisCounts>;
 };
 
 export async function getTeacherClassInsights(
@@ -68,7 +77,7 @@ export async function getTeacherClassInsights(
     avgRating: null,
     attemptsThisWeek: 0,
   };
-  const base = { students: [], leaderboard: [], weakChapters: [], stats: emptyStats };
+  const base = { students: [], leaderboard: [], weakChapters: [], stats: emptyStats, diagnosisByChapter: {} };
 
   const { data: studentRows, error: sErr } = await sb
     .from("students")
@@ -184,5 +193,82 @@ export async function getTeacherClassInsights(
     attemptsThisWeek,
   };
 
-  return { students, leaderboard, weakChapters, stats };
+  // ── Diagnosis rollup ────────────────────────────────────────────────────────
+  // Collect recent attempt IDs + their owning student from the already-loaded
+  // attempt data so we don't need another round trip to the DB for student IDs.
+  const recentAttemptIds: string[] = [];
+  const attemptToStudent = new Map<string, string>();
+  for (const a of attemptRes.data ?? []) {
+    if (new Date(a.submitted_at as string).getTime() >= weekAgoMs) {
+      recentAttemptIds.push(a.id as string);
+      attemptToStudent.set(a.id as string, a.student_id as string);
+    }
+  }
+
+  let diagnosisByChapter: Record<string, DiagnosisCounts> = {};
+
+  if (recentAttemptIds.length > 0) {
+    const t0 = performance.now();
+
+    // One joined query: answers + the question fields needed for diagnosis.
+    // answer_index reaches the server only — counts are the only thing returned
+    // to the client UI, never the key itself.
+    const { data: ansRows } = await sb
+      .from("answers")
+      .select(
+        "attempt_id, picked_index, time_sec, first_answer_index, questions(id, subject, chapter, difficulty, par_time_sec, answer_index)",
+      )
+      .in("attempt_id", recentAttemptIds);
+
+    type AnsRow = {
+      attempt_id: string;
+      picked_index: number | null;
+      time_sec: number | null;
+      first_answer_index: number | null;
+      questions: {
+        id: string;
+        subject: string;
+        chapter: string;
+        difficulty: string;
+        par_time_sec: number;
+        answer_index: number;
+      } | null;
+    };
+
+    const rollupInputs: AnswerForRollup[] = [];
+    for (const row of (ansRows as AnsRow[] | null) ?? []) {
+      const q = row.questions;
+      if (!q) continue;
+      const studentId = attemptToStudent.get(row.attempt_id);
+      if (!studentId) continue;
+      rollupInputs.push({
+        attemptId: row.attempt_id,
+        studentId,
+        question: {
+          id: q.id,
+          subject: q.subject as Subject,
+          chapter: q.chapter,
+          concept: "",
+          difficulty: q.difficulty as Difficulty,
+          parTimeSec: q.par_time_sec,
+          text: "",
+          options: [],
+          answerIndex: q.answer_index,
+          imageUrl: null,
+        },
+        pickedIndex: row.picked_index,
+        timeSec: row.time_sec ?? 0,
+        firstPickedIndex: row.first_answer_index,
+      });
+    }
+
+    diagnosisByChapter = rollupAnswersToDiagnosis(rollupInputs);
+
+    const elapsed = (performance.now() - t0).toFixed(1);
+    console.log(
+      `[TeacherInsights] Diagnosis rollup: ${elapsed}ms — ${rollupInputs.length} answers across ${recentAttemptIds.length} recent attempts`,
+    );
+  }
+
+  return { students, leaderboard, weakChapters, stats, diagnosisByChapter };
 }

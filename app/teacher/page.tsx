@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { getCurrentUser, landingFor } from "@/lib/auth";
 import { getTeacherClassInsights } from "@/lib/db/teacher";
+import type { DiagnosisCounts } from "@/lib/db/teacher";
+import type { DiagnosisCategory } from "@/lib/types";
 import { CreateStudentForm } from "@/components/admin/CreateStudentForm";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import { LoginForm } from "@/components/auth/LoginForm";
@@ -52,6 +54,33 @@ const SUBJECT_ABBR: Record<Subject, string> = {
   Chemistry: "Chem",
   Biology: "Bio",
 };
+
+const DIAG_LABEL: Partial<Record<DiagnosisCategory, string>> = {
+  CONCEPT_GAP: "Concept Gap",
+  GUESS: "Guessing",
+  CARELESS: "Careless",
+  TOO_SLOW: "Too Slow",
+  TIME_MANAGEMENT: "Time Mgmt",
+  SELF_DOUBT: "Self-Doubt",
+};
+
+function DiagnosisReasonLine({ counts }: { counts: DiagnosisCounts | undefined }) {
+  if (!counts) return null;
+  const sorted = (Object.entries(counts) as [DiagnosisCategory, number][])
+    .filter(([, n]) => n > 0)
+    .sort(([, a], [, b]) => b - a);
+  if (sorted.length === 0) return null;
+  return (
+    <p className="mt-0.5 min-w-0 flex-wrap text-[10px] leading-4 text-paper/40">
+      {sorted.map(([cat, n], i) => (
+        <span key={cat}>
+          {i > 0 && <span className="mx-1 opacity-40">·</span>}
+          {DIAG_LABEL[cat] ?? cat}: {n}
+        </span>
+      ))}
+    </p>
+  );
+}
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 const barPct = (rating: number) =>
@@ -113,8 +142,8 @@ export default async function TeacherPage() {
   const centreId = me.profile.centreId;
   const insights = centreId
     ? await getTeacherClassInsights(centreId)
-    : { students: [], leaderboard: [], weakChapters: [], stats: { totalStudents: 0, withLogins: 0, activeThisWeek: 0, ratedStudents: 0, avgRating: null, attemptsThisWeek: 0 } };
-  const { students, leaderboard, weakChapters, stats } = insights;
+    : { students: [], leaderboard: [], weakChapters: [], stats: { totalStudents: 0, withLogins: 0, activeThisWeek: 0, ratedStudents: 0, avgRating: null, attemptsThisWeek: 0 }, diagnosisByChapter: {} };
+  const { students, leaderboard, weakChapters, stats, diagnosisByChapter } = insights;
 
   const statCards = [
     { label: "Students", value: fmt(stats.totalStudents), sub: `${stats.withLogins} with login` },
@@ -229,6 +258,7 @@ export default async function TeacherPage() {
                         </span>
                       )}
                     </div>
+                    <DiagnosisReasonLine counts={diagnosisByChapter[`${c.subject}|${c.chapter}`]} />
                   </div>
                 ))}
               </div>

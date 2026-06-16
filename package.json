@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx lib/diagnose.test.ts && tsx lib/diagnose.v2.test.ts && tsx lib/grade.test.ts && tsx lib/rating.test.ts && tsx lib/mastery.test.ts",
+    "test": "tsx lib/diagnose.test.ts && tsx lib/diagnose.v2.test.ts && tsx lib/grade.test.ts && tsx lib/rating.test.ts && tsx lib/mastery.test.ts && tsx lib/teacher-rollup.test.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "db:seed": "tsx scripts/seed.ts"
