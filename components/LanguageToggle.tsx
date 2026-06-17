@@ -28,7 +28,7 @@ export function LanguageToggle({ dark = false }: { dark?: boolean }) {
     >
       <Languages className="h-3.5 w-3.5 shrink-0" />
       <span className="hidden sm:inline">{t("toggle")}</span>
-      <span className="sm:hidden">{locale === "en" ? "தமிழ்" : "EN"}</span>
+      <span className="sm:hidden">{locale === "en" ? t("ta") : "EN"}</span>
     </button>
   );
 }
