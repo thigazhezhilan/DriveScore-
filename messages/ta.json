@@ -102,9 +102,7 @@
     "report": "அறிக்கை",
     "overallLevel": "ஒட்டுமொத்த நிலை",
     "topLevelReached": "உச்ச நிலை அடைந்தீர்கள் — வைட் கோட் 🥼",
-    "pointsToNext": "{next} நிலைக்கு {points} புள்ளிகள்",
-    "focusTitle": "என் கவனம்",
-    "focusSubtitle": "உங்கள் அடுத்த வினாக்கள் தயாராக உள்ளன"
+    "pointsToNext": "{next} நிலைக்கு {points} புள்ளிகள்"
   },
   "report": {
     "eyebrow": "பகுப்பாய்வு அறிக்கை",
@@ -418,26 +416,6 @@
     "statusInProgress": "நடப்பில்",
     "statusRevisit": "மீண்டும் படி",
     "statusLocked": "பூட்டப்பட்டது"
-  },
-  "focus": {
-    "pageTitle": "என் கவனம்",
-    "back": "பின்னே",
-    "todayHeading": "இன்றைய கவனம்",
-    "todayAction": "{chapter} பாடத்தில் {gateLabel} நிலை {count} வினாக்களை தீர்க்கவும்",
-    "todayTime": "~{min} நிமிடம்",
-    "startBtn": "பயிற்சி தொடங்கு",
-    "generating": "வினாக்கள் தயாரிக்கிறோம்…",
-    "weekHeading": "இந்த வாரத்தின் எல்லை",
-    "weekGate": "{gateLabel} வாயில்",
-    "weekProgress": "{required} இல் {strong} வலிமையான பதில்கள்",
-    "weekReady": "அனைத்து {required} முடிந்தன — வாயில் கிட்டத்தட்ட திறக்கும்!",
-    "strongLabel": "வலிமையான பதில்கள்",
-    "revisitHeading": "மீண்டும் படிக்க வேண்டியது",
-    "revisitWhy": "இங்கே உங்கள் துல்லியம் குறைந்தது — ஒரு சிறு அமர்வு அதை நிலைப்படுத்தும்.",
-    "revisitBtn": "இப்போது மீண்டும் படி",
-    "emptyTitle": "இன்னும் வினா இல்லை",
-    "emptyBody": "முதல் அத்தியாயத்தைத் தொடங்க மாஸ்டரி ரோட்டிற்கு செல்லுங்கள்.",
-    "goRoad": "மாஸ்டரி ரோட் திறக்கவும்"
   },
   "language": {
     "toggle": "English / தமிழ்",

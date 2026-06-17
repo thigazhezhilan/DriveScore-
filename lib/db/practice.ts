@@ -312,14 +312,13 @@ export async function createMockFromQuestionIds(
   studentId: string,
   title: string,
   questionIds: string[],
-  kind: "lesson" | "focus" = "lesson",
 ): Promise<string> {
   const supabase = getServiceClient();
   const { data: mock, error } = await supabase
     .from("mocks")
     .insert({
       centre_id: null, batch_id: null, owner_student_id: studentId,
-      kind, title, status: "published", max_attempts: 1,
+      kind: "lesson", title, status: "published", max_attempts: 1,
     })
     .select("id").single();
   if (error) throw error;
@@ -330,27 +329,6 @@ export async function createMockFromQuestionIds(
     if (e2) throw e2;
   }
   return mockId;
-}
-
-/**
- * Generate a focus-practice mock for the student's current frontier gate.
- * Identical to generateGateMock but tags the mock with kind = "focus" so it
- * is invisible to teacher analytics (focus is student-private by design).
- */
-export async function generateFocusMock(
-  studentId: string,
-  subject: Subject,
-  chapter: string,
-  difficulties: Difficulty[],
-  title: string,
-  count: number,
-): Promise<string | null> {
-  let ids = await sampleChapterIdsByDifficulty(subject, chapter, difficulties, count);
-  if (ids.length === 0) {
-    ids = await sampleChapterIdsByDifficulty(subject, chapter, null, count);
-  }
-  if (ids.length === 0) return null;
-  return createMockFromQuestionIds(studentId, title, ids, "focus");
 }
 
 /** The correct option index for one question (server-only check). */

@@ -94,10 +94,7 @@ export async function getTeacherClassInsights(
   // Bulk reads, all RLS-scoped to the teacher's students.
   const [ratingRes, attemptRes, eventRes, chapterRes] = await Promise.all([
     sb.from("student_ratings").select("student_id, rating, level").in("student_id", ids).eq("subject", "Overall"),
-    // mock_id is included so the diagnosis rollup can filter out focus-practice
-    // attempts (focus mocks have centre_id = NULL so they are invisible to teachers
-    // via RLS — we use that visibility check to enforce privacy below).
-    sb.from("attempts").select("id, student_id, submitted_at, mock_id").in("student_id", ids).not("submitted_at", "is", null).order("submitted_at", { ascending: false }),
+    sb.from("attempts").select("id, student_id, submitted_at").in("student_id", ids).not("submitted_at", "is", null).order("submitted_at", { ascending: false }),
     sb.from("rating_events").select("student_id, delta").in("student_id", ids).gte("created_at", weekAgoIso),
     sb.from("student_chapter_ratings").select("subject, chapter, rating").in("student_id", ids),
   ]);
@@ -197,28 +194,12 @@ export async function getTeacherClassInsights(
   };
 
   // ── Diagnosis rollup ────────────────────────────────────────────────────────
-  // Collect recent attempt IDs whose mock is VISIBLE to this teacher. Focus mocks
-  // have centre_id = NULL so the teacher's mocks_select RLS excludes them — this
-  // is the privacy guarantee for the focus feature: focus-practice answers never
-  // reach the teacher diagnosis rollup.
-  const recentCandidateAttempts = (attemptRes.data ?? []).filter(
-    (a) => new Date(a.submitted_at as string).getTime() >= weekAgoMs,
-  );
-  const candidateMockIds = [...new Set(recentCandidateAttempts.map((a) => a.mock_id as string))];
-
-  const visibleMockIdSet = new Set<string>();
-  if (candidateMockIds.length > 0) {
-    const { data: visibleMocks } = await sb
-      .from("mocks")
-      .select("id")
-      .in("id", candidateMockIds);
-    for (const m of visibleMocks ?? []) visibleMockIdSet.add(m.id as string);
-  }
-
+  // Collect recent attempt IDs + their owning student from the already-loaded
+  // attempt data so we don't need another round trip to the DB for student IDs.
   const recentAttemptIds: string[] = [];
   const attemptToStudent = new Map<string, string>();
-  for (const a of recentCandidateAttempts) {
-    if (visibleMockIdSet.has(a.mock_id as string)) {
+  for (const a of attemptRes.data ?? []) {
+    if (new Date(a.submitted_at as string).getTime() >= weekAgoMs) {
       recentAttemptIds.push(a.id as string);
       attemptToStudent.set(a.id as string, a.student_id as string);
     }

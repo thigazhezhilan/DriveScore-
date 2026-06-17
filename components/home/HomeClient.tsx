@@ -14,7 +14,6 @@ import {
   Mountain,
   RotateCcw,
   Timer,
-  Zap,
 } from "lucide-react";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -93,24 +92,8 @@ export function HomeClient({
         {/* Skill level — Elo-based, motivating, no raw rank ladder */}
         {rating && <LevelCard rating={rating} />}
 
-        {/* Focus card — today's quest (always first, student's #1 action) */}
-        <Link
-          href="/focus"
-          className="card-glass-lg animate-fade-up mt-4 group flex items-center gap-3.5 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
-          style={{ animationDelay: "80ms" }}
-        >
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]">
-            <Zap className="h-5 w-5" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="font-display font-bold text-paper">{t("focusTitle")}</p>
-            <p className="text-xs text-paper/55">{t("focusSubtitle")}</p>
-          </div>
-          <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
-        </Link>
-
         {/* Quick actions — practice + road + progress (side by side on laptop) */}
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <Link
             href="/practice"
             className="card-glass animate-fade-up group flex items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
