@@ -102,7 +102,9 @@
     "report": "Report",
     "overallLevel": "Overall level",
     "topLevelReached": "Top level reached — White Coat 🥼",
-    "pointsToNext": "{points} to {next}"
+    "pointsToNext": "{points} to {next}",
+    "focusTitle": "My Focus",
+    "focusSubtitle": "Your next quest is ready"
   },
   "report": {
     "eyebrow": "Diagnosis report",
@@ -416,6 +418,26 @@
     "statusInProgress": "In progress",
     "statusRevisit": "Revisit",
     "statusLocked": "Locked"
+  },
+  "focus": {
+    "pageTitle": "My Focus",
+    "back": "Back",
+    "todayHeading": "Today's focus",
+    "todayAction": "Solve {count} {gateLabel}-tier questions in {chapter}",
+    "todayTime": "~{min} min",
+    "startBtn": "Start Practice",
+    "generating": "Building your set…",
+    "weekHeading": "This week's frontier",
+    "weekGate": "{gateLabel} gate",
+    "weekProgress": "{strong} of {required} strong answers",
+    "weekReady": "All {required} done — gate almost clear!",
+    "strongLabel": "strong answers",
+    "revisitHeading": "Worth revisiting",
+    "revisitWhy": "Your accuracy here has dipped — a quick session will lock it in.",
+    "revisitBtn": "Revisit Now",
+    "emptyTitle": "No quest yet",
+    "emptyBody": "Head to the mastery road to begin your first chapter.",
+    "goRoad": "Open Mastery Road"
   },
   "language": {
     "toggle": "English / தமிழ்",
