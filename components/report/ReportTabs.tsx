@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { GraduationCap, RotateCcw, Stethoscope, Users } from "lucide-react";
+import { GraduationCap, Home, Stethoscope, Users } from "lucide-react";
 import { useSession } from "@/lib/session";
 import type { Report } from "@/lib/grade";
 import type { Role } from "@/lib/types";
@@ -76,7 +76,7 @@ export function ReportTabs({
             className="btn-ghost px-3 py-2 text-xs"
             aria-label={t("retake")}
           >
-            <RotateCcw className="h-4 w-4" />
+            <Home className="h-4 w-4" />
             {t("retake")}
           </button>
         </div>
