@@ -224,9 +224,9 @@ async function main() {
     const { error } = await supabase
       .from("questions")
       .update({
-        tamil_question_text:     t.tamil_question_text,
-        tamil_options:           t.tamil_options,
-        tamil_explanation:       t.tamil_explanation,
+        body_ta:                 t.tamil_question_text,
+        options_ta:              t.tamil_options,
+        explanation_ta:          t.tamil_explanation,
         tamil_status:            tamilStatus,
         tamil_confidence_notes:  t.model_observations,
         tamil_validation_result: validationResult,

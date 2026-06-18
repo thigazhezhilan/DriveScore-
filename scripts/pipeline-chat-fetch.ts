@@ -113,13 +113,13 @@ async function main() {
   const limit   = parseInt(getArg("--limit") ?? "1", 10);
 
   // ── Fetch questions ──────────────────────────────────────────────────────────
-  type QRow = { id: string; text: string; options: string[]; subject: string; chapter: string | null; difficulty: string | null };
+  type QRow = { id: string; body_en: string; options_en: string[]; subject: string; chapter: string | null; difficulty: string | null };
   let questions: QRow[] = [];
 
   if (id) {
     const { data, error } = await supabase
       .from("questions")
-      .select("id, text, options, subject, chapter, difficulty")
+      .select("id, body_en, options_en, subject, chapter, difficulty")
       .eq("id", id)
       .single();
     if (error || !data) throw new Error("Question not found: " + (error?.message ?? ""));
@@ -127,7 +127,7 @@ async function main() {
   } else {
     let q = supabase
       .from("questions")
-      .select("id, text, options, subject, chapter, difficulty")
+      .select("id, body_en, options_en, subject, chapter, difficulty")
       .eq("tamil_status", status);
     if (subject) q = q.eq("subject", subject);
     const { data, error } = await q.limit(limit);
@@ -160,7 +160,7 @@ async function main() {
 
   for (let idx = 0; idx < questions.length; idx++) {
     const q = questions[idx];
-    const allText = q.text + " " + (q.options ?? []).join(" ");
+    const allText = q.body_en + " " + (q.options_en ?? []).join(" ");
 
     const glossaryMatches = await lookupGlossary(supabase, allText, q.subject);
     const retrievedChunks = await lookupChunks(supabase, q.subject, q.chapter);
@@ -168,9 +168,9 @@ async function main() {
     console.log(`\n── [${idx + 1}/${questions.length}] ─────────────────────────────────────`);
     console.log(`ID       : ${q.id}`);
     console.log(`Subject  : ${q.subject}  |  Chapter: ${q.chapter ?? "—"}  |  Difficulty: ${q.difficulty ?? "—"}`);
-    console.log(`\nQuestion : ${q.text}`);
+    console.log(`\nQuestion : ${q.body_en}`);
     console.log(`\nOptions  :`);
-    (q.options ?? []).forEach((opt, i) => console.log(`  ${String.fromCharCode(65 + i)}. ${opt}`));
+    (q.options_en ?? []).forEach((opt, i) => console.log(`  ${String.fromCharCode(65 + i)}. ${opt}`));
 
     console.log(`\nGlossary matches (${glossaryMatches.length}):`);
     if (glossaryMatches.length === 0) {
@@ -192,8 +192,8 @@ async function main() {
 
     queue.push({
       questionId:       q.id,
-      question_text:    q.text,
-      options:          q.options ?? [],
+      question_text:    q.body_en,
+      options:          q.options_en ?? [],
       subject:          q.subject,
       chapter:          q.chapter,
       glossaryMatches,
