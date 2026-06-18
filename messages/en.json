@@ -422,5 +422,25 @@
     "en": "English",
     "ta": "தமிழ்",
     "switchTo": "Switch language"
+  },
+  "languageSelect": {
+    "title": "Choose your language",
+    "subtitle": "This choice is permanent and cannot be changed later — all questions and the app interface will be in the language you pick.",
+    "lockNotice": "Locked permanently once chosen",
+    "enLabel": "English",
+    "enDesc": "All questions and the interface in English",
+    "enBtn": "Choose English →",
+    "taLabel": "தமிழ்",
+    "taDesc": "கேள்விகளும் செயலியும் தமிழில்",
+    "taBtn": "தமிழ் தேர்வு செய் →",
+    "errorPick": "Pick a language to continue.",
+    "errorAuth": "Not authenticated.",
+    "errorAlreadyLocked": "Your language is already locked and cannot be changed.",
+    "errorSave": "Could not save your choice. Please try again."
+  },
+  "settings": {
+    "language": "Language",
+    "languageLocked": "Language is locked and cannot be changed.",
+    "languageLockedNote": "Your language preference is permanently set. This ensures your diagnosis data, Elo ratings, and analytics remain consistent."
   }
 }

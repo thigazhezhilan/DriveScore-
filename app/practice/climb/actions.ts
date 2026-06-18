@@ -28,13 +28,14 @@ export async function nextClimbQuestion(
   rung: number,
   seenIds: string[],
   source: "pyq" | "ai" = "pyq",
+  locale: "en" | "ta" = "en",
 ): Promise<ClimbQuestion | null> {
   const student = await getCurrentStudent();
   if (!student) return null;
   const subject = SUBJECTS.find((s) => s === subjectIn) as Subject | undefined;
   if (!subject || !chapter) return null;
   const difficulty = DIFFS[Math.max(0, Math.min(2, rung))] ?? "Easy";
-  return sampleClimbQuestion(subject, chapter, difficulty, seenIds.slice(0, 500), source);
+  return sampleClimbQuestion(subject, chapter, difficulty, seenIds.slice(0, 500), source, locale);
 }
 
 /** Student flags a question as wrong (crowd QA for AI questions). */

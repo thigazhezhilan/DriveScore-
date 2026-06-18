@@ -54,19 +54,23 @@ function shuffle<T>(arr: T[]): T[] {
  */
 export async function listGlobalSyllabus(
   source: "pyq" | "ai" = "pyq",
+  locale: "en" | "ta" = "en",
 ): Promise<SubjectSyllabus[]> {
   const supabase = getServiceClient();
   // Paginate: Supabase caps a single select at 1000 rows. The global AI pool now
   // exceeds 1000, so a single query would truncate and undercount later chapters.
   const rows: { subject: string; chapter: string }[] = [];
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await supabase
+    let query = supabase
       .from("questions")
       .select("subject, chapter")
       .is("centre_id", null)
       .eq("source", source)
       .eq("hidden", false)
       .range(from, from + 999);
+    // Tamil students only see chapters/counts for questions with Tamil content.
+    if (locale === "ta") query = query.not("body_ta", "is", null);
+    const { data, error } = await query;
     if (error) throw error;
     rows.push(...((data ?? []) as { subject: string; chapter: string }[]));
     if (!data || data.length < 1000) break;
@@ -91,6 +95,7 @@ async function sampleGlobalIds(
   subject: Subject,
   chapter: string | null,
   count: number,
+  locale: "en" | "ta" = "en",
 ): Promise<string[]> {
   const supabase = getServiceClient();
   // Paginate past Supabase's 1000-row cap so large pools (e.g. Biology) sample
@@ -106,6 +111,9 @@ async function sampleGlobalIds(
       .eq("subject", subject)
       .range(from, from + 999);
     if (chapter) query = query.eq("chapter", chapter);
+    // Strict language filter: Tamil students only receive questions that have
+    // Tamil content (body_ta IS NOT NULL). English students always have content.
+    if (locale === "ta") query = query.not("body_ta", "is", null);
 
     const { data, error } = await query;
     if (error) throw error;
@@ -161,8 +169,9 @@ export async function generateLessonMock(
   subject: Subject,
   chapter: string,
   count = 15,
+  locale: "en" | "ta" = "en",
 ): Promise<string | null> {
-  const ids = await sampleGlobalIds(subject, chapter, count);
+  const ids = await sampleGlobalIds(subject, chapter, count, locale);
   if (ids.length === 0) return null;
   return createGeneratedMock(studentId, "lesson", `${chapter} — practice`, ids);
 }
@@ -269,6 +278,7 @@ export async function sampleClimbQuestion(
   difficulty: Difficulty | null,
   excludeIds: string[],
   source: "pyq" | "ai" = "pyq",
+  locale: "en" | "ta" = "en",
 ): Promise<ClimbQuestion | null> {
   const supabase = getServiceClient();
   const ex = new Set(excludeIds);
@@ -277,6 +287,8 @@ export async function sampleClimbQuestion(
       .eq("source", source).eq("hidden", false)
       .eq("subject", subject).eq("chapter", chapter);
     if (diff) q = q.eq("difficulty", diff);
+    // Strict language filter: Tamil students must only receive questions with Tamil content.
+    if (locale === "ta") q = q.not("body_ta", "is", null);
     const { data } = await q;
     return (data ?? []).map((r) => r.id as string).filter((id) => !ex.has(id));
   };
@@ -287,7 +299,7 @@ export async function sampleClimbQuestion(
   const pick = ids[Math.floor(Math.random() * ids.length)];
   const { data, error } = await supabase
     .from("questions")
-    .select("id, subject, chapter, concept, difficulty, par_time_sec, text, options, image_url")
+    .select("id, subject, chapter, concept, difficulty, par_time_sec, body_en, options_en, image_url, body_ta, options_ta, tamil_status")
     .eq("id", pick).single();
   if (error || !data) return null;
   return {
@@ -297,9 +309,12 @@ export async function sampleClimbQuestion(
     concept: data.concept,
     difficulty: data.difficulty as Difficulty,
     parTimeSec: data.par_time_sec,
-    text: data.text,
-    options: (data.options as string[]) ?? [],
+    text: data.body_en,
+    options: (data.options_en as string[]) ?? [],
     imageUrl: (data.image_url as string | null) ?? null,
+    bodyTa: (data.body_ta as string | null) ?? null,
+    optionsTa: (data.options_ta as string[] | null) ?? null,
+    tamilStatus: (data.tamil_status as string | null) ?? null,
   };
 }
 

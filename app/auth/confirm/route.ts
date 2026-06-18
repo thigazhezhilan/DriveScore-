@@ -17,6 +17,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { EmailOtpType } from "@supabase/supabase-js";
+import { getServiceClient } from "@/lib/db/client";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -56,5 +57,28 @@ export async function GET(request: NextRequest) {
   if (!ok) {
     return NextResponse.redirect(new URL("/forgot-password?error=expired", origin));
   }
+
+  // Sync NEXT_LOCALE cookie from the user's saved preferred_language so the
+  // first page load after email confirmation is already in the right language.
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const service = getServiceClient();
+      const { data: profile } = await service
+        .from("profiles")
+        .select("preferred_language")
+        .eq("id", user.id)
+        .maybeSingle();
+      const locale = profile?.preferred_language === "ta" ? "ta" : "en";
+      response.cookies.set("NEXT_LOCALE", locale, {
+        maxAge: 60 * 60 * 24 * 365,
+        path: "/",
+        sameSite: "lax",
+      });
+    }
+  } catch {
+    // Non-fatal — locale defaults to 'en' if this fails.
+  }
+
   return response;
 }

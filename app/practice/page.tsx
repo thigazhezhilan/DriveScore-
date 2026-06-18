@@ -44,14 +44,15 @@ export default async function PracticePage({
 }: {
   searchParams: { error?: string; track?: string };
 }) {
-  await requireRole("student");
+  const me = await requireRole("student");
   const tp = await getTranslations("practice");
   const tc = await getTranslations("common");
 
+  const locale = me.profile.preferredLanguage === "ta" ? "ta" : "en";
   const track: "pyq" | "ai" = searchParams.track === "ai" ? "ai" : "pyq";
   let syllabus: Awaited<ReturnType<typeof listGlobalSyllabus>> = [];
   try {
-    syllabus = await listGlobalSyllabus(track);
+    syllabus = await listGlobalSyllabus(track, locale);
   } catch {
     syllabus = [];
   }

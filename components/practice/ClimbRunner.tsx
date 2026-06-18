@@ -13,7 +13,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getTamilContent } from "@/lib/tamil/guard";
 import {
   ArrowRight, CheckCircle2, Flag, Flame, Heart, Loader2, XCircle, Zap,
 } from "lucide-react";
@@ -26,6 +27,9 @@ type Q = {
   id: string; subject: string; chapter: string; concept: string;
   difficulty: Difficulty; parTimeSec: number; text: string;
   options: string[]; imageUrl: string | null;
+  bodyTa?: string | null;
+  optionsTa?: string[] | null;
+  tamilStatus?: string | null;
 };
 
 const DIFF_MULT: Record<Difficulty, number> = { Easy: 1, Medium: 1.5, Hard: 2 };
@@ -46,7 +50,8 @@ export function ClimbRunner({
 }) {
   const t = useTranslations("practice");
   const router = useRouter();
-  const [phase, setPhase] = useState<"loading" | "answering" | "feedback" | "finishing" | "error">("loading");
+  const locale = useLocale() as "en" | "ta";
+  const [phase, setPhase] = useState<"loading" | "answering" | "feedback" | "finishing" | "error" | "empty">("loading");
   const [hp, setHp] = useState(START_HP);
   const [rung, setRung] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -70,7 +75,7 @@ export function ClimbRunner({
   /** Fetch the next question for a rung. Returns false if the pool is exhausted. */
   async function load(forRung: number): Promise<boolean> {
     setPhase("loading");
-    const next = await nextClimbQuestion(subject, chapter, forRung, seenRef.current, source);
+    const next = await nextClimbQuestion(subject, chapter, forRung, seenRef.current, source, locale);
     if (!next) return false;
     seenRef.current = [...seenRef.current, next.id];
     setQ(next as Q);
@@ -95,7 +100,17 @@ export function ClimbRunner({
   }
 
   useEffect(() => {
-    (async () => { if (!(await load(0))) await finishAndGo(); })();
+    (async () => {
+      const ok = await load(0);
+      if (!ok) {
+        // No questions available (e.g. no Tamil-translated questions for this chapter).
+        if (answersRef.current.length === 0) {
+          setPhase("empty");
+        } else {
+          await finishAndGo();
+        }
+      }
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -141,6 +156,40 @@ export function ClimbRunner({
   };
 
   const hpColor = hp > 50 ? "bg-energy" : hp > 20 ? "bg-reward" : "bg-pop";
+  const localised = q
+    ? getTamilContent(
+        {
+          text: q.text,
+          options: q.options,
+          explanation: null,
+          bodyTa: q.bodyTa,
+          optionsTa: q.optionsTa,
+          explanationTa: null,
+        },
+        locale,
+      )
+    : null;
+
+  if (phase === "empty") {
+    return (
+      <main className="student-skin mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-5 text-center text-paper">
+        <div className="mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-energy/10 text-energy">
+          <span className="text-3xl">📚</span>
+        </div>
+        <h2 className="font-display text-xl font-bold">
+          {locale === "ta"
+            ? "இந்த அத்தியாயத்தில் தமிழ் கேள்விகள் இல்லை"
+            : "No questions available for this chapter"}
+        </h2>
+        <p className="mt-2 text-sm text-paper/55">
+          {locale === "ta"
+            ? "இந்த அத்தியாயத்திற்கான தமிழ் மொழிபெயர்ப்பு இன்னும் தயாரிக்கப்படவில்லை."
+            : "Tamil translations for this chapter are not yet available."}
+        </p>
+        <Link href="/practice" className="btn-ghost-dark mt-6 text-sm">{t("backToPractice")}</Link>
+      </main>
+    );
+  }
 
   if (phase === "finishing") {
     return (
@@ -193,14 +242,14 @@ export function ClimbRunner({
             </span>
           </div>
           <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-energy-soft">{q.chapter}</p>
-          {q.text && <h2 className="mt-1.5 font-display text-xl font-bold leading-snug text-paper">{q.text}</h2>}
+          {localised?.text && <h2 className="mt-1.5 font-display text-xl font-bold leading-snug text-paper">{localised.text}</h2>}
           {q.imageUrl && (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img src={q.imageUrl} alt="Question figure" className="mt-4 w-full rounded-2xl border border-white/10 bg-white p-2" />
           )}
 
           <div className="mt-5 grid gap-2.5">
-            {q.options.map((opt, i) => {
+            {(localised?.options ?? q.options).map((opt, i) => {
               const letter = String.fromCharCode(65 + i);
               const isPicked = picked === i;
               const reveal = phase === "feedback";

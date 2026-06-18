@@ -26,6 +26,9 @@ MARKET-STRATEGY-ANALYSIS.md
 PROJECT-SNAPSHOT.md
 DriveScore_Architecture.txt
 
+# Tamil pipeline temp file (written by translate:fetch, consumed by translate:store)
+.translation-queue.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

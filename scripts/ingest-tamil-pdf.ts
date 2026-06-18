@@ -1,0 +1,238 @@
+/**
+ * Ingests a Samacheer Kalvi Tamil textbook PDF into tamil_knowledge_chunks.
+ * No OpenAI. No embeddings. Retrieval uses chapter-name filter only.
+ *
+ * Usage:
+ *   npm run ingest:pdf
+ *   npm run ingest:pdf -- --file "path/to/book.pdf" --subject physics --class 11
+ *   npm run ingest:pdf -- --dry-run          (print passages, don't insert)
+ *   npm run ingest:pdf -- --clear            (delete existing samacheer chunks first)
+ */
+
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+
+import { createClient } from "@supabase/supabase-js";
+import { readFileSync } from "fs";
+import { PDFParse } from "pdf-parse";
+
+// ─── CLI args ─────────────────────────────────────────────────────────────────
+function getArg(flag: string): string | null {
+  const i = process.argv.indexOf(flag);
+  return i !== -1 ? (process.argv[i + 1] ?? null) : null;
+}
+const hasFlag = (f: string) => process.argv.includes(f);
+
+const PDF_PATH =
+  getArg("--file") ??
+  "11th_tamil_medium_book/Class_11_Physics_Tamil_Volume_1_2024_Edition-www.tntextbooks.in.pdf";
+const SUBJECT       = (getArg("--subject") ?? "physics").toLowerCase() as "physics" | "chemistry" | "biology";
+const CLASS_LEVEL   = getArg("--class") ?? "11";
+const DRY_RUN       = hasFlag("--dry-run");
+const CLEAR_FIRST   = hasFlag("--clear");
+const MAX_CHUNK_LEN = 800;   // chars — target passage length
+
+// ─── Chapter map: Samacheer chapter number → DB chapter name(s) ───────────────
+// The DB uses NCERT-style English names. Each entry maps one Tamil chapter to
+// one or more DB chapter names so questions from any matching chapter get context.
+const CHAPTER_MAP: Record<number, { db_chapters: string[]; tamil_name: string }> = {
+  1: {
+    tamil_name: "இயல் உலகத்தின் தன்மையும் அளவீட்டியலும்",
+    db_chapters: ["Units and Measurements", "Nature of Physical World and Measurement"],
+  },
+  2: {
+    tamil_name: "இயக்கவியல்",
+    db_chapters: ["Kinematics", "Motion in a Straight Line", "Motion in a Plane"],
+  },
+  3: {
+    tamil_name: "இயக்க விதிகள்",
+    db_chapters: ["Laws of Motion"],
+  },
+  4: {
+    tamil_name: "வேலை, ஆற்றல் மற்றும் திறன்",
+    db_chapters: ["Work, Energy and Power"],
+  },
+  5: {
+    tamil_name: "துகள்களாலான அமைப்பு மற்றும் திணிப்பொருட்களின் இயக்கம்",
+    db_chapters: ["System of Particles and Rotational Motion", "Rotational Motion"],
+  },
+  // Add more when other volumes are ingested
+};
+
+// ─── Text cleaning ────────────────────────────────────────────────────────────
+function cleanText(raw: string): string {
+  return raw
+    // Remove PDF file metadata lines (e.g. "PHYSICS_01_Tamil.indd 5  02-01-2023 14:08:42")
+    .replace(/PHYSICS_\w+\.indd\s+\S+\s+\S+\s+\S+/g, "")
+    // Remove date-time stamps
+    .replace(/\d{2}[/-]\d{2}[/-]\d{4}\s+\d{2}:\d{2}:\d{2}/g, "")
+    // Remove URLs
+    .replace(/www\.\S+/g, "")
+    // Remove standalone Roman numeral page markers (I, II, III, IV, V…)
+    .replace(/^\s*[IVXivx]+\s*$/gm, "")
+    // Remove lines that are ONLY a page number (1-350)
+    .replace(/^\s*\d{1,3}\s*$/gm, "")
+    // Remove the running header pattern: "{digits} அலகு {digit} {title}"
+    .replace(/^\s*\d+\s+அலகு\s+\d+[^\n]*/gm, "")
+    // Collapse excessive whitespace/blank lines
+    .replace(/\t+/g, " ")
+    .replace(/[ ]{3,}/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+// ─── Chapter detection ────────────────────────────────────────────────────────
+// Looks for "அலகு N" in the first 400 chars of a page (running header area).
+function detectChapter(pageText: string): number | null {
+  const header = pageText.slice(0, 400);
+  const m = header.match(/அலகு\s+(\d+)/);
+  return m ? parseInt(m[1], 10) : null;
+}
+
+// ─── Passage splitting ────────────────────────────────────────────────────────
+// Splits accumulated chapter text into ~MAX_CHUNK_LEN char passages,
+// breaking at paragraph boundaries. Filters out very short noise passages.
+function splitIntoPassages(text: string): string[] {
+  const paragraphs = text
+    .split(/\n{2,}/)
+    .map((p) => p.replace(/\s+/g, " ").trim())
+    .filter((p) => p.length > 60);   // skip tiny fragments
+
+  const passages: string[] = [];
+  let buf = "";
+
+  for (const para of paragraphs) {
+    const candidate = buf ? buf + "\n\n" + para : para;
+    if (candidate.length > MAX_CHUNK_LEN && buf.length > 0) {
+      passages.push(buf);
+      buf = para;
+    } else {
+      buf = candidate;
+    }
+  }
+  if (buf.trim().length > 60) passages.push(buf);
+
+  return passages;
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+async function main() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) throw new Error("Missing Supabase env vars");
+
+  const supabase = createClient(url, key);
+
+  // ── Load PDF ────────────────────────────────────────────────────────────────
+  console.log(`\nLoading PDF: ${PDF_PATH}`);
+  const buf = readFileSync(PDF_PATH);
+  const parser = new PDFParse({ data: buf });
+
+  console.log("Extracting text from all pages (this may take a minute)…");
+  const textResult = await parser.getText({});
+  const totalPages = textResult.total;
+  console.log(`✓ Extracted ${totalPages} pages`);
+
+  // ── Process page by page ────────────────────────────────────────────────────
+  let currentChapter: number | null = null;
+  const chapterTexts: Record<number, string> = {};
+
+  for (const page of textResult.pages) {
+    const raw = page.text ?? "";
+
+    // Detect chapter from running header
+    const detected = detectChapter(raw);
+    if (detected !== null && detected in CHAPTER_MAP) {
+      currentChapter = detected;
+    }
+
+    // Skip front matter and appendix pages (no recognized chapter)
+    if (currentChapter === null || !(currentChapter in CHAPTER_MAP)) continue;
+
+    const cleaned = cleanText(raw);
+    if (cleaned.length < 30) continue;   // skip mostly-empty pages
+
+    chapterTexts[currentChapter] = (chapterTexts[currentChapter] ?? "") + "\n\n" + cleaned;
+  }
+
+  // ── Report what we found ────────────────────────────────────────────────────
+  console.log("\n── Chapter text extracted ─────────────────────────────");
+  for (const [num, text] of Object.entries(chapterTexts)) {
+    const n = parseInt(num);
+    const map = CHAPTER_MAP[n];
+    const passages = splitIntoPassages(text);
+    console.log(`  Chapter ${n} (${map.tamil_name})`);
+    console.log(`    DB chapters : ${map.db_chapters.join(", ")}`);
+    console.log(`    Text length : ${text.length} chars → ${passages.length} passages`);
+  }
+
+  if (DRY_RUN) {
+    console.log("\n[dry-run] Sample passages from Chapter 3 (Laws of Motion):");
+    const ch3 = chapterTexts[3] ?? "";
+    const sample = splitIntoPassages(ch3).slice(0, 3);
+    sample.forEach((p, i) => console.log(`\n  [${i + 1}] ${p.slice(0, 300)}…`));
+    console.log("\n✓ Dry run complete — nothing written to DB");
+    return;
+  }
+
+  // ── Optional: clear existing samacheer chunks for this subject ──────────────
+  if (CLEAR_FIRST) {
+    console.log("\nClearing existing samacheer_textbook chunks…");
+    const { error } = await supabase
+      .from("tamil_knowledge_chunks")
+      .delete()
+      .eq("source_type", "samacheer_textbook")
+      .eq("subject", SUBJECT);
+    if (error) throw new Error("Clear failed: " + error.message);
+    console.log("✓ Cleared");
+  }
+
+  // ── Insert passages ─────────────────────────────────────────────────────────
+  console.log("\n── Inserting into DB ──────────────────────────────────");
+  let totalInserted = 0;
+
+  for (const [num, text] of Object.entries(chapterTexts)) {
+    const n = parseInt(num);
+    const map = CHAPTER_MAP[n];
+    const passages = splitIntoPassages(text);
+
+    // Insert one set of chunks per DB chapter name so retrieval matches exactly
+    for (const dbChapter of map.db_chapters) {
+      const rows = passages.map((p) => ({
+        source_type:       "samacheer_textbook",
+        subject:           SUBJECT,
+        chapter:           dbChapter,
+        class_level:       CLASS_LEVEL,
+        tamil_text:        p,
+        english_reference: null,
+        embedding:         null,    // no OpenAI — retrieval uses chapter filter
+      }));
+
+      // Batch insert (Supabase upsert supports arrays)
+      const BATCH = 50;
+      for (let i = 0; i < rows.length; i += BATCH) {
+        const batch = rows.slice(i, i + BATCH);
+        const { error } = await supabase.from("tamil_knowledge_chunks").insert(batch);
+        if (error) throw new Error(`Insert failed (ch${n} → ${dbChapter}): ${error.message}`);
+      }
+
+      console.log(`  ✓ Ch${n} → "${dbChapter}": ${passages.length} passages`);
+      totalInserted += passages.length;
+    }
+  }
+
+  console.log(`\n✓ Done — ${totalInserted} passages stored in tamil_knowledge_chunks`);
+  console.log("  source_type : samacheer_textbook");
+  console.log(`  subject     : ${SUBJECT}`);
+  console.log(`  class_level : ${CLASS_LEVEL}`);
+  console.log("\nNext steps:");
+  console.log("  1. npm run db:seed-glossary     (seeds 100 forced terms — free)");
+  console.log("  2. npm run translate:fetch -- --subject Physics --limit 1");
+  console.log("     → should now show real textbook passages in STEP 3");
+  await parser.destroy();
+}
+
+main().catch((e) => {
+  console.error("Error:", e.message);
+  process.exit(1);
+});

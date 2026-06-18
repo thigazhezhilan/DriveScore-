@@ -11,9 +11,18 @@
     "test": "tsx lib/diagnose.test.ts && tsx lib/diagnose.v2.test.ts && tsx lib/grade.test.ts && tsx lib/rating.test.ts && tsx lib/mastery.test.ts && tsx lib/teacher-rollup.test.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "db:seed-glossary": "tsx scripts/seed-tamil-glossary.ts",
+    "db:seed-knowledge": "tsx scripts/seed-tamil-knowledge.ts",
+    "translate:tamil": "tsx scripts/tamil-translate.ts",
+    "test:tamil": "tsx lib/tamil/agent.test.ts",
+    "translate:fetch": "tsx scripts/pipeline-chat-fetch.ts",
+    "translate:store": "tsx scripts/pipeline-chat-store.ts",
+    "ingest:pdf": "tsx scripts/ingest-tamil-pdf.ts",
+    "db:seed-language-demo": "tsx scripts/seed-language-demo.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.2",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@supabase/ssr": "^0.10.3",
@@ -23,6 +32,7 @@
     "lucide-react": "0.417.0",
     "next": "14.2.5",
     "next-intl": "^4.13.0",
+    "openai": "^6.43.0",
     "papaparse": "^5.5.3",
     "pdf-parse": "^2.4.5",
     "react": "18.3.1",

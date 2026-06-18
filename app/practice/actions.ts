@@ -9,6 +9,7 @@
  */
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { getCurrentStudent } from "@/lib/auth";
 import { generateFullMock, generateLessonMock } from "@/lib/db/practice";
 import { SUBJECTS } from "@/lib/questions/validate";
@@ -23,7 +24,9 @@ export async function startLessonPractice(formData: FormData): Promise<void> {
   const subject = SUBJECTS.find((s) => s === subjectIn) as Subject | undefined;
   if (!subject || !chapter) redirect("/practice?error=invalid");
 
-  const mockId = await generateLessonMock(student.id, subject, chapter);
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get("NEXT_LOCALE")?.value ?? "en") as "en" | "ta";
+  const mockId = await generateLessonMock(student.id, subject, chapter, 15, locale);
   if (!mockId) redirect("/practice?error=empty");
 
   redirect(`/test?mock=${mockId}`);

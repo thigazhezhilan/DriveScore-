@@ -119,10 +119,9 @@ export default async function WelcomePage() {
 
           <Reveal delay={0.28}>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
-              <a href={DEMO_MAILTO} className="btn-energy w-full sm:w-auto">
-                {t("bookDemo")}
-                <ArrowRight className="h-5 w-5" />
-              </a>
+              <Link href="/signup" className="btn-energy w-full sm:w-auto">
+                Sign up free <ArrowRight className="h-5 w-5" />
+              </Link>
               <a
                 href="#student-login"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-base font-semibold text-paper transition hover:bg-white/10 sm:w-auto"

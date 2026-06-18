@@ -47,10 +47,21 @@ export async function login(
     };
   }
 
+  // Language not yet chosen → gate the student before giving dashboard access.
+  if (profile.preferredLanguage === null) {
+    redirect("/language-select");
+  }
+
   // Sync the UI language from the user's saved preference so the first load
   // after login respects their chosen language even if the cookie was cleared.
   if (profile.preferredLanguage === "ta") {
     cookies().set("NEXT_LOCALE", "ta", {
+      maxAge: 60 * 60 * 24 * 365,
+      path: "/",
+      sameSite: "lax",
+    });
+  } else {
+    cookies().set("NEXT_LOCALE", "en", {
       maxAge: 60 * 60 * 24 * 365,
       path: "/",
       sameSite: "lax",

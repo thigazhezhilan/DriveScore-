@@ -60,10 +60,20 @@ export async function requireUser(): Promise<CurrentUser> {
 /**
  * Require a specific role. If logged in as the wrong role, bounce to that
  * user's own landing page (not an error).
+ *
+ * For the student role: also enforces the language gate — a student whose
+ * preferred_language is null (not yet chosen) is redirected to /language-select
+ * before they can access any student page.
  */
 export async function requireRole(role: AuthRole): Promise<CurrentUser> {
   const me = await requireUser();
   if (me.profile.role !== role) redirect(landingFor(me.profile.role));
+
+  // Language gate: students must choose their permanent language before use.
+  if (role === "student" && me.profile.preferredLanguage === null) {
+    redirect("/language-select");
+  }
+
   return me;
 }
 

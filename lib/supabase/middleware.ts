@@ -27,6 +27,9 @@ const PUBLIC_PATHS = [
   "/forgot-password",
   "/reset-password",
   "/auth/confirm",
+  // Language selection gate — authenticated users with null preferred_language
+  // land here before any student page. Must not redirect to /welcome on this path.
+  "/language-select",
 ];
 
 function isPublic(pathname: string): boolean {

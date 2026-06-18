@@ -19,13 +19,20 @@ export type Question = {
   difficulty: Difficulty;
   /** Expected time for an average student, in seconds. */
   parTimeSec: number;
+  /** English question body (DB column: body_en). */
   text: string;
-  /** Exactly 4 options. May be blank strings for image-only questions. */
+  /** English answer options (DB column: options_en). Exactly 4 strings. */
   options: string[];
   /** Index (0–3) of the correct option. */
   answerIndex: number;
   /** Optional figure for diagram questions (public URL). */
   imageUrl?: string | null;
+  /** Tamil content columns — present only when fetched with Tamil columns. */
+  bodyTa?: string | null;
+  optionsTa?: string[] | null;
+  explanationTa?: string | null;
+  /** 'none' | 'ai_drafted' | 'review_required' | 'review_pending' | 'approved' | 'rejected' */
+  tamilStatus?: string | null;
 };
 
 /**

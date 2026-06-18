@@ -29,6 +29,7 @@ const fieldBase =
 export function SignupForm({ centres }: { centres: { id: string; name: string }[] }) {
   const [state, formAction] = useFormState(signUpAccount, initial);
   const [role, setRole] = useState<"student" | "teacher">("student");
+  const [lang, setLang] = useState<"en" | "ta">("en");
   const t = useTranslations("auth");
   const tc = useTranslations("common");
 
@@ -69,6 +70,36 @@ export function SignupForm({ centres }: { centres: { id: string; name: string }[
 
       <form action={formAction} className="space-y-3">
         <input type="hidden" name="role" value={role} />
+
+        {role === "student" && (
+          <div>
+            <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-ink/50">
+              Preferred language / விரும்பிய மொழி
+            </p>
+            <input type="hidden" name="preferredLanguage" value={lang} />
+            <div className="grid grid-cols-2 gap-1 rounded-xl bg-black/[0.04] p-1">
+              <button
+                type="button"
+                onClick={() => setLang("en")}
+                className={`rounded-lg px-3 py-2 text-sm font-bold transition ${lang === "en" ? "bg-white text-ink shadow-sm" : "text-ink/55 hover:text-ink"}`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang("ta")}
+                className={`rounded-lg px-3 py-2 text-sm font-bold transition ${lang === "ta" ? "bg-white text-ink shadow-sm" : "text-ink/55 hover:text-ink"}`}
+              >
+                தமிழ்
+              </button>
+            </div>
+            <p className="mt-1 text-[11px] text-ink/40">
+              {lang === "en"
+                ? "This cannot be changed later."
+                : "இதை பின்னர் மாற்ற முடியாது."}
+            </p>
+          </div>
+        )}
 
         <div className="relative">
           <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/35" />

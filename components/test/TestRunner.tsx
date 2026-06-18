@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getTamilContent } from "@/lib/tamil/guard";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
@@ -27,6 +28,7 @@ export function TestRunner({
   const router = useRouter();
   const reduce = useReducedMotion();
   const t = useTranslations("test");
+  const locale = useLocale() as "en" | "ta";
   const [isPending, startTransition] = useTransition();
 
   const [index, setIndex] = useState(0);
@@ -110,6 +112,18 @@ export function TestRunner({
   const isLast = index === total - 1;
   const overPar = elapsed > question.parTimeSec;
 
+  const localised = getTamilContent(
+    {
+      text: question.text,
+      options: question.options,
+      explanation: null,
+      bodyTa: question.bodyTa,
+      optionsTa: question.optionsTa,
+      explanationTa: question.explanationTa,
+    },
+    locale,
+  );
+
   const qVariants = reduce
     ? { initial: { opacity: 1 }, animate: { opacity: 1 }, exit: { opacity: 1 } }
     : {
@@ -179,9 +193,9 @@ export function TestRunner({
               <p className="text-[11px] font-bold uppercase tracking-wider text-energy-soft">
                 {question.chapter}
               </p>
-              {question.text && (
+              {localised.text && (
                 <h2 className="mt-1.5 font-display text-xl font-bold leading-snug text-paper">
-                  {question.text}
+                  {localised.text}
                 </h2>
               )}
 
@@ -195,7 +209,7 @@ export function TestRunner({
               )}
 
               <div className="mt-5 grid gap-2.5">
-                {question.options.map((opt, i) => {
+                {localised.options.map((opt, i) => {
                   const selected = picked === i;
                   const letter = String.fromCharCode(65 + i); // A, B, C, D
                   return (

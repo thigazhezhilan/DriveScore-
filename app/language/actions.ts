@@ -7,7 +7,17 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 type Locale = "en" | "ta";
 const SUPPORTED: Locale[] = ["en", "ta"];
 
-/** Set the UI language: persists to a 1-year cookie and updates the user's profile. */
+/**
+ * Set the UI language cookie for public / marketing pages.
+ *
+ * For authenticated users: only writes to the profile when preferred_language
+ * is currently null (first-time set). If it is already set the DB trigger would
+ * block any change anyway, so we simply skip the update and let the cookie
+ * serve as the temporary locale signal (the locked value is the authoritative one).
+ *
+ * Students with a locked language should not see the LanguageToggle at all —
+ * this action exists for the marketing site and unauthenticated visitors.
+ */
 export async function setLanguage(locale: Locale): Promise<void> {
   if (!SUPPORTED.includes(locale)) return;
 
@@ -18,20 +28,28 @@ export async function setLanguage(locale: Locale): Promise<void> {
     sameSite: "lax",
   });
 
-  // Also persist to profile for cross-device / post-cookie-clear recovery.
+  // Persist to profile only when the language is not yet locked.
   try {
     const supabase = createSupabaseServerClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       const db = getServiceClient();
-      await db
+      const { data: profile } = await db
         .from("profiles")
-        .update({ preferred_language: locale })
-        .eq("id", user.id);
+        .select("preferred_language")
+        .eq("id", user.id)
+        .maybeSingle();
+      // Only update if not yet set — the trigger blocks changes anyway, but
+      // this avoids surfacing a Postgres exception in server logs.
+      if (profile && profile.preferred_language === null) {
+        await db
+          .from("profiles")
+          .update({ preferred_language: locale })
+          .eq("id", user.id);
+      }
     }
   } catch {
-    // Non-fatal — the cookie is the authoritative source for next-intl.
+    // Non-fatal — the cookie is the authoritative source for next-intl on
+    // the marketing site.
   }
 }

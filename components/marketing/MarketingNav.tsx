@@ -77,6 +77,12 @@ export function MarketingNav() {
           >
             Log in
           </Link>
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-energy/40 px-4 py-2 text-sm font-bold text-energy transition hover:bg-energy/10"
+          >
+            Sign up
+          </Link>
           <a
             href={DEMO_MAILTO}
             className="inline-flex items-center gap-1.5 rounded-xl bg-energy px-4 py-2 text-sm font-bold text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)] transition hover:-translate-y-0.5"
@@ -125,6 +131,12 @@ export function MarketingNav() {
                 className="rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-center text-base font-semibold text-paper transition hover:bg-white/10"
               >
                 Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-xl border border-energy/40 px-3 py-2.5 text-center text-base font-bold text-energy transition hover:bg-energy/10"
+              >
+                Sign up
               </Link>
               <a
                 href={DEMO_MAILTO}

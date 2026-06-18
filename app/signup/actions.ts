@@ -15,7 +15,7 @@
  * Returns `sent: true` so the UI tells them to confirm via email.
  */
 
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getServiceClient } from "@/lib/db/client";
 
@@ -62,6 +62,7 @@ export async function signUpAccount(
   const password = String(formData.get("password") ?? "");
   const centreId = String(formData.get("centreId") ?? "").trim();
   const joinCode = String(formData.get("joinCode") ?? "").trim();
+  const preferredLanguage = formData.get("preferredLanguage") === "ta" ? "ta" : "en";
 
   if (!fullName || !email || !password || !centreId) {
     return { error: "errorFillAll", sent: false };
@@ -110,12 +111,13 @@ export async function signUpAccount(
   const userId = signUp.user?.id;
   if (!userId) return { error: "errorCreateFailed", sent: false };
 
-  // Set role + centre server-side (service key bypasses RLS).
+  // Set role + centre + language server-side (service key bypasses RLS).
   const { error: pErr } = await service.from("profiles").upsert({
     id: userId,
     role,
     centre_id: centreId,
     full_name: fullName,
+    ...(role === "student" ? { preferred_language: preferredLanguage } : {}),
   });
   if (pErr) {
     // With "Confirm email" on, signUp() for an already-registered email
@@ -144,6 +146,16 @@ export async function signUpAccount(
       });
       if (sErr) return { error: sErr.message, sent: false };
     }
+  }
+
+  // Set locale cookie immediately so the confirmation-email landing is in the
+  // right language (only takes effect when email confirm is disabled / auto-confirmed).
+  if (role === "student") {
+    cookies().set("NEXT_LOCALE", preferredLanguage, {
+      maxAge: 60 * 60 * 24 * 365,
+      path: "/",
+      sameSite: "lax",
+    });
   }
 
   return { error: null, sent: true };
