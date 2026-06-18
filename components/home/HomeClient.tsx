@@ -16,7 +16,6 @@ import {
   Timer,
 } from "lucide-react";
 import { LogoutButton } from "@/components/auth/LogoutButton";
-import { LanguageToggle } from "@/components/LanguageToggle";
 import { Neuro } from "@/components/mascot/Neuro";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { LevelCard } from "@/components/home/LevelCard";
@@ -51,13 +50,10 @@ export function HomeClient({
       <AuroraBackground />
 
       <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-5 pb-10 pt-7">
-        {/* Brand + language toggle + sign out */}
+        {/* Brand + sign out */}
         <header className="animate-fade-up flex items-center justify-between gap-3">
           <Logo size={40} wordmarkClassName="text-lg text-paper" />
-          <div className="flex items-center gap-2">
-            <LanguageToggle dark />
-            <LogoutButton dark />
-          </div>
+          <LogoutButton dark />
         </header>
 
         {/* Hero: Neuro + speech bubble */}
