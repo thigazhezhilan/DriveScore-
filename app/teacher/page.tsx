@@ -21,6 +21,7 @@ import type { DiagnosisCategory } from "@/lib/types";
 import { CreateStudentForm } from "@/components/admin/CreateStudentForm";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginGreetingPlayer } from "@/components/auth/LoginGreetingPlayer";
 import { Logo } from "@/components/brand/Logo";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import type { Subject } from "@/lib/types";
@@ -171,6 +172,10 @@ export default async function TeacherPage() {
   return (
     <main className="landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
       <AuroraBackground />
+      <LoginGreetingPlayer
+        name={me.profile.fullName?.split(" ")[0] ?? null}
+        language={me.profile.preferredLanguage ?? "en"}
+      />
 
       <div className="relative z-10 mx-auto max-w-5xl px-5 pb-12 pt-6">
         <header className="animate-fade-up flex items-center justify-between">

@@ -35,6 +35,11 @@ export default async function HomePage() {
   }
 
   return (
-    <HomeClient studentName={me.profile.fullName} mocks={mocks} rating={rating} />
+    <HomeClient
+      studentName={me.profile.fullName}
+      language={me.profile.preferredLanguage ?? "en"}
+      mocks={mocks}
+      rating={rating}
+    />
   );
 }

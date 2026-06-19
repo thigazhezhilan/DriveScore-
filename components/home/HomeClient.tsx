@@ -20,6 +20,7 @@ import { Neuro } from "@/components/mascot/Neuro";
 import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { LevelCard } from "@/components/home/LevelCard";
 import { Logo } from "@/components/brand/Logo";
+import { useLoginGreeting } from "@/hooks/useLoginGreeting";
 import type { RatingSummary } from "@/lib/db/ratings";
 
 type MockItem = {
@@ -33,10 +34,12 @@ type MockItem = {
 
 export function HomeClient({
   studentName,
+  language,
   mocks,
   rating,
 }: {
   studentName: string | null;
+  language: "en" | "ta";
   mocks: MockItem[];
   rating: RatingSummary | null;
 }) {
@@ -44,6 +47,7 @@ export function HomeClient({
   const t = useTranslations("home");
   const tc = useTranslations("common");
   const firstName = studentName ? studentName.split(" ")[0] : null;
+  useLoginGreeting(firstName, language);
 
   return (
     <main className="student-skin landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
