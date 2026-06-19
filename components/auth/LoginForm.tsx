@@ -1,16 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LogIn, Loader2, Lock, Mail } from "lucide-react";
 import { login, type LoginState } from "@/app/login/actions";
 import { Logo } from "@/components/brand/Logo";
 
-const SESSION_KEY = "loginGreetingPlayed";
-const initial: LoginState = { error: null, greeting: null };
+const initial: LoginState = { error: null };
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -121,55 +118,6 @@ export function LoginForm({
 }) {
   const [state, formAction] = useFormState(login, initial);
   const t = useTranslations("auth");
-  const router = useRouter();
-
-  useEffect(() => {
-    const g = state.greeting;
-    if (!g) return;
-
-    sessionStorage.setItem(SESSION_KEY, "1");
-
-    const text =
-      g.language === "ta"
-        ? `${g.firstName}, எல்லாம் ரெடி. ஸ்டார்ட் பண்ணலாமா?`
-        : `Hey ${g.firstName}, your seat's ready. Let's go!`;
-    const langCode = g.language === "ta" ? "ta-IN" : "en-IN";
-    const dest = g.redirectTo;
-
-    function navigate() {
-      router.push(dest);
-    }
-
-    if (!g.firstName || typeof window === "undefined" || !window.speechSynthesis) {
-      navigate();
-      return;
-    }
-
-    // Navigate after a short delay so speech can start before the page transitions.
-    // Next.js client-side navigation does not destroy the window, so speech
-    // continues playing on the new page.
-    function doSpeak(voices: SpeechSynthesisVoice[]) {
-      const utt = new SpeechSynthesisUtterance(text);
-      utt.voice = voices.find((v) => v.lang === langCode) ?? null;
-      utt.rate = 0.95;
-      utt.volume = 0.85;
-      window.speechSynthesis.speak(utt);
-      setTimeout(navigate, 150);
-    }
-
-    const voices = window.speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      doSpeak(voices);
-    } else {
-      const fallback = setTimeout(navigate, 3000);
-      window.speechSynthesis.addEventListener("voiceschanged", function h() {
-        window.speechSynthesis.removeEventListener("voiceschanged", h);
-        clearTimeout(fallback);
-        doSpeak(window.speechSynthesis.getVoices());
-      });
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.greeting]);
 
   const header = (
     <div className="animate-fade-up mb-8">

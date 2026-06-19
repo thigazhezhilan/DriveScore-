@@ -1,0 +1,831 @@
+DRIVESCORE — COMPREHENSIVE FEATURE REPORT
+==========================================
+Generated: 2026-06-18
+Codebase: C:\Users\91995\Desktop\thigal\project2
+Live URL : https://drive-score.vercel.app
+==========================================
+
+
+PRODUCT OVERVIEW
+----------------
+
+DriveScore is an AI-powered NEET mock-test analysis and gamified learning
+platform designed for coaching centres, schools, and individual aspirants
+preparing for the Indian NEET medical entrance exam.
+
+The core differentiator is the Diagnosis Engine — a deterministic algorithm
+that analyzes per-question timing and answer patterns to explain WHY marks
+were lost, not just report a score.
+
+Built as a Next.js PWA (Progressive Web App) with Supabase backend.
+Also available as an Android app via Trusted Web Activity (TWA).
+
+Product intent: "Don't just score it. Diagnose it."
+
+
+==============================================================================
+1. AUTHENTICATION & ROLE SYSTEM
+==============================================================================
+
+Three distinct user roles with row-level security (RLS) enforced at the
+database level.
+
+STUDENT ROLE
+  - Individual test-takers preparing for NEET.
+  - Can take assigned mocks, practice lesson-by-lesson, view personal reports.
+  - Sees own data only (RLS-protected; cannot see other students).
+  - Must select preferred language (English or Tamil) at signup — permanently
+    locked once set (DB trigger prevents changes).
+  - Key files: app/login, app/signup, app/language-select, lib/auth.ts
+
+TEACHER ROLE
+  - Coaching centre managers who publish mocks and monitor student progress.
+  - Full CRUD on questions + mocks within their centre.
+  - Can publish/unpublish assignments to batches.
+  - View class dashboard: per-student ratings, leaderboard, diagnosis breakdown,
+    weak chapters.
+  - Key files: app/teacher/page.tsx, lib/db/teacher.ts
+
+ADMIN ROLE
+  - Platform super-admin (DriveScore company). No centre affiliation.
+  - Cross-centre operations: create centres, manage teachers, run analytics.
+  - Manage global question bank accessible to all students for practice.
+  - Key files: app/admin/page.tsx, lib/db/adminAnalytics.ts
+
+AUTHENTICATION DETAILS
+  - Supabase Auth (Postgres-backed user management).
+  - Login via email + password; password reset via email link (expires 1 hour).
+  - Auth middleware redirects unauthenticated users to /login.
+  - Service-key (server-side) for privileged operations (grading, rating
+    updates, user creation) — never exposed to the browser.
+  - User-scoped client for RLS-enforced access.
+
+
+==============================================================================
+2. THE DIAGNOSIS ENGINE  (Core Differentiator)
+==============================================================================
+
+A pure, deterministic algorithm classifying each wrong answer into one of
+seven categories. No AI/LLM; fully unit-tested.
+
+File: lib/diagnose.ts
+
+CLASSIFICATION LOGIC
+  1. Unattempted                         → TIME_MANAGEMENT
+  2. Correct + slow (> 140% of par)      → TOO_SLOW
+  3. Correct + normal pace               → SOLID  (no problem)
+  4. Wrong + Easy difficulty             → CARELESS  (a slip)
+  5. Wrong + rushed (< 40% of par)       → GUESS  (answered too fast)
+  6. Wrong + Medium/Hard at normal pace  → CONCEPT_GAP  (genuine knowledge gap)
+  7. First answer correct, final wrong   → SELF_DOUBT  (changed a right answer)
+
+SELF_DOUBT DETAIL
+  - Triggered when student changes a CORRECT first answer to a WRONG final one.
+  - Requires first_answer_index tracking (migration 0015).
+  - Confidence: 95% (high certainty — instinct was provably right).
+
+CONFIDENCE SCORING
+  - Each diagnosis also gets a 0–100 confidence score.
+  - Uses only within-attempt signals: timing vs. par, difficulty,
+    first-vs-final answer.
+  - No cross-attempt or cross-student data (privacy-first design).
+
+PER-CATEGORY ADVICE SHOWN TO STUDENTS
+  CONCEPT_GAP    "Re-learn from NCERT before practising more"
+  GUESS          "Slow down; use elimination before committing"
+  SELF_DOUBT     "Trust your first instinct; only change for a concrete reason"
+  CARELESS       "Slow down on easy questions"
+  TOO_SLOW       "Practise these for speed"
+  TIME_MANAGEMENT "Work on pacing across the full paper"
+  SOLID          "Correct and on time — keep it up"
+
+SPEED ARCHETYPES  (whole-attempt pacing personality)
+  SNIPER    Accurate but deliberate. Advice: build speed.
+  GAMBLER   Fast but loose. Advice: slow down and eliminate options.
+  PANICKER  Strong start, accuracy drops sharply in final fifth.
+            Advice: practise pacing the full paper.
+  BALANCED  Speed and accuracy well matched. Advice: keep building both.
+  Requires ≥5 attempted questions to assign an archetype.
+
+
+==============================================================================
+3. RATING SYSTEM  (Skill Progression)
+==============================================================================
+
+Fair Elo-based rating reflecting the hardest difficulty tier a student
+reliably beats. Points farming is mathematically impossible.
+
+File: lib/rating.ts
+
+ELO MECHANICS
+  - Every student starts at rating 1000.
+  - Each question is an "opponent" with a fixed rating by difficulty:
+      Easy   → 800
+      Medium → 1100
+      Hard   → 1400
+  - Correct vs. question above your rating → large gain.
+  - Correct vs. question far below your rating → ~zero gain (farming blocked).
+  - Wrong vs. easy question → meaningful loss.
+  - Wrong vs. hard question → tiny loss.
+
+K-FACTOR (Volatility)
+  - First 30 rated questions per subject (calibration): K = 32  (fast move).
+  - After calibration: K = 16  (stable, slow movement).
+
+LEVELS  (Sticky — Road to the White Coat)
+  Aspirant    (0+)
+  Achiever    (900+)
+  Scholar     (1050+)
+  Ranker      (1200+)
+  Topper      (1350+)
+  White Coat  (1500+)
+
+  Sticky rule: a level is only LOST once rating falls 25 points below its
+  floor (demotion buffer prevents flickering at boundaries).
+
+OVERALL RATING  (NEET-weighted)
+  Mirrors NEET mark split:
+    Biology 50%  |  Physics 25%  |  Chemistry 25%
+  Single headline "Overall" rating answers "How NEET-ready am I?".
+
+PER-CHAPTER RATINGS
+  - Subject × chapter granularity (e.g. "Physics / Ray Optics").
+  - Same Elo engine; drives chapter-by-chapter weakness discovery.
+  - Used by practice page to show strongest and weakest lessons.
+  - Migration: 0012
+
+ANTI-FARMING
+  - Once a question is answered correctly, subsequent correct answers on the
+    SAME question yield delta=0.
+  - Checked against all prior attempts for that student × question.
+  - Idempotency: rating_events table has unique(attempt_id, question_id).
+    Re-submitting an attempt never double-applies ratings.
+
+
+==============================================================================
+4. MASTERY ROAD  (Progressive Gate System)
+==============================================================================
+
+Chapter-by-chapter progression map with four difficulty gates per chapter.
+NOT a "% to NEET" predictor — purely a progression visualizer.
+
+File: lib/mastery.ts
+
+GATE STRUCTURE  (per chapter)
+  Foundation (Easy) → Application (Medium) → NEET-Level (Hard) → Mastery
+
+  Gates unlock in order; previous gate must be cleared before the next opens.
+  Hard questions feed BOTH NEET-Level and Mastery gates simultaneously.
+
+GATE CLEARING  (Earned, Not Lucky)
+  - Requires: 4 STRONG correct answers + 70% accuracy at that tier +
+    minimum 2 separate sessions.
+  - One lucky answer is NOT enough; consistency required.
+
+GATE REGRESSION  (Recent Decay)
+  - A cleared gate moves back to NEEDS_REINFORCEMENT if recent accuracy
+    drops below 55%.
+  - Checks last 6 answers at that tier; minimum 3 recent answers before
+    regression can trigger.
+
+FRONTIER PRESCRIPTION  (Next-Step Quest)
+  - Server finds the single next frontier gate (earliest locked / regressed).
+  - Recommends 8 targeted questions at that gate's difficulty.
+  - Student taps "Start 8 Questions" → personal practice mock generated.
+  - After completion: same report + diagnosis + rating pipeline runs.
+
+REVISIT PROMPTS
+  - Regressed gates flagged "Worth revisiting — recently slipped".
+  - Student can revisit any gate, not just the frontier.
+
+
+==============================================================================
+5. PRACTICE PATHWAYS
+==============================================================================
+
+Two self-directed student practice flows reusing the existing
+test → attempt → report pipeline. Both generate personal mocks on the fly.
+
+FULL NEET MOCK  (Practice / Bank)
+  - 180-question shuffled paper (45 Physics + 45 Chemistry + 90 Biology).
+  - Sampled from the global question pool (centre_id IS NULL).
+  - Language-filtered: Tamil students only see questions with body_ta IS NOT NULL.
+  - Each "start" generates a fresh mock (kind='bank', max_attempts=1).
+  - Same TestRunner component as assigned mocks.
+
+LESSON PRACTICE  (Practice by Lesson / Climb)
+  - Pick subject + chapter → focused 8-question test on that topic.
+  - Generates at the frontier's difficulty tier.
+  - Same report + diagnosis + rating flow.
+
+ADAPTIVE CLIMB  (Gamified Lesson Practice)
+  - Infinite adaptive difficulty; questions stream one at a time until HP = 0.
+  - Correct answer → difficulty rises, HP healed (+8 HP), XP gained, streak +1.
+  - Wrong answer  → difficulty drops, HP reduced (Easy –25, Medium –15, Hard –10).
+  - Run ends at HP = 0 or when chapter pool exhausted.
+  - All answered questions persisted as a real attempt → full report/diagnosis.
+  - XP formula: base (10 × difficulty_multiplier) × speed_bonus × streak_multiplier.
+
+PRACTICE PAGE  (lib/db/practice.ts)
+  - Dynamically lists global syllabus (subjects → chapters → question counts).
+  - Shows per-chapter rating badge (e.g. "Scholar" next to each chapter).
+  - Two tracks: Past Papers (pyq) and AI Practice (ai).
+
+
+==============================================================================
+6. ATTEMPT SUBMISSION & GRADING  (Server-Side)
+==============================================================================
+
+All grading happens server-side with the service key.
+Answer keys NEVER reach the browser.
+
+File: app/actions.ts → submitAttempt()
+
+FLOW
+  1. Student finishes mock (all answered or time skipped).
+  2. Client sends answers; server re-fetches questions using service key.
+  3. Server checks access: is mock published for student's batch?
+  4. Server enforces attempt limit: has student exceeded max_attempts?
+  5. Server grades using buildReport() (pure function).
+     Output: score, per-question diagnosis, 9 report sections.
+  6. Server persists attempt + answers to DB.
+  7. Server updates student ratings (best-effort; failure logs but
+     doesn't block the submission).
+  8. Client redirected to /report?attempt=<id>.
+
+MAX ATTEMPTS
+  - Per-mock configurable (default 1; teachers can set higher).
+  - Teacher can manually "unlock retake" for any student.
+
+PER-QUESTION TIMING CAPTURE
+  - Client records shownAt timestamp when each question appears.
+  - On submit: elapsed = now − shownAt (seconds).
+  - First picked index also recorded (for SELF_DOUBT detection).
+  - All client-side; transmitted to server with each answer.
+
+
+==============================================================================
+7. REPORT  (Three Views)
+==============================================================================
+
+Single graded attempt rendered three ways based on viewer role.
+
+Files: components/report/StudentView.tsx, TeacherView.tsx, ParentView.tsx
+
+STUDENT VIEW  ("Here's your breakdown")
+  - Score out of 720 (NEET marking: +4 correct, −1 wrong, 0 blank).
+  - Per-subject breakdown (marks, accuracy, question counts).
+  - Diagnosis groups ranked by frequency.
+  - Root causes: "Where your marks went" (ranked by marks lost per category).
+  - Pacing archetype (SNIPER / GAMBLER / BALANCED / PANICKER) + advice.
+  - Strongest subject badge.
+  - XP + best streak badges (from Climb mode).
+  - Confetti animation on completion.
+
+TEACHER VIEW  ("Where the marks went")
+  - Same report structure, teacher-oriented phrasing.
+  - Per-chapter diagnosis breakdown.
+  - "What to re-teach": CONCEPT_GAP chapters only
+    (guess/careless/timing are student-side issues, not teaching gaps).
+
+PARENT VIEW  (WhatsApp-style weekly update)
+  - Simple, jargon-free summary: score / strong area / needs work / focus.
+  - "No need to worry — these are normal, fixable patterns."
+  - Encourages without shaming.
+
+
+==============================================================================
+8. STUDENT DASHBOARD  (Home)
+==============================================================================
+
+Landing page after login. Loads published batch mocks + rating summary.
+
+File: components/home/HomeClient.tsx
+
+CONTENT
+  - Personalised greeting + Neuro mascot with encouragement.
+  - Overall skill rating + animated level roadmap:
+      All 6 levels shown as nodes on a horizontal track.
+      Completed nodes: filled + checkmark.
+      Current node: pulsing glow ring + "YOU" pin.
+      Future nodes: dimmed.
+      Track line draws left-to-right on load with gradient animation.
+  - Three navigation cards:
+      Practice anytime  → /practice
+      Mastery Road      → /road
+      Your progress     → /progress
+  - YOUR MOCKS section: published batch mocks with status chips
+    (Attempted / Completed / Start Mock / Report / Go to Home).
+  - RLS-scoped: only shows mocks assigned to student's batch.
+
+
+==============================================================================
+9. PROGRESS DASHBOARD
+==============================================================================
+
+Personal trends + strengths/weaknesses + recent attempts.
+
+File: lib/db/progress.ts
+
+CONTENT
+  - Skill rating trend over time: one line per subject + Overall.
+  - Strongest lessons: chapters with highest per-chapter rating.
+  - Needs work: chapters with lowest per-chapter rating.
+  - Recent tests: last 10 attempts with marks and date.
+  - Empty state: "Take a couple of tests first".
+
+
+==============================================================================
+10. TEACHER DASHBOARD
+==============================================================================
+
+Centre manager overview of class performance.
+
+File: lib/db/teacher.ts → getTeacherClassInsights()
+
+CONTENT
+  - Class statistics: total students, active this week, rated students,
+    average rating, attempts this week.
+  - Student leaderboard: sorted by overall rating + weekly delta.
+  - Per-student grid: name, login status, rating, level, attempts,
+    last-active date, weekly change.
+  - Weak chapters: subject × chapter ranked by struggling count + avg rating.
+  - Re-teach this week: chapters where most students are below Scholar (1050).
+  - Per-chapter diagnosis breakdown:
+    {subject|chapter} → counts of CONCEPT_GAP, GUESS, CARELESS, etc.
+  - Inactive nudge: "{N} students inactive — publish a mock or nudge practice".
+
+
+==============================================================================
+11. ADMIN PLATFORM DASHBOARD
+==============================================================================
+
+Cross-centre operations and platform KPIs.
+
+File: lib/db/adminAnalytics.ts
+
+CONTENT
+  - Platform KPIs: total centres, students, tests, average rating trend.
+  - Weekly momentum: attempts / centres / students over last 8 weeks.
+  - Centre Health table (churn radar):
+    per-centre: active %, teacher activity, avg rating, momentum trend,
+    color-coded risk (green / yellow / red).
+  - Platform-wide diagnosis breakdown (category distribution).
+  - Links: create centre, manage teachers, global question bank.
+
+
+==============================================================================
+12. MOCK BUILDER  (Admin / Teacher)
+==============================================================================
+
+Interface for assembling mocks and publishing to batches.
+
+WORKFLOW
+  1. Create new mock: title, optional batch selection.
+  2. Pick questions from centre's bank (or global bank for admins).
+  3. Drag to reorder questions.
+  4. Preview structure (question count, subjects, difficulties).
+  5. Save as draft (invisible to students).
+  6. Publish: choose batch + set max_attempts (default 1).
+  7. Published mocks appear on students' home screens immediately.
+
+QUESTION PICKER
+  - Search/filter by subject, chapter, difficulty.
+  - Teachers: centre bank only + read-only global bank.
+  - Admins: full global bank + all centre banks.
+
+
+==============================================================================
+13. QUESTION BANK MANAGEMENT
+==============================================================================
+
+Two question sources:
+
+INSTITUTE BANK  (per-centre)
+  - Created by a coaching centre (centre_id = that centre).
+  - Visible only to that centre's staff (RLS enforced).
+  - Used in centre-published mocks.
+
+GLOBAL BANK  (Platform)
+  - Created by admins or seeded from past papers (centre_id IS NULL).
+  - Accessible to ALL students for practice.
+  - Source: 'pyq' (past papers) or 'ai' (AI-generated + auto-verified).
+  - Crowd QA: questions reported as wrong by students are auto-hidden.
+
+QUESTION STRUCTURE
+  - subject          : Physics | Chemistry | Biology
+  - chapter          : NCERT chapter name
+  - concept          : finer tag (e.g. "Concave mirror image formation")
+  - difficulty       : Easy | Medium | Hard
+  - par_time_sec     : expected time in seconds for an average student
+  - body_en / body_ta        : question text (English + Tamil)
+  - options_en / options_ta  : answer options (English + Tamil)
+  - answer_index     : 0–3  (NEVER sent to browser)
+  - explanation_en / explanation_ta : answer explanation
+  - image_url        : optional diagram
+  - source           : 'pyq' | 'ai'
+  - tamil_status     : none | ai_drafted | review_required |
+                       review_pending | approved | rejected
+
+
+==============================================================================
+14. TAMIL TRANSLATION PIPELINE
+==============================================================================
+
+Chat-AI workflow to translate 3,996 English NEET questions to Tamil.
+Zero Anthropic API cost — uses Claude Code chat tokens instead.
+
+Files: scripts/pipeline-chat-fetch.ts, pipeline-chat-store.ts,
+       scripts/patch-queue.ts, scripts/show-queue.ts
+
+PIPELINE STEPS  (per batch of 50)
+  1. npm run translate:fetch -- --subject Physics --status none --limit 50
+     Writes .translation-queue.json with translation: null for each question.
+  2. Claude (in chat) reads all questions, produces Tamil translations.
+  3. Write scripts/patch-queue.ts with the translations map.
+  4. npx tsx scripts/patch-queue.ts
+     Injects translations into the queue file.
+  5. npm run translate:store
+     Validates + stores to DB + clears queue file.
+
+DB TABLES
+  - tamil_knowledge_chunks  : pgvector RAG store (textbook passages).
+  - tamil_glossary          : forced term map (English → Tamil, per-subject).
+
+QUESTION COLUMNS (added by migration 0017, renamed by 0019)
+  - body_ta        (renamed from tamil_question_text)
+  - options_ta     (renamed from tamil_options)
+  - explanation_ta (renamed from tamil_explanation)
+  - tamil_status   : none | ai_drafted | review_required | approved | rejected
+  - tamil_confidence_notes   : model self-reported metadata
+  - tamil_validation_result  : objective validator output
+  - tamil_error_log          : parse/API/validator failures
+
+OBJECTIVE VALIDATOR  (pipeline-chat-store.ts)
+  Weights: risk_words_preserved=30, glossary_match_rate=25,
+           option_count_match=20, number_count_match=10,
+           unit_preserved=10, formula=5, math=5.
+  Score < 80 → auto-set to review_required.
+
+KNOWN VALIDATOR FALSE POSITIVES
+  1. unit_preserved fails on almost every question.
+     Root cause: Ω encoding mismatch (U+2126 vs U+03A9) + regex picks up
+     English words after numbers ("10 If", "3 and") as unit candidates.
+     Impact: -10 points on every question; score 95 instead of 100.
+  2. risk_words_preserved false positives on "MAXIMUM", "MINIMUM" in
+     descriptive context.
+     Impact: some correct translations scored 65 → review_required.
+  Actual translations are correct despite lower scores.
+
+TEXTBOOK CHUNKS LOADED
+  - Physics Vol 1 (Class 11, 2024 edition): 999 passages.
+  - Chapters: Units & Measurements, Kinematics, Laws of Motion,
+    Work/Energy/Power, Rotational Motion.
+  - No embeddings — retrieval uses chapter column filter directly.
+
+PROGRESS (as of 2026-06-18)
+  Physics    : 98 translated  (~902 remaining)
+  Chemistry  :  0 translated  (~1000 remaining)
+  Biology    :  0 translated  (~2000 remaining)
+  Total DB   : 3,996 questions
+
+LANGUAGE LOCK
+  - Each student picks English ('en') or Tamil ('ta') at signup.
+  - Stored in profiles.preferred_language.
+  - DB trigger (lock_preferred_language, migration 0019) blocks ANY change
+    once set — immutable.
+  - Tamil students: only see practice questions where body_ta IS NOT NULL.
+  - Both _en and _ta columns coexist in the same questions table.
+    Query layer fetches the right version based on student's preference.
+
+
+==============================================================================
+15. GAMIFICATION
+==============================================================================
+
+XP + Streaks + Levels + Mastery Road form a progression loop
+without being "just points".
+
+LEVEL SYSTEM  (home screen Level Card)
+  - Six visible levels: Aspirant → Achiever → Scholar → Ranker →
+    Topper → White Coat.
+  - Sticky: once earned, lost only if rating falls 25 pts below the floor.
+  - Visual roadmap: horizontal track with 6 animated nodes.
+    Completed = filled ✓, Current = pulsing YOU pin, Future = dimmed.
+
+XP  (Climb mode only)
+  Formula: base × difficulty_multiplier × speed_bonus × streak_multiplier
+    base                = 10 XP
+    difficulty_multiplier : Easy=1, Medium=1.5, Hard=2
+    speed_bonus         : 1.5× if answered within par time
+    streak_multiplier   : +10% per consecutive correct (capped at 5)
+  Total XP displayed in post-game report.
+
+STREAKS  (Climb mode only)
+  - Current streak: consecutive correct answers.
+  - Resets to 0 on any wrong answer.
+  - Best streak for the session shown in report.
+
+HP  (Climb mode only)
+  - Start: 100 HP.
+  - Healing: +8 HP per correct answer.
+  - Damage: Easy −25, Medium −15, Hard −10.
+  - Run ends when HP = 0 or question pool exhausted.
+
+MASTERY ROAD PROGRESSION
+  - Four gates per chapter (Foundation → Application → NEET-Level → Mastery).
+  - Frontier quest: the one next gate to clear.
+  - Regressed gates: "Worth revisiting — recently slipped".
+  - NOT a "% to doctor" or "% to NEET" meter (deliberately avoided).
+
+
+==============================================================================
+16. STUDENT ACCOUNT FLOW
+==============================================================================
+
+SELF-REGISTER FLOW
+  1. /signup → select centre, enter email + password + name.
+  2. Supabase sends email confirmation link.
+  3. Confirm email → profile created (role='student').
+  4. Login → redirected to /language-select (preferred_language = NULL).
+  5. Choose language → permanently locked.
+  6. Redirected to home. Batch assignment done by teacher/admin.
+
+TEACHER SIGNUP
+  1. Same /signup flow, selects "I'm a teacher".
+  2. Provides centre join code (managed by admin).
+  3. Profile created with role='teacher' + centre_id set.
+
+TEACHER-ADDED STUDENTS (No Login)
+  - Admin can create profile rows without Supabase auth users (no email).
+  - Student later self-registers via /signup; email matched to seeded row;
+    profile_id linked.
+
+PASSWORD RESET
+  1. /login → "Forgot password".
+  2. Email → /forgot-password server action.
+  3. Supabase sends reset link (expires 1 hour).
+  4. /reset-password → new password → login.
+
+
+==============================================================================
+17. CENTRE & BATCH MANAGEMENT
+==============================================================================
+
+Multi-tenancy: separate centres with their own staff, students, batches,
+questions. Full data isolation via RLS.
+
+CENTRE CREATION  (Admin only)
+  - Admin creates centre with a name.
+  - centre_id used in ALL RLS policies to isolate data.
+
+BATCH STRUCTURE
+  - A centre has multiple batches (e.g. "NEET 2027 Batch A").
+  - Batch linked to one teacher (others can view).
+  - Fields: name, exam_year, centre_id.
+
+STUDENT ASSIGNMENT
+  - Admin/teacher adds student to batch via CreateStudentForm.
+  - Student gets profile_id + batch_id.
+  - Published mocks are assigned to batches; students see only their batch's mocks.
+
+RLS DATA ISOLATION
+  - Teacher: sees students in their centre's batches only.
+  - Admin: sees all students globally.
+  - Student: sees only themselves (auth.uid() match).
+
+
+==============================================================================
+18. ANDROID APP  (PWA + TWA)
+==============================================================================
+
+Thin native shell wrapping the live website.
+
+BUILD METHOD
+  - Trusted Web Activity (TWA): full-screen Chrome webview, URL bar hidden.
+  - Generated via pwabuilder.com — no React Native or Flutter.
+
+KEY IDENTITY  (PERMANENT — changing breaks Play Store listing)
+  - Package ID : com.drivescore.app
+  - App name   : DriveScore
+  - Host       : drive-score.vercel.app
+  - Theme      : #06140f
+
+PWA SERVICE WORKER  (public/sw.js)
+  - Offline caching, install prompt, app icons.
+  - Bump CACHE_VERSION to force immediate update on all clients.
+
+DIGITAL ASSET LINKS  (public/.well-known/assetlinks.json)
+  - Proves app ↔ website ownership → URL bar hides in TWA.
+  - Middleware fix: /.well-known/ excluded from auth redirect
+    (otherwise Google verification fails).
+
+UPDATES
+  - Code push → GitHub → Vercel → live within ~30 seconds.
+  - Installed APK pulls the live URL on each launch (auto-updated).
+  - Rebuild APK ONLY for native changes (icon, package ID, permissions).
+
+PLAY STORE  (Not live yet as of 2026-06-18)
+  - Remaining: $25 developer account, upload .aab, screenshots,
+    privacy policy URL, content rating, data-safety form.
+  - Google review: 3–7 days.
+  - assetlinks.json already live → verification passes automatically.
+
+
+==============================================================================
+19. INTERNATIONALIZATION  (next-intl)
+==============================================================================
+
+Full English + Tamil UI + content support.
+
+UI STRINGS
+  - messages/en.json : ~450 keys (auth, home, practice, report, etc.)
+  - messages/ta.json : Tamil equivalents (in progress)
+  Namespaces: common, auth, home, report, diagnosis, archetype, test,
+              practice, progress, teacher, welcome, road, language,
+              languageSelect, settings.
+
+QUESTION CONTENT
+  - body_en / options_en / explanation_en : English
+  - body_ta / options_ta / explanation_ta : Tamil (nullable)
+  - Query layer returns the student's preferred language version.
+
+LANGUAGE SELECTION
+  - /language-select: required gate for new students before dashboard.
+  - Permanent DB-level lock (trigger on profiles table).
+  - next-intl reads from both cookies and DB; prefers DB when logged in.
+
+
+==============================================================================
+20. SECURITY & PRIVACY
+==============================================================================
+
+ANSWER KEY PROTECTION
+  - answer_index NEVER sent to browser (excluded from PublicQuestion type).
+  - questions table: NO select policy for user-scoped clients (deny-all).
+  - Questions fetched server-side with service key only.
+  - answer_index stripped before serialization.
+
+DATA ISOLATION
+  - Row-level security (RLS) at Postgres level on ALL user-facing tables.
+  - Each row tagged: student_id / centre_id / batch_id.
+  - Policies enforce visibility; service key bypasses for trusted ops.
+
+PRIVACY BY DESIGN
+  - Confidence scoring uses only within-attempt signals — no cross-student
+    comparison data.
+  - Tamil translation uses only textbook + exam data (no student data).
+  - One student CANNOT see another student's report (RLS enforced).
+
+SESSION MANAGEMENT
+  - Supabase SSR client handles server-side sessions.
+  - Auth cookies: secure, httpOnly, SameSite.
+  - Token refresh automatic.
+
+
+==============================================================================
+21. TECHNOLOGY STACK
+==============================================================================
+
+FRONTEND
+  - Next.js 14.2.5  (App Router, server components + server actions)
+  - React 18.3.1
+  - Framer Motion 11.18.2  (animations, spring transitions, reveal effects)
+  - Three.js + React Three Fiber  (3D hero scene on marketing landing page)
+  - Tailwind CSS  (utility-first styling)
+  - Lucide React  (icons)
+  - next-intl  (i18n routing + translations)
+
+BACKEND
+  - Supabase  (Postgres + Auth + pgvector embeddings)
+  - Next.js server actions  (server-side grading, rating, auth)
+  - Edge middleware  (auth redirect, asset-links bypass)
+
+DEPLOYMENT
+  - Vercel  (auto-deploy on every push to main)
+
+NOTABLE LIBRARIES
+  - @anthropic-ai/sdk      Claude API for Tamil translation
+  - @supabase/supabase-js  DB + auth client
+  - @supabase/ssr          Server-side session management
+  - Jimp                   Image manipulation (question diagrams)
+  - Papa Parse             CSV parsing for bulk question import
+  - pdf-parse              PDF ingestion for Tamil textbook chunks
+  - tsx                    TypeScript script runner (no compile step)
+  - Playwright             End-to-end tests + accessibility checks
+
+DATABASE  (Supabase PostgreSQL — 19 migrations)
+  Key tables:
+  - centres, batches, profiles
+  - questions  (body_en/ta, options_en/ta, answer_index, tamil_status, ...)
+  - mocks, mock_questions
+  - attempts, answers
+  - student_ratings, rating_events  (Elo ledger)
+  - student_chapter_ratings
+  - tamil_knowledge_chunks  (pgvector RAG)
+  - tamil_glossary
+  - question_reports  (crowd QA flags)
+  Extensions: pgvector  (Tamil semantic search)
+
+
+==============================================================================
+22. TESTING
+==============================================================================
+
+UNIT TESTS  (pure functions, zero external dependencies)
+  - lib/diagnose.test.ts        7 tests — diagnosis classification + confidence
+  - lib/diagnose.v2.test.ts     enhanced tests with SELF_DOUBT scenarios
+  - lib/rating.test.ts          Elo mechanics, calibration, anti-farming
+  - lib/mastery.test.ts         gate clearing, regression, frontier compute
+  - lib/grade.test.ts           report building, archetype detection
+  - lib/teacher-rollup.test.ts  diagnosis aggregation per chapter
+
+E2E TESTS  (Playwright)
+  - tests/  (npm run test:e2e)
+  - Accessibility checks via @axe-core/playwright
+
+
+==============================================================================
+23. NOTABLE IMPLEMENTATION DETAILS
+==============================================================================
+
+ATTEMPT IDEMPOTENCY
+  - rating_events: unique(attempt_id, question_id).
+  - Re-submitting an attempt never double-applies ratings.
+  - Client uses POST-Redirect-GET on question picker to avoid double-submit.
+
+MASTERY ROAD CHAPTER ORDERING
+  - Chapters sorted by NCERT order (not alphabetical).
+  - chapterRank() in lib/questions/chapters.ts returns ordinal per
+    subject + chapter.
+  - Enables consistent, intuitive progression UI.
+
+PAGINATION FOR LARGE QUESTION POOLS
+  - Supabase caps single select() at 1000 rows.
+  - listGlobalSyllabus: loops from=0; from+=1000 until data.length < 1000.
+  - Supports accurate counts even for 10k+ global pool.
+
+RANDOM SAMPLING
+  - shuffle<T>(): Fisher-Yates in-place shuffle; returns new array.
+  - Used for full mock + lesson practice question selection.
+
+ARCHETYPE DETECTION  (PANICKER check)
+  - Splits attempt into 5 equal quintiles.
+  - Computes per-quintile accuracy.
+  - PANICKER: final quintile accuracy drops ≥ 20 percentage points vs. first.
+
+SMOOTH ANIMATIONS
+  - Framer Motion spring animations for progress, level roadmap,
+    confetti, card reveals.
+  - Parallax effect on landing page (CinematicBackground / Three.js scene).
+  - useReducedMotion() respected everywhere: all animations have a
+    reduce-? branch that skips animation.
+
+MARKETING SITE  (separate route group)
+  - /welcome, /features, /for-centres, /about, /contact, /faq
+  - Routes under (marketing) layout — no auth required.
+  - Describes diagnosis engine, report views, pricing tiers.
+
+
+==============================================================================
+24. FUTURE FEATURES  (Identified, Not Yet Built)
+==============================================================================
+
+  - Full cohort batch analytics (teacher dashboard shows all students,
+    not just one representative).
+  - Custom report templates (per-centre branding).
+  - Video explanations linked to diagnosis categories.
+  - Parent portal (standalone WhatsApp-style weekly updates).
+  - Offline-first PWA (full sync queue when back online).
+  - Teacher assignment of specific weak chapters.
+  - Mock scheduling + push reminders.
+  - Peer leaderboards + study groups.
+  - Human review UI for Tamil translations (500+ translated → build review screen).
+  - Physics Vol 2 + Chemistry + Biology textbook ingestion for Tamil RAG.
+  - Play Store listing (app built; listing not submitted yet).
+
+
+==============================================================================
+SUMMARY
+==============================================================================
+
+DriveScore is a diagnostic learning platform built around a deterministic,
+explainable algorithm that transforms NEET mock scores into actionable
+learning paths.
+
+It combines:
+  - Skill-rating (Elo)              → fair, transparent progression
+  - Diagnosis Engine                → WHY marks were lost, not just HOW MANY
+  - Mastery Road                    → chapter-by-chapter gate progression
+  - Gamification (XP/streaks/HP)    → engagement in Climb mode
+  - Bilingual pipeline (EN + TA)    → Tamil medium students included
+  - Multi-tenancy (centres/batches) → B2B coaching centre product
+  - Three report views              → student / teacher / parent
+
+Core product insight: "Diagnose, not just score."
+Core technical insight: server-side grading + pure deterministic logic +
+row-level security = safe, explainable, privacy-respecting.
+
+==========================================
+END OF REPORT
+==========================================
