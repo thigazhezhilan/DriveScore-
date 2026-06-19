@@ -14,7 +14,14 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getProfile } from "@/lib/db/queries";
 import { landingFor } from "@/lib/auth";
 
-export type LoginState = { error: string | null };
+export type LoginState = {
+  error: string | null;
+  greeting: {
+    firstName: string;
+    language: "en" | "ta";
+    redirectTo: string;
+  } | null;
+};
 
 export async function login(
   _prev: LoginState,
@@ -24,7 +31,7 @@ export async function login(
   const password = String(formData.get("password") ?? "");
 
   if (!email || !password) {
-    return { error: "errorEmailPassword" };
+    return { error: "errorEmailPassword", greeting: null };
   }
 
   const supabase = createSupabaseServerClient();
@@ -34,7 +41,7 @@ export async function login(
   });
 
   if (error || !data.user) {
-    return { error: "errorWrongCredentials" };
+    return { error: "errorWrongCredentials", greeting: null };
   }
 
   // Resolve role server-side (service client bypasses RLS) and route.
@@ -42,9 +49,7 @@ export async function login(
   if (!profile) {
     // Authenticated but no profile/role assigned — treat as a setup problem.
     await supabase.auth.signOut();
-    return {
-      error: "errorNoRole",
-    };
+    return { error: "errorNoRole", greeting: null };
   }
 
   // Language not yet chosen → gate the student before giving dashboard access.
@@ -68,7 +73,16 @@ export async function login(
     });
   }
 
-  redirect(landingFor(profile.role));
+  // Return greeting data — the client will speak then navigate.
+  // This keeps the browser's user-gesture context alive for Web Speech API.
+  return {
+    error: null,
+    greeting: {
+      firstName: profile.fullName?.split(" ")[0] ?? "",
+      language: profile.preferredLanguage,
+      redirectTo: landingFor(profile.role),
+    },
+  };
 }
 
 export async function logout(): Promise<void> {
