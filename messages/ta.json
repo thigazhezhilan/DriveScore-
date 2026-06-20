@@ -102,7 +102,11 @@
     "report": "அறிக்கை",
     "overallLevel": "ஒட்டுமொத்த நிலை",
     "topLevelReached": "உச்ச நிலை அடைந்தீர்கள் — வைட் கோட் 🥼",
-    "pointsToNext": "{next} நிலைக்கு {points} புள்ளிகள்"
+    "pointsToNext": "{next} நிலைக்கு {points} புள்ளிகள்",
+    "youPin": "நீங்கள்",
+    "masteryViewRoad": "பாதை காண்க",
+    "masteryAllCleared": "அனைத்து நிலைகளும் கடந்தீர்கள்!",
+    "masteryGatesCleared": "கடந்த நிலைகள்"
   },
   "report": {
     "eyebrow": "பகுப்பாய்வு அறிக்கை",

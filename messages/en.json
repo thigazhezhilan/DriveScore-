@@ -102,7 +102,11 @@
     "report": "Report",
     "overallLevel": "Overall level",
     "topLevelReached": "Top level reached — White Coat 🥼",
-    "pointsToNext": "{points} to {next}"
+    "pointsToNext": "{points} to {next}",
+    "youPin": "YOU",
+    "masteryViewRoad": "View road",
+    "masteryAllCleared": "All gates cleared!",
+    "masteryGatesCleared": "Gates cleared"
   },
   "report": {
     "eyebrow": "Diagnosis report",

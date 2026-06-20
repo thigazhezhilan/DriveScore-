@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  Activity,
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
   CheckCircle2,
   Dumbbell,
@@ -13,7 +13,9 @@ import {
   Lock,
   Mountain,
   RotateCcw,
-  Timer,
+  Stethoscope,
+  TrendingDown,
+  Zap,
 } from "lucide-react";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import { Neuro } from "@/components/mascot/Neuro";
@@ -21,6 +23,8 @@ import { AuroraBackground } from "@/components/landing/AuroraBackground";
 import { LevelCard } from "@/components/home/LevelCard";
 import { Logo } from "@/components/brand/Logo";
 import type { RatingSummary } from "@/lib/db/ratings";
+
+// ── Types ────────────────────────────────────────────────────────────────────
 
 type MockItem = {
   id: string;
@@ -31,19 +35,56 @@ type MockItem = {
   latestAttemptId: string | null;
 };
 
+/** Lightweight mastery snapshot serialised from the server component. */
+export type MasterySnap = {
+  frontier: {
+    subject: string;
+    chapter: string;
+    gate: string;
+    gateLabel: string;
+    reason: string;
+  } | null;
+  clearedGates: number;
+  totalGates: number;
+};
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+const LEVEL_COLORS: Record<string, { text: string; bg: string }> = {
+  Aspirant:    { text: "text-paper/60",   bg: "bg-white/10" },
+  Achiever:    { text: "text-energy",     bg: "bg-energy/15" },
+  Scholar:     { text: "text-energy",     bg: "bg-energy/15" },
+  Ranker:      { text: "text-reward",     bg: "bg-reward/15" },
+  Topper:      { text: "text-reward",     bg: "bg-reward/15" },
+  "White Coat":{ text: "text-[#B7AEFF]", bg: "bg-accent2/15" },
+};
+
+const fmt = (n: number) => n.toLocaleString("en-IN");
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
 export function HomeClient({
   studentName,
   mocks,
   rating,
+  mastery,
 }: {
   studentName: string | null;
   mocks: MockItem[];
   rating: RatingSummary | null;
+  mastery: MasterySnap | null;
 }) {
   const reduce = useReducedMotion();
   const t = useTranslations("home");
   const tc = useTranslations("common");
   const firstName = studentName ? studentName.split(" ")[0] : null;
+
+  // First mock the student can still attempt — the hero primary CTA target.
+  const nextMock = mocks.find((m) => m.attemptCount < m.maxAttempts) ?? null;
+
+  const levelColor = rating
+    ? (LEVEL_COLORS[rating.overall.level] ?? LEVEL_COLORS.Aspirant)
+    : null;
 
   return (
     <main className="student-skin landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
@@ -56,10 +97,11 @@ export function HomeClient({
           <LogoutButton dark />
         </header>
 
-        {/* Hero: Neuro + speech bubble */}
+        {/* ── Hero: Neuro + greeting + skill-rating stat + primary CTA ── */}
         <section className="animate-fade-up mt-6" style={{ animationDelay: "60ms" }}>
           <div className="card-glass-lg relative overflow-hidden p-5">
             <div className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-energy/25 blur-2xl" />
+
             <div className="relative flex items-center gap-3">
               <motion.div
                 className="shrink-0"
@@ -69,10 +111,13 @@ export function HomeClient({
               >
                 <Neuro mood="welcome" size={120} />
               </motion.div>
+
               <div className="min-w-0 flex-1">
+                {/* Greeting bubble */}
                 <div className="relative inline-block rounded-2xl rounded-bl-sm bg-energy px-3.5 py-2 text-sm font-bold text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]">
                   {firstName ? t("neuroBubble", { firstName }) : t("neuroBubbleNoName")}
                 </div>
+
                 <p className="mt-2 text-xs font-medium text-paper/65">
                   {t.rich("neuroIntro", {
                     bold: (chunks) => (
@@ -80,19 +125,77 @@ export function HomeClient({
                     ),
                   })}
                 </p>
+
+                {/* ── Skill-rating stat row ── */}
+                {rating && levelColor && (
+                  <motion.div
+                    className="mt-3 flex flex-wrap items-center gap-2"
+                    initial={reduce ? false : { opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, ease: "easeOut" }}
+                  >
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[11px] font-bold ${levelColor.bg} ${levelColor.text}`}
+                    >
+                      <Stethoscope className="h-3 w-3" />
+                      {rating.overall.level}
+                    </span>
+                    <span className="tabular-nums text-sm font-extrabold text-paper">
+                      {fmt(rating.overall.rating)}
+                    </span>
+                    {rating.recentDelta !== 0 && (
+                      <span
+                        className={`inline-flex items-center gap-0.5 text-xs font-bold tabular-nums ${
+                          rating.recentDelta > 0 ? "text-energy" : "text-[#FF9A91]"
+                        }`}
+                      >
+                        {rating.recentDelta > 0 ? (
+                          <ArrowUpRight className="h-3 w-3" />
+                        ) : (
+                          <TrendingDown className="h-3 w-3" />
+                        )}
+                        {rating.recentDelta > 0 ? "+" : ""}
+                        {fmt(rating.recentDelta)}
+                      </span>
+                    )}
+                  </motion.div>
+                )}
               </div>
             </div>
+
+            {/* ── Primary CTA — first mock still open for attempts ── */}
+            {nextMock && (
+              <motion.div
+                className="relative mt-4"
+                initial={reduce ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, ease: "easeOut", duration: 0.3 }}
+              >
+                <Link
+                  href={`/test?mock=${nextMock.id}`}
+                  className="btn-energy flex w-full cursor-pointer items-center gap-2 py-3 text-sm font-bold"
+                >
+                  <Zap className="h-4 w-4 shrink-0" />
+                  <span>{nextMock.attemptCount > 0 ? t("retake") : t("startMock")}</span>
+                  <span className="text-focusink/55">·</span>
+                  <span className="min-w-0 flex-1 truncate font-medium opacity-80">
+                    {nextMock.title}
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0" />
+                </Link>
+              </motion.div>
+            )}
           </div>
         </section>
 
-        {/* Skill level — Elo-based, motivating, no raw rank ladder */}
+        {/* ── Skill level — Elo roadmap with animated level nodes ───── */}
         {rating && <LevelCard rating={rating} />}
 
-        {/* Quick actions — practice + road + progress (side by side on laptop) */}
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {/* ── Quick actions ─────────────────────────────────────────── */}
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <Link
             href="/practice"
-            className="card-glass animate-fade-up group flex items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
+            className="card-glass animate-fade-up group flex cursor-pointer items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
             style={{ animationDelay: "90ms" }}
           >
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]">
@@ -107,7 +210,7 @@ export function HomeClient({
 
           <Link
             href="/road"
-            className="card-glass animate-fade-up group flex items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
+            className="card-glass animate-fade-up group flex cursor-pointer items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
             style={{ animationDelay: "95ms" }}
           >
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-reward/20 text-reward">
@@ -120,10 +223,10 @@ export function HomeClient({
             <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
           </Link>
 
-          {rating && (
+          {rating ? (
             <Link
               href="/progress"
-              className="card-glass animate-fade-up group flex items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
+              className="card-glass animate-fade-up group flex cursor-pointer items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
               style={{ animationDelay: "100ms" }}
             >
               <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy/15 text-energy">
@@ -135,36 +238,78 @@ export function HomeClient({
               </div>
               <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
             </Link>
+          ) : (
+            <div className="hidden sm:block" />
           )}
         </div>
 
-        {/* Headline */}
-        <section className="animate-fade-up mt-7" style={{ animationDelay: "120ms" }}>
-          <h2 className="font-display text-[30px] font-extrabold leading-[1.05] tracking-tight text-paper">
-            {t("tagline1")}
-            <span className="mt-1 block">
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-r from-energy via-energy-soft to-reward bg-clip-text text-transparent">
-                  {t("tagline2")}
-                </span>
-                <span className="absolute inset-x-0 bottom-1 z-0 h-3 -rotate-1 bg-reward/40" />
-              </span>{" "}
-              {t("tagline3")}
-            </span>
-          </h2>
-          <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            <span className="pill bg-energy/15 text-energy">
-              <Timer className="h-3.5 w-3.5" /> {t("pillTiming")}
-            </span>
-            <span className="pill bg-reward/15 text-reward">
-              <Activity className="h-3.5 w-3.5" /> {t("pillDiagnosis")}
-            </span>
-            <span className="pill bg-accent2/20 text-[#B7AEFF]">{t("pillMarking")}</span>
-          </div>
-        </section>
+        {/* ── Mastery Road preview ───────────────────────────────────── */}
+        {mastery && mastery.totalGates > 0 && (
+          <section className="animate-fade-up mt-4" style={{ animationDelay: "110ms" }}>
+            <div className="card-glass-lg relative overflow-hidden p-5">
+              <div className="pointer-events-none absolute -left-8 -top-8 h-32 w-32 rounded-full bg-reward/20 blur-2xl" />
 
-        {/* Assigned mocks */}
-        <section className="animate-fade-up mt-8" style={{ animationDelay: "180ms" }}>
+              <div className="relative flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-reward/15 text-reward">
+                    <Mountain className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-paper/40">
+                      {t("masteryTitle")}
+                    </p>
+                    {mastery.frontier ? (
+                      <p className="font-display text-sm font-bold leading-snug text-paper">
+                        {mastery.frontier.chapter}
+                        <span className="ml-1.5 font-normal text-paper/40">·</span>
+                        <span className="ml-1.5 text-reward">{mastery.frontier.gateLabel}</span>
+                      </p>
+                    ) : (
+                      <p className="font-display text-sm font-bold text-paper">
+                        {t("masteryAllCleared")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <Link
+                  href="/road"
+                  className="shrink-0 cursor-pointer rounded-xl bg-reward/10 px-3 py-1.5 text-xs font-bold text-reward transition hover:bg-reward/20"
+                >
+                  {t("masteryViewRoad")} →
+                </Link>
+              </div>
+
+              {/* Cleared-gates progress bar */}
+              <div className="mt-4">
+                <div className="mb-1.5 flex justify-between text-[10px] text-paper/40">
+                  <span>{t("masteryGatesCleared")}</span>
+                  <span className="tabular-nums">
+                    {mastery.clearedGates} / {mastery.totalGates}
+                  </span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                  <motion.div
+                    className="h-full rounded-full bg-gradient-to-r from-energy via-reward to-[#B7AEFF]"
+                    initial={reduce ? false : { width: 0 }}
+                    animate={{
+                      width: `${(mastery.clearedGates / mastery.totalGates) * 100}%`,
+                    }}
+                    transition={{ duration: 1.1, ease: "easeOut", delay: 0.4 }}
+                  />
+                </div>
+                {mastery.frontier?.reason && (
+                  <p className="mt-2 text-[11px] italic text-paper/40">
+                    {mastery.frontier.reason}
+                  </p>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── Assigned mocks ─────────────────────────────────────────── */}
+        <section className="animate-fade-up mt-8" style={{ animationDelay: "150ms" }}>
           <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-paper/45">
             {t("yourMocks")}
           </h3>
@@ -179,57 +324,72 @@ export function HomeClient({
             </div>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {mocks.map((m) => (
-                <div key={m.id} className="card-glass flex flex-col p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy/15 text-energy">
-                      <BookOpen className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-display font-bold text-paper">{m.title}</p>
-                      <div className="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-paper/55">
-                        <span>{tc("questionCount", { count: m.questionCount })}</span>
-                        {m.attemptCount > 0 && (
-                          <span className="pill bg-energy/15 text-energy">
-                            <CheckCircle2 className="h-3.5 w-3.5" /> {t("attempted")}
-                          </span>
+              {mocks.map((m) => {
+                const pct =
+                  m.maxAttempts > 0 ? Math.min(1, m.attemptCount / m.maxAttempts) : 0;
+                return (
+                  <div key={m.id} className="card-glass flex flex-col p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy/15 text-energy">
+                        <BookOpen className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-display font-bold text-paper">{m.title}</p>
+                        <div className="mt-0.5 flex flex-wrap items-center gap-2 text-xs text-paper/55">
+                          <span>{tc("questionCount", { count: m.questionCount })}</span>
+                          {m.attemptCount > 0 && (
+                            <span className="pill bg-energy/15 text-energy">
+                              <CheckCircle2 className="h-3.5 w-3.5" /> {t("attempted")}
+                            </span>
+                          )}
+                        </div>
+                        {/* attempt progress bar — only shown when multiple attempts allowed */}
+                        {m.maxAttempts > 1 && (
+                          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                            <motion.div
+                              className="h-full rounded-full bg-energy/70"
+                              initial={reduce ? false : { width: 0 }}
+                              animate={{ width: `${pct * 100}%` }}
+                              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                            />
+                          </div>
                         )}
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mt-auto flex items-center gap-2 pt-3">
-                    {m.attemptCount >= m.maxAttempts && m.attemptCount > 0 ? (
-                      <div className="flex flex-1 items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-semibold text-paper/40">
-                        <Lock className="h-4 w-4" /> {t("completed")}
-                      </div>
-                    ) : (
-                      <Link
-                        href={`/test?mock=${m.id}`}
-                        className="btn-energy flex-1 py-2.5 text-sm"
-                      >
-                        {m.attemptCount > 0 ? (
-                          <>
-                            {t("retake")} <RotateCcw className="h-4 w-4" />
-                          </>
-                        ) : (
-                          <>
-                            {t("startMock")} <ArrowRight className="h-4 w-4" />
-                          </>
-                        )}
-                      </Link>
-                    )}
-                    {m.attemptCount > 0 && m.latestAttemptId && (
-                      <Link
-                        href={`/report?attempt=${m.latestAttemptId}`}
-                        className="btn-ghost-dark px-4 py-2.5 text-sm"
-                      >
-                        <LineChart className="h-4 w-4 text-energy" /> {t("report")}
-                      </Link>
-                    )}
+                    <div className="mt-auto flex items-center gap-2 pt-3">
+                      {m.attemptCount >= m.maxAttempts && m.attemptCount > 0 ? (
+                        <div className="flex flex-1 items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-semibold text-paper/40">
+                          <Lock className="h-4 w-4" /> {t("completed")}
+                        </div>
+                      ) : (
+                        <Link
+                          href={`/test?mock=${m.id}`}
+                          className="btn-energy flex-1 py-2.5 text-sm"
+                        >
+                          {m.attemptCount > 0 ? (
+                            <>
+                              {t("retake")} <RotateCcw className="h-4 w-4" />
+                            </>
+                          ) : (
+                            <>
+                              {t("startMock")} <ArrowRight className="h-4 w-4" />
+                            </>
+                          )}
+                        </Link>
+                      )}
+                      {m.attemptCount > 0 && m.latestAttemptId && (
+                        <Link
+                          href={`/report?attempt=${m.latestAttemptId}`}
+                          className="btn-ghost-dark px-4 py-2.5 text-sm"
+                        >
+                          <LineChart className="h-4 w-4 text-energy" /> {t("report")}
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </section>

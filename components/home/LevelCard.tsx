@@ -43,6 +43,7 @@ function LevelRoadmap({
   rating: number;
 }) {
   const reduce = useReducedMotion();
+  const t = useTranslations("home");
   const currentIdx = LEVELS.findIndex((l) => l.name === currentLevel);
 
   /* fraction progress inside the current segment (0–1) */
@@ -158,7 +159,7 @@ function LevelRoadmap({
                     className="rounded-full px-1.5 py-0.5 text-[9px] font-black tracking-wide"
                     style={{ background: style.node, color: "#0a0f0d" }}
                   >
-                    YOU
+                    {t("youPin")}
                   </span>
                   {/* tiny pointer */}
                   <div
