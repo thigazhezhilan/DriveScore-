@@ -9,6 +9,7 @@ import type { Role } from "@/lib/types";
 import { StudentView } from "@/components/report/StudentView";
 import { TeacherView } from "@/components/report/TeacherView";
 import { ParentView } from "@/components/report/ParentView";
+import { AuroraBackground } from "@/components/landing/AuroraBackground";
 
 const TAB_IDS: { id: Role; icon: typeof GraduationCap }[] = [
   { id: "student", icon: GraduationCap },
@@ -45,87 +46,85 @@ export function ReportTabs({
   };
 
   return (
-    <main
-      className={`mx-auto min-h-dvh max-w-4xl px-5 pb-10 pt-6 ${
-        warm
-          ? "student-skin bg-[radial-gradient(120%_60%_at_50%_0%,rgba(0,224,184,0.12),transparent_60%)]"
-          : ""
-      }`}
-    >
-      {/* Header + role toggle */}
-      <header className="animate-fade-up">
-        <div className="flex items-center justify-between">
-          <div>
-            <p
-              className={`text-[11px] font-semibold uppercase tracking-wider ${
-                warm ? "text-energy-deep" : "text-teal-deep"
-              }`}
+    <main className="student-skin landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
+      <AuroraBackground />
+
+      <div className="relative mx-auto max-w-4xl px-5 pb-10 pt-6">
+        {/* Header + role toggle */}
+        <header className="animate-fade-up">
+          <div className="flex items-center justify-between">
+            <div>
+              <p
+                className={`text-[11px] font-semibold uppercase tracking-wider ${
+                  warm ? "text-energy" : "text-teal-soft"
+                }`}
+              >
+                {t("eyebrow")}
+              </p>
+              <h1
+                className={`font-display font-bold text-paper ${
+                  warm ? "text-2xl font-extrabold" : "text-xl"
+                }`}
+              >
+                {warm ? t("yourBreakdown") : t("mockAnalysis")}
+              </h1>
+            </div>
+            <button
+              onClick={retake}
+              className="btn-ghost-dark px-3 py-2 text-xs"
+              aria-label={t("retake")}
             >
-              {t("eyebrow")}
-            </p>
-            <h1
-              className={`font-display font-bold text-ink ${
-                warm ? "text-2xl font-extrabold" : "text-xl"
-              }`}
+              <Home className="h-4 w-4" />
+              {t("retake")}
+            </button>
+          </div>
+
+          {gameStats && (
+            <div className="mt-3 flex items-center gap-2 text-xs font-bold">
+              <span className="inline-flex items-center gap-1 rounded-full bg-energy/15 px-2.5 py-1 text-energy">
+                ⚡ {t("xpThisRun", { xp: gameStats.xp })}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-reward/15 px-2.5 py-1 text-reward">
+                🔥 {t("bestStreak", { streak: gameStats.streak })}
+              </span>
+            </div>
+          )}
+
+          {!locked && (
+            <div
+              role="tablist"
+              aria-label="Report view"
+              className="mt-4 grid grid-cols-3 gap-1 rounded-2xl bg-white/[0.06] p-1"
             >
-              {warm ? t("yourBreakdown") : t("mockAnalysis")}
-            </h1>
-          </div>
-          <button
-            onClick={retake}
-            className="btn-ghost px-3 py-2 text-xs"
-            aria-label={t("retake")}
-          >
-            <Home className="h-4 w-4" />
-            {t("retake")}
-          </button>
-        </div>
+              {TAB_IDS.map(({ id, icon: Icon }) => {
+                const active = id === view;
+                return (
+                  <button
+                    key={id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setRole(id)}
+                    className={`flex items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-sm font-semibold transition ${
+                      active
+                        ? "bg-white/15 text-paper shadow-sm"
+                        : "text-paper/55 hover:text-paper"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {tabLabels[id]}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </header>
 
-        {gameStats && (
-          <div className="mt-3 flex items-center gap-2 text-xs font-bold">
-            <span className="inline-flex items-center gap-1 rounded-full bg-energy/15 px-2.5 py-1 text-energy-deep">
-              ⚡ {t("xpThisRun", { xp: gameStats.xp })}
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-amber/15 px-2.5 py-1 text-[#9a6800]">
-              🔥 {t("bestStreak", { streak: gameStats.streak })}
-            </span>
-          </div>
-        )}
-
-        {!locked && (
-          <div
-            role="tablist"
-            aria-label="Report view"
-            className="mt-4 grid grid-cols-3 gap-1 rounded-2xl bg-black/[0.04] p-1"
-          >
-            {TAB_IDS.map(({ id, icon: Icon }) => {
-              const active = id === view;
-              return (
-                <button
-                  key={id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setRole(id)}
-                  className={`flex items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-sm font-semibold transition ${
-                    active
-                      ? "bg-white text-ink shadow-sm"
-                      : "text-ink/55 hover:text-ink"
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  {tabLabels[id]}
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </header>
-
-      <section key={view} className="animate-fade-up mt-5">
-        {view === "student" && <StudentView report={report} />}
-        {view === "teacher" && <TeacherView report={report} />}
-        {view === "parent" && <ParentView report={report} />}
-      </section>
+        <section key={view} className="animate-fade-up mt-5">
+          {view === "student" && <StudentView report={report} />}
+          {view === "teacher" && <TeacherView report={report} />}
+          {view === "parent" && <ParentView report={report} />}
+        </section>
+      </div>
     </main>
   );
 }
