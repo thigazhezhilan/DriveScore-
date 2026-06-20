@@ -1,31 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { ArrowUpRight, Stethoscope, TrendingDown } from "lucide-react";
 import type { RatingSummary } from "@/lib/db/ratings";
 import { LEVELS } from "@/lib/rating";
 import type { Subject } from "@/lib/types";
-import { EASE, SPRING, DUR, STAGGER } from "@/lib/motion";
-
-function useCountUp(target: number, enabled: boolean, durationMs = 1100) {
-  const [value, setValue] = useState(enabled ? 0 : target);
-  const raf = useRef<number>(0);
-  useEffect(() => {
-    if (!enabled) { setValue(target); return; }
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / durationMs);
-      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-      setValue(Math.round(eased * target));
-      if (t < 1) raf.current = requestAnimationFrame(tick);
-    };
-    const id = setTimeout(() => { raf.current = requestAnimationFrame(tick); }, 350);
-    return () => { clearTimeout(id); cancelAnimationFrame(raf.current); };
-  }, [target, enabled, durationMs]);
-  return value;
-}
+import { EASE, SPRING, DUR, STAGGER, useCountUp } from "@/lib/motion";
 
 /** Per-level accent (Tailwind tokens already in the dark skin). */
 const LEVEL_STYLE: Record<string, { text: string; bar: string; glow: string; node: string; ring: string }> = {
@@ -208,7 +189,7 @@ export function LevelCard({ rating }: { rating: RatingSummary }) {
   const t = useTranslations("home");
   const { overall, subjects, recentDelta } = rating;
   const style = LEVEL_STYLE[overall.level] ?? LEVEL_STYLE.Aspirant;
-  const displayRating = useCountUp(overall.rating, !reduce);
+  const displayRating = useCountUp(overall.rating, !reduce, 1100, 350);
 
   const currentIdx  = LEVELS.findIndex((l) => l.name === overall.level);
   const nextLevel   = LEVELS[currentIdx + 1] ?? null;

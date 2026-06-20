@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
-import { EASE, DUR, STAGGER } from "@/lib/motion";
+import { EASE, DUR, STAGGER, useCountUp } from "@/lib/motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -63,24 +62,6 @@ const LEVEL_COLORS: Record<string, { text: string; bg: string }> = {
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 
-function useCountUp(target: number, enabled: boolean, durationMs = 1100) {
-  const [value, setValue] = useState(enabled ? 0 : target);
-  const raf = useRef<number>(0);
-  useEffect(() => {
-    if (!enabled) { setValue(target); return; }
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / durationMs);
-      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-      setValue(Math.round(eased * target));
-      if (t < 1) raf.current = requestAnimationFrame(tick);
-    };
-    const id = setTimeout(() => { raf.current = requestAnimationFrame(tick); }, 280);
-    return () => { clearTimeout(id); cancelAnimationFrame(raf.current); };
-  }, [target, enabled, durationMs]);
-  return value;
-}
-
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function HomeClient({
@@ -106,7 +87,7 @@ export function HomeClient({
     ? (LEVEL_COLORS[rating.overall.level] ?? LEVEL_COLORS.Aspirant)
     : null;
 
-  const heroRating = useCountUp(rating?.overall.rating ?? 0, !reduce && !!rating, 900);
+  const heroRating = useCountUp(rating?.overall.rating ?? 0, !reduce && !!rating, 900, 280);
 
   return (
     <main className="student-skin landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
