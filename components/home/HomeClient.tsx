@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, DUR, STAGGER } from "@/lib/motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -61,6 +63,24 @@ const LEVEL_COLORS: Record<string, { text: string; bg: string }> = {
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 
+function useCountUp(target: number, enabled: boolean, durationMs = 1100) {
+  const [value, setValue] = useState(enabled ? 0 : target);
+  const raf = useRef<number>(0);
+  useEffect(() => {
+    if (!enabled) { setValue(target); return; }
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / durationMs);
+      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      setValue(Math.round(eased * target));
+      if (t < 1) raf.current = requestAnimationFrame(tick);
+    };
+    const id = setTimeout(() => { raf.current = requestAnimationFrame(tick); }, 280);
+    return () => { clearTimeout(id); cancelAnimationFrame(raf.current); };
+  }, [target, enabled, durationMs]);
+  return value;
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function HomeClient({
@@ -85,6 +105,8 @@ export function HomeClient({
   const levelColor = rating
     ? (LEVEL_COLORS[rating.overall.level] ?? LEVEL_COLORS.Aspirant)
     : null;
+
+  const heroRating = useCountUp(rating?.overall.rating ?? 0, !reduce && !!rating, 900);
 
   return (
     <main className="student-skin landing-skin relative min-h-dvh overflow-x-hidden bg-[#06140f] text-paper">
@@ -113,10 +135,15 @@ export function HomeClient({
               </motion.div>
 
               <div className="min-w-0 flex-1">
-                {/* Greeting bubble */}
-                <div className="relative inline-block rounded-2xl rounded-bl-sm bg-energy px-3.5 py-2 text-sm font-bold text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]">
+                {/* Greeting bubble — pops in after mascot entrance settles */}
+                <motion.div
+                  className="relative inline-block rounded-2xl rounded-bl-sm bg-energy px-3.5 py-2 text-sm font-bold text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]"
+                  initial={reduce ? false : { scale: 0.65, opacity: 0, y: 4 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  transition={{ delay: 0.28, type: "spring", stiffness: 260, damping: 20 }}
+                >
                   {firstName ? t("neuroBubble", { firstName }) : t("neuroBubbleNoName")}
-                </div>
+                </motion.div>
 
                 <p className="mt-2 text-xs font-medium text-paper/65">
                   {t.rich("neuroIntro", {
@@ -141,7 +168,7 @@ export function HomeClient({
                       {rating.overall.level}
                     </span>
                     <span className="tabular-nums text-sm font-extrabold text-paper">
-                      {fmt(rating.overall.rating)}
+                      {fmt(heroRating)}
                     </span>
                     {rating.recentDelta !== 0 && (
                       <span
@@ -193,51 +220,69 @@ export function HomeClient({
 
         {/* ── Quick actions ─────────────────────────────────────────── */}
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          <Link
-            href="/practice"
-            className="card-glass animate-fade-up group flex cursor-pointer items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
-            style={{ animationDelay: "90ms" }}
+          {/* Practice */}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.09, ease: EASE, duration: DUR.base }}
           >
-            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)]">
-              <Dumbbell className="h-5 w-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="font-display font-bold text-paper">{t("practiceTitle")}</p>
-              <p className="text-xs text-paper/55">{t("practiceSubtitle")}</p>
-            </div>
-            <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
-          </Link>
-
-          <Link
-            href="/road"
-            className="card-glass animate-fade-up group flex cursor-pointer items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
-            style={{ animationDelay: "95ms" }}
-          >
-            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-reward/20 text-reward">
-              <Mountain className="h-5 w-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="font-display font-bold text-paper">{t("masteryTitle")}</p>
-              <p className="text-xs text-paper/55">{t("masterySubtitle")}</p>
-            </div>
-            <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
-          </Link>
-
-          {rating ? (
             <Link
-              href="/progress"
-              className="card-glass animate-fade-up group flex cursor-pointer items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:bg-white/[0.08]"
-              style={{ animationDelay: "100ms" }}
+              href="/practice"
+              className="card-glass group flex h-full cursor-pointer items-center gap-3 p-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.08] hover:shadow-[0_8px_28px_-8px_rgba(0,224,184,0.45)]"
             >
-              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy/15 text-energy">
-                <LineChart className="h-5 w-5" />
+              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy text-focusink shadow-[0_0_18px_-4px_rgba(0,224,184,0.7)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                <Dumbbell className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="font-display font-bold text-paper">{t("progressTitle")}</p>
-                <p className="text-xs text-paper/55">{t("progressSubtitle")}</p>
+                <p className="font-display font-bold text-paper">{t("practiceTitle")}</p>
+                <p className="text-xs text-paper/55">{t("practiceSubtitle")}</p>
               </div>
-              <ArrowRight className="h-5 w-5 shrink-0 text-energy transition group-hover:translate-x-0.5" />
+              <ArrowRight className="h-5 w-5 shrink-0 text-energy transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
+          </motion.div>
+
+          {/* Mastery Road */}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.09 + STAGGER, ease: EASE, duration: DUR.base }}
+          >
+            <Link
+              href="/road"
+              className="card-glass group flex h-full cursor-pointer items-center gap-3 p-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.08] hover:shadow-[0_8px_28px_-8px_rgba(255,176,32,0.35)]"
+            >
+              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-reward/20 text-reward transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                <Mountain className="h-5 w-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-display font-bold text-paper">{t("masteryTitle")}</p>
+                <p className="text-xs text-paper/55">{t("masterySubtitle")}</p>
+              </div>
+              <ArrowRight className="h-5 w-5 shrink-0 text-energy transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+
+          {/* Progress (only when rating exists) */}
+          {rating ? (
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.09 + STAGGER * 2, ease: EASE, duration: DUR.base }}
+            >
+              <Link
+                href="/progress"
+                className="card-glass group flex h-full cursor-pointer items-center gap-3 p-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.08] hover:shadow-[0_8px_28px_-8px_rgba(0,224,184,0.45)]"
+              >
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-energy/15 text-energy transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                  <LineChart className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-display font-bold text-paper">{t("progressTitle")}</p>
+                  <p className="text-xs text-paper/55">{t("progressSubtitle")}</p>
+                </div>
+                <ArrowRight className="h-5 w-5 shrink-0 text-energy transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
           ) : (
             <div className="hidden sm:block" />
           )}
@@ -288,15 +333,29 @@ export function HomeClient({
                     {mastery.clearedGates} / {mastery.totalGates}
                   </span>
                 </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                  {/* fill — triggers on scroll-into-view */}
                   <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-energy via-reward to-[#B7AEFF]"
                     initial={reduce ? false : { width: 0 }}
-                    animate={{
+                    whileInView={{
                       width: `${(mastery.clearedGates / mastery.totalGates) * 100}%`,
                     }}
-                    transition={{ duration: 1.1, ease: "easeOut", delay: 0.4 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: DUR.fill, ease: "easeOut", delay: 0.4 }}
                   />
+                  {/* shimmer sweep — rides over the fill after it lands */}
+                  {!reduce && (
+                    <motion.div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-y-0 w-12"
+                      style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)" }}
+                      initial={{ x: "-3rem" }}
+                      whileInView={{ x: "calc(100vw + 3rem)" }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 1.55, duration: 0.75, ease: EASE }}
+                    />
+                  )}
                 </div>
                 {mastery.frontier?.reason && (
                   <p className="mt-2 text-[11px] italic text-paper/40">

@@ -112,9 +112,9 @@ export function Neuro({
         </motion.g>
 
         {/* ── Decorative dendrites (top of the cell) ── */}
-        <Dendrite x1={74} y1={56} x2={58} y2={28} />
-        <Dendrite x1={100} y1={50} x2={100} y2={20} />
-        <Dendrite x1={126} y1={56} x2={142} y2={28} />
+        <Dendrite x1={74}  y1={56} x2={58}  y2={28} phase={0}   />
+        <Dendrite x1={100} y1={50} x2={100} y2={20} phase={0.4} />
+        <Dendrite x1={126} y1={56} x2={142} y2={28} phase={0.8} />
 
         {/* ── Arms (pose by mood) ── */}
         <Arms mood={mood} reduce={!!reduce} />
@@ -178,12 +178,19 @@ export function Neuro({
   );
 }
 
-function Dendrite({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) {
+function Dendrite({
+  x1, y1, x2, y2, phase = 0,
+}: { x1: number; y1: number; x2: number; y2: number; phase?: number }) {
+  const reduce = useReducedMotion();
   return (
-    <g>
+    <motion.g
+      style={{ transformBox: "view-box", transformOrigin: `${x1}px ${y1}px` }}
+      animate={reduce ? undefined : { rotate: [-2.5, 2.5, -2.5] }}
+      transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: phase }}
+    >
       <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--energy-deep)" strokeWidth={5} strokeLinecap="round" />
       <circle cx={x2} cy={y2} r={5} fill="var(--energy-deep)" />
-    </g>
+    </motion.g>
   );
 }
 

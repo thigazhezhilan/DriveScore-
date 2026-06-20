@@ -89,20 +89,24 @@ export function AuroraBackground() {
         }}
       />
 
-      {/* science motif — faint DNA helix (desktop only, cheap static SVG) */}
-      <svg
-        aria-hidden
-        viewBox="0 0 220 600"
-        preserveAspectRatio="xMidYMid meet"
-        className="float-slow absolute right-[3%] top-1/2 hidden h-[78vh] -translate-y-1/2 md:block"
-        style={{ opacity: 0.14 }}
-      >
-        <path d={strandPath(110, 58, 20, 580, 4, 0)} fill="none" stroke="#00E0B8" strokeWidth={2} />
-        <path d={strandPath(110, 58, 20, 580, 4, Math.PI)} fill="none" stroke="#7CF0DD" strokeWidth={2} />
-        {strandRungs(110, 58, 20, 580, 4).map((r, i) => (
-          <line key={i} x1={r.x1} y1={r.y} x2={r.x2} y2={r.y} stroke="#00E0B8" strokeWidth={1.2} opacity={0.5} />
-        ))}
-      </svg>
+      {/* science motif — faint DNA helix, desktop only, ambient drift via CSS */}
+      <div className="absolute right-[3%] top-1/2 hidden h-[78vh] -translate-y-1/2 md:block">
+        <div className="dna-ambient h-full">
+          <svg
+            aria-hidden
+            viewBox="0 0 220 600"
+            preserveAspectRatio="xMidYMid meet"
+            className="h-full w-auto"
+            style={{ opacity: 0.14 }}
+          >
+            <path d={strandPath(110, 58, 20, 580, 4, 0)} fill="none" stroke="#00E0B8" strokeWidth={2} />
+            <path d={strandPath(110, 58, 20, 580, 4, Math.PI)} fill="none" stroke="#7CF0DD" strokeWidth={2} />
+            {strandRungs(110, 58, 20, 580, 4).map((r, i) => (
+              <line key={i} x1={r.x1} y1={r.y} x2={r.x2} y2={r.y} stroke="#00E0B8" strokeWidth={1.2} opacity={0.5} />
+            ))}
+          </svg>
+        </div>
+      </div>
 
       {/* science motif — faint molecule (desktop only) */}
       <svg

@@ -213,6 +213,17 @@ html[lang="ta"] .landing-skin {
 .aurora-breathe { animation: glow-breathe 7s ease-in-out infinite; }
 .scroll-cue { animation: cue-bob 1.8s ease-in-out infinite; }
 
+/* DNA helix ambient — very slow float + slight rotation, never distracting */
+@keyframes dna-ambient {
+  0%, 100% { transform: translateY(0)    rotate(0deg); }
+  35%       { transform: translateY(-7px) rotate(1.4deg); }
+  70%       { transform: translateY(-3px) rotate(-0.9deg); }
+}
+.dna-ambient { animation: dna-ambient 14s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .dna-ambient { animation: none; }
+}
+
 /* Fine film grain for an "expensive" matte finish (cheap: one tiled SVG). */
 .grain-overlay {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
