@@ -108,10 +108,10 @@ export function StudentView({ report }: { report: Report }) {
       {/* The centrepiece: grouped diagnosis */}
       <motion.section variants={item}>
         <div className="mb-2.5 flex items-baseline justify-between">
-          <h3 className="font-display text-xl font-extrabold text-ink">
+          <h3 className="font-display text-xl font-extrabold text-paper">
             {t("whyLostMarks")}
           </h3>
-          <span className="text-xs font-medium text-ink/50">{t("groupedByCause")}</span>
+          <span className="text-xs font-medium text-paper/50">{t("groupedByCause")}</span>
         </div>
         <DiagnosisGroups groups={report.groups} />
       </motion.section>

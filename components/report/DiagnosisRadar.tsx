@@ -91,14 +91,14 @@ export function DiagnosisRadar({
   if (rootCauses === null) {
     return (
       <section>
-        <h3 className="mb-2.5 font-display text-lg font-bold text-ink">
+        <h3 className="mb-2.5 font-display text-lg font-bold text-paper">
           {tr("whereMarksWent")}
         </h3>
-        <div className="card animate-pulse p-5">
-          <div className="mx-auto aspect-[4/3] w-full max-w-sm rounded-2xl bg-black/[0.05]" />
+        <div className="card-glass animate-pulse p-5">
+          <div className="mx-auto aspect-[4/3] w-full max-w-sm rounded-2xl bg-white/[0.05]" />
           <div className="mt-4 flex justify-center gap-6">
             {[80, 60, 72].map((w, k) => (
-              <div key={k} className="h-3 rounded-full bg-black/[0.05]" style={{ width: w }} />
+              <div key={k} className="h-3 rounded-full bg-white/[0.05]" style={{ width: w }} />
             ))}
           </div>
         </div>
@@ -110,12 +110,12 @@ export function DiagnosisRadar({
   if (maxScore === 0) {
     return (
       <section>
-        <h3 className="mb-2.5 font-display text-lg font-bold text-ink">
+        <h3 className="mb-2.5 font-display text-lg font-bold text-paper">
           {tr("whereMarksWent")}
         </h3>
-        <div className="card p-6 text-center">
-          <p className="text-sm font-semibold text-ink">{tr("radarEmpty")}</p>
-          <p className="mt-1 text-xs text-ink/50">{tr("radarEmptySub")}</p>
+        <div className="card-glass p-6 text-center">
+          <p className="text-sm font-semibold text-paper">{tr("radarEmpty")}</p>
+          <p className="mt-1 text-xs text-paper/50">{tr("radarEmptySub")}</p>
         </div>
       </section>
     );
@@ -146,10 +146,10 @@ export function DiagnosisRadar({
 
   return (
     <section>
-      <h3 className="mb-2.5 font-display text-lg font-bold text-ink">
+      <h3 className="mb-2.5 font-display text-lg font-bold text-paper">
         {tr("whereMarksWent")}
       </h3>
-      <div className="card overflow-hidden p-4 sm:p-5">
+      <div className="card-glass overflow-hidden p-4 sm:p-5">
 
         {/* Intrinsic-ratio container — labels rendered as HTML so Tamil text
             wraps naturally without SVG text overflow constraints.             */}
@@ -169,7 +169,7 @@ export function DiagnosisRadar({
                 key={k}
                 points={pts}
                 fill="none"
-                stroke="rgba(0,0,0,0.07)"
+                stroke="rgba(255,255,255,0.12)"
                 strokeWidth={1}
               />
             ))}
@@ -181,7 +181,7 @@ export function DiagnosisRadar({
                 <line
                   key={i}
                   x1={CX} y1={CY} x2={x} y2={y}
-                  stroke="rgba(0,0,0,0.07)" strokeWidth={1}
+                  stroke="rgba(255,255,255,0.12)" strokeWidth={1}
                 />
               );
             })}
@@ -236,7 +236,7 @@ export function DiagnosisRadar({
               }}
             >
               {lb.key && (
-                <span className="text-[9px] font-semibold leading-tight text-ink/55">
+                <span className="text-[9px] font-semibold leading-tight text-paper/55">
                   {tr(lb.key)}
                 </span>
               )}
@@ -261,7 +261,7 @@ export function DiagnosisRadar({
           ).map(({ color, key, range }) => (
             <span key={range} className="flex items-center gap-1.5">
               <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: color }} />
-              <span className="text-ink/60">
+              <span className="text-paper/60">
                 {tr(key)} {range}
               </span>
             </span>
