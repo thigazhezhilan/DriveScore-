@@ -31,6 +31,8 @@ import { getCurrentUser, landingFor } from "@/lib/auth";
 import { CinematicBackground } from "@/components/landing/CinematicBackground";
 import { Reveal } from "@/components/landing/Reveal";
 import { Parallax } from "@/components/landing/Parallax";
+import { HeroHeadline } from "@/components/landing/HeroHeadline";
+import { MotionCard } from "@/components/landing/MotionCard";
 import { WaveDivider } from "@/components/landing/WaveDivider";
 import { Neuro } from "@/components/mascot/Neuro";
 import { LoginForm } from "@/components/auth/LoginForm";
@@ -98,16 +100,11 @@ export default async function WelcomePage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12}>
-            <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
-              {t("heroH1_1")}{" "}
-              <span className="bg-gradient-to-r from-energy via-energy-soft to-reward bg-clip-text text-transparent">
-                {t("heroH1Accent")}
-              </span>
-              .
-              <span className="mt-2 block">{t("heroH1_2")}</span>
-            </h1>
-          </Reveal>
+          <HeroHeadline
+            line1={t("heroH1_1")}
+            accent={t("heroH1Accent")}
+            line2={t("heroH1_2")}
+          />
 
           <Reveal delay={0.2}>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-paper/70 sm:text-lg">
@@ -149,19 +146,16 @@ export default async function WelcomePage() {
               })}
             </h2>
           </Reveal>
-          <Reveal delay={0.1}>
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {([0, 1, 2] as const).map((i) => (
-                <div
-                  key={i}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-left"
-                >
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {([0, 1, 2] as const).map((i) => (
+              <Reveal key={i} delay={0.08 + i * 0.08}>
+                <MotionCard className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-left">
                   <p className="font-display text-lg font-bold text-paper">{t(`prob${i}Title`)}</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-paper/60">{t(`prob${i}Desc`)}</p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+                </MotionCard>
+              </Reveal>
+            ))}
+          </div>
         </Section>
 
         <WaveDivider tint="rgba(0,224,184,0.05)" />
@@ -191,7 +185,7 @@ export default async function WelcomePage() {
               const s = DIAG_STYLES[i];
               return (
                 <Reveal key={i} delay={i * 0.08}>
-                  <div className={`group h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:bg-white/[0.06] ${s.glow}`}>
+                  <MotionCard className={`group h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:bg-white/[0.06] ${s.glow}`}>
                     <div className={`grid h-11 w-11 place-items-center rounded-xl ${s.chip}`}>
                       <Icon className="h-5 w-5" />
                     </div>
@@ -200,7 +194,7 @@ export default async function WelcomePage() {
                       <h3 className="font-display font-bold text-paper">{t(`diag${i}Name`)}</h3>
                     </div>
                     <p className="mt-1.5 text-sm leading-relaxed text-paper/60">{t(`diag${i}Desc`)}</p>
-                  </div>
+                  </MotionCard>
                 </Reveal>
               );
             })}
@@ -230,7 +224,7 @@ export default async function WelcomePage() {
               const { icon: Icon, accent, ring } = REPORT_STYLES[i];
               return (
                 <Reveal key={i} delay={i * 0.1}>
-                  <div className={`h-full rounded-3xl border border-white/10 bg-white/[0.04] p-6 ring-1 ${ring}`}>
+                  <MotionCard className={`h-full rounded-3xl border border-white/10 bg-white/[0.04] p-6 ring-1 ${ring}`}>
                     <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/5">
                       <Icon className={`h-6 w-6 ${accent}`} />
                     </div>
@@ -241,7 +235,7 @@ export default async function WelcomePage() {
                       {t(`report${i}Title`)}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-paper/65">{t(`report${i}Desc`)}</p>
-                  </div>
+                  </MotionCard>
                 </Reveal>
               );
             })}
@@ -270,13 +264,13 @@ export default async function WelcomePage() {
               const Icon = AUDIENCE_ICONS[i];
               return (
                 <Reveal key={i} delay={i * 0.1}>
-                  <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                  <MotionCard className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                     <div className="grid h-11 w-11 place-items-center rounded-xl bg-energy/10 text-energy-soft">
                       <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="mt-3 font-display text-lg font-bold text-paper">{t(`aud${i}Name`)}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-paper/65">{t(`aud${i}Desc`)}</p>
-                  </div>
+                  </MotionCard>
                 </Reveal>
               );
             })}
@@ -398,13 +392,13 @@ export default async function WelcomePage() {
               const Icon = TRUST_ICONS[i];
               return (
                 <Reveal key={i} delay={i * 0.1}>
-                  <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                  <MotionCard className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                     <div className="grid h-11 w-11 place-items-center rounded-xl bg-energy/10 text-energy-soft">
                       <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="mt-3 font-display font-bold text-paper">{t(`trust${i}Title`)}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-paper/60">{t(`trust${i}Desc`)}</p>
-                  </div>
+                  </MotionCard>
                 </Reveal>
               );
             })}
