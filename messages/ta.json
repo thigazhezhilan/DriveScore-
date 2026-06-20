@@ -174,7 +174,17 @@
     "defaultFocus": "தொடர்ந்து பயிற்சி செய்யுங்கள் — இந்த வாரம் எந்த பிரச்சினையும் இல்லை.",
     "basedOn": "{count, plural, one {# கேள்வி} other {# கேள்விகள்}} அடிப்படையில் · {confidence}% உறுதி",
     "noWorries": "கவலைப்பட வேண்டாம் — இவை சாதாரண, திருத்தக்கூடிய பழக்கங்கள். ஆசிரியர் வகுப்பில் {firstName}-க்கு வழிகாட்டுவார். 😊",
-    "replyPlaceholder": "கோச்சிங் சென்டருக்கு பதில் அனுப்புங்கள்…"
+    "replyPlaceholder": "கோச்சிங் சென்டருக்கு பதில் அனுப்புங்கள்…",
+    "radarEmpty": "கண்டறிதல் ரேடாரைப் பார்க்க ஒரு மாக் தேர்வை முடிக்கவும்.",
+    "radarEmptySub": "உங்கள் முதல் தேர்வுக்குப் பிறகு 5-வகை பகுப்பாய்வு இங்கே தோன்றும்.",
+    "legendStrong": "வலிமை",
+    "legendSoft": "சராசரி",
+    "legendWeak": "பலவீனம்",
+    "radarLabel_CONCEPT_GAP": "புரிதல்",
+    "radarLabel_GUESS": "யூகித்தல்",
+    "radarLabel_CARELESS": "கவனமின்மை",
+    "radarLabel_TIME_MANAGEMENT": "நேரம்",
+    "radarLabel_SELF_DOUBT": "சந்தேகம்"
   },
   "diagnosis": {
     "CONCEPT_GAP": {

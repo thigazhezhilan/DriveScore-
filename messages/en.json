@@ -174,7 +174,17 @@
     "defaultFocus": "Keep up the steady practice — no red flags this week.",
     "basedOn": "Based on {count, plural, one {# question} other {# questions}} · {confidence}% confidence",
     "noWorries": "No need to worry — these are normal, fixable patterns. The teacher will guide {firstName} in class. 😊",
-    "replyPlaceholder": "Reply to the coaching centre…"
+    "replyPlaceholder": "Reply to the coaching centre…",
+    "radarEmpty": "Complete a mock to see your diagnosis radar.",
+    "radarEmptySub": "Your 5-category breakdown appears after your first test.",
+    "legendStrong": "Strong",
+    "legendSoft": "Soft",
+    "legendWeak": "Weak",
+    "radarLabel_CONCEPT_GAP": "Concepts",
+    "radarLabel_GUESS": "Guessing",
+    "radarLabel_CARELESS": "Careless",
+    "radarLabel_TIME_MANAGEMENT": "Timing",
+    "radarLabel_SELF_DOUBT": "Self-Doubt"
   },
   "diagnosis": {
     "CONCEPT_GAP": {

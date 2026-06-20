@@ -7,7 +7,7 @@ import type { Report } from "@/lib/grade";
 import { fmtTime } from "@/lib/grade";
 import { ScoreRing } from "./ScoreRing";
 import { DiagnosisGroups } from "./DiagnosisGroups";
-import { RootCauses } from "./RootCauses";
+import { DiagnosisRadar } from "./DiagnosisRadar";
 import { ArchetypeBadge } from "./ArchetypeBadge";
 import { Confetti } from "./Confetti";
 import { Neuro } from "@/components/mascot/Neuro";
@@ -101,11 +101,9 @@ export function StudentView({ report }: { report: Report }) {
       )}
 
       {/* Lead with impact: where the marks actually went. */}
-      {report.rootCauses.length > 0 && (
-        <motion.section variants={item}>
-          <RootCauses rootCauses={report.rootCauses} />
-        </motion.section>
-      )}
+      <motion.section variants={item}>
+        <DiagnosisRadar rootCauses={report.rootCauses} maxScore={report.maxScore} />
+      </motion.section>
 
       {/* The centrepiece: grouped diagnosis */}
       <motion.section variants={item}>
