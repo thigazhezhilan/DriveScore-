@@ -51,7 +51,7 @@ export function StudentView({ report }: { report: Report }) {
       {/* Score hero */}
       <motion.section
         variants={item}
-        className="card-energy relative overflow-hidden p-6 text-center"
+        className="card-glass-lg relative overflow-hidden p-6 text-center"
       >
         <div className="pointer-events-none absolute -left-12 -top-12 h-44 w-44 rounded-full bg-energy-soft/40 blur-2xl" />
 
@@ -69,7 +69,7 @@ export function StudentView({ report }: { report: Report }) {
           </div>
         </div>
 
-        <span className="pill bg-reward/15 text-[#9a6800]">
+        <span className="pill bg-reward/15 text-reward">
           <Sparkles className="h-3.5 w-3.5" /> {t("yourMockResult")}
         </span>
 
@@ -78,18 +78,18 @@ export function StudentView({ report }: { report: Report }) {
         </div>
 
         <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-xs">
-          <span className="pill bg-energy/15 text-energy-deep">
+          <span className="pill bg-energy/15 text-energy">
             <Target className="h-3.5 w-3.5" /> {t("accuracy", { pct: report.accuracyPct })}
           </span>
-          <span className="pill bg-black/5 text-ink/70">
+          <span className="pill bg-white/10 text-paper/70">
             <Timer className="h-3.5 w-3.5" /> {t("totalTime", { time: fmtTime(report.totalTimeSec) })}
           </span>
         </div>
 
         <div className="mt-4 grid w-full grid-cols-3 gap-2 text-center">
-          <Stat label={t("correct")} value={report.correctCount} tone="text-energy-deep" />
+          <Stat label={t("correct")} value={report.correctCount} tone="text-energy" />
           <Stat label={t("wrong")} value={report.wrongCount} tone="text-pop" />
-          <Stat label={t("blank")} value={report.blankCount} tone="text-ink/45" />
+          <Stat label={t("blank")} value={report.blankCount} tone="text-paper/45" />
         </div>
       </motion.section>
 
@@ -119,7 +119,7 @@ export function StudentView({ report }: { report: Report }) {
       {/* AI Tutor placeholder — v2, no real call. */}
       <motion.section
         variants={item}
-        className="card-energy relative overflow-hidden border border-dashed border-energy/40 p-5"
+        className="card-glass relative overflow-hidden border border-dashed border-energy/40 p-5"
       >
         <div className="flex items-start gap-3">
           <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-energy to-energy-deep text-focusink">
@@ -127,12 +127,12 @@ export function StudentView({ report }: { report: Report }) {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <h4 className="font-display font-bold text-ink">{t("aiTutorTitle")}</h4>
-              <span className="pill bg-reward/15 text-[#9a6800]">
+              <h4 className="font-display font-bold text-paper">{t("aiTutorTitle")}</h4>
+              <span className="pill bg-reward/15 text-reward">
                 <Lock className="h-3 w-3" /> {t("aiTutorComingSoon")}
               </span>
             </div>
-            <p className="mt-1 text-sm leading-relaxed text-ink/60">
+            <p className="mt-1 text-sm leading-relaxed text-paper/60">
               {t.rich("aiTutorBody", {
                 strong: (chunks) => <strong>{chunks}</strong>,
               })}
@@ -154,11 +154,11 @@ function Stat({
   tone: string;
 }) {
   return (
-    <div className="rounded-2xl bg-black/[0.03] py-3">
+    <div className="rounded-2xl bg-white/[0.06] py-3">
       <p className={`font-display text-2xl font-extrabold tabular-nums ${tone}`}>
         {value}
       </p>
-      <p className="text-[11px] font-semibold text-ink/50">{label}</p>
+      <p className="text-[11px] font-semibold text-paper/50">{label}</p>
     </div>
   );
 }

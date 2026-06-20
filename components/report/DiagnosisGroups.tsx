@@ -30,11 +30,11 @@ export function DiagnosisGroups({
 
   if (groups.length === 0) {
     return (
-      <div className="card border-l-4 border-l-emerald-500 p-5">
-        <p className="font-display font-semibold text-emerald-700">
+      <div className="card-glass border-l-4 border-l-emerald-500 p-5">
+        <p className="font-display font-semibold text-emerald-400">
           {tr("noProblemAreas")}
         </p>
-        <p className="mt-1 text-sm text-ink/60">{tr("noProblemAreasBody")}</p>
+        <p className="mt-1 text-sm text-paper/60">{tr("noProblemAreasBody")}</p>
       </div>
     );
   }
@@ -47,7 +47,7 @@ export function DiagnosisGroups({
         return (
           <div
             key={group.category}
-            className={`card animate-fade-up border-l-4 ${style.border} p-4`}
+            className={`card-glass animate-fade-up border-l-4 ${style.border} p-4`}
             style={{ animationDelay: `${gi * 80}ms` }}
           >
             <div className="flex items-start gap-3">
@@ -58,7 +58,7 @@ export function DiagnosisGroups({
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h4 className="font-display font-semibold text-ink">
+                  <h4 className="font-display font-semibold text-paper">
                     {t(`${group.category}.title`)}
                   </h4>
                   <span className={`pill ${style.chipBg} ${style.chipText}`}>
@@ -66,7 +66,7 @@ export function DiagnosisGroups({
                   </span>
                 </div>
                 {!compact && (
-                  <p className="mt-0.5 text-xs leading-relaxed text-ink/60">
+                  <p className="mt-0.5 text-xs leading-relaxed text-paper/60">
                     {t(`${group.category}.advice`)}
                   </p>
                 )}
@@ -77,13 +77,13 @@ export function DiagnosisGroups({
               {group.items.map((it) => (
                 <li
                   key={it.question.id}
-                  className={`flex items-center justify-between gap-3 rounded-lg ${style.softBg} px-3 py-2`}
+                  className="flex items-center justify-between gap-3 rounded-lg bg-white/[0.05] px-3 py-2"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink">
+                    <p className="truncate text-sm font-medium text-paper">
                       {it.question.concept}
                     </p>
-                    <p className="truncate text-xs text-ink/55">
+                    <p className="truncate text-xs text-paper/55">
                       {it.question.subject} · {it.question.chapter}
                     </p>
                   </div>
@@ -92,7 +92,7 @@ export function DiagnosisGroups({
                       confidence={it.confidence}
                       reason={it.confidenceReason}
                     />
-                    <span className="text-[11px] font-medium tabular-nums text-ink/45">
+                    <span className="text-[11px] font-medium tabular-nums text-paper/45">
                       {fmtTime(it.attempt.timeSec)}
                     </span>
                   </div>
