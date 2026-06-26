@@ -175,7 +175,7 @@ export function ClimbRunner({
         <p className="mt-2 text-sm text-paper/55">
           {locale === "ta"
             ? "இந்த அத்தியாயத்திற்கான தமிழ் மொழிபெயர்ப்பு இன்னும் தயாரிக்கப்படவில்லை."
-            : "Tamil translations for this chapter are not yet available."}
+            : "Questions for this chapter are not yet available."}
         </p>
         <Link href="/practice" className="btn-ghost-dark mt-6 text-sm">{t("backToPractice")}</Link>
       </main>
