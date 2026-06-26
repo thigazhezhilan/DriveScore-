@@ -5,7 +5,7 @@
  * key) and grade one answer at a time. Both verify a logged-in student.
  */
 
-import { getCurrentStudent } from "@/lib/auth";
+import { getCurrentStudent, getCurrentUser } from "@/lib/auth";
 import {
   sampleClimbQuestion,
   getQuestionAnswerIndex,
@@ -30,8 +30,8 @@ export async function nextClimbQuestion(
   source: "pyq" | "ai" = "pyq",
   locale: "en" | "ta" = "en",
 ): Promise<ClimbQuestion | null> {
-  const student = await getCurrentStudent();
-  if (!student) return null;
+  const user = await getCurrentUser();
+  if (!user || user.profile.role !== "student") return null;
   const subject = SUBJECTS.find((s) => s === subjectIn) as Subject | undefined;
   if (!subject || !chapter) return null;
   const difficulty = DIFFS[Math.max(0, Math.min(2, rung))] ?? "Easy";

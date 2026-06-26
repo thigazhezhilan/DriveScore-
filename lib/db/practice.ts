@@ -302,7 +302,7 @@ export async function sampleClimbQuestion(
   const pick = ids[Math.floor(Math.random() * ids.length)];
   const { data, error } = await supabase
     .from("questions")
-    .select("id, subject, chapter, concept, difficulty, par_time_sec, body, body_en, options, options_en, image_url, language")
+    .select("id, subject, chapter, concept, difficulty, par_time_sec, body, options, image_url, language")
     .eq("id", pick).single();
   if (error || !data) return null;
   return {
@@ -312,8 +312,8 @@ export async function sampleClimbQuestion(
     concept: data.concept,
     difficulty: data.difficulty as Difficulty,
     parTimeSec: data.par_time_sec,
-    text: (data.body ?? data.body_en) as string,
-    options: ((data.options ?? data.options_en) as string[]) ?? [],
+    text: data.body as string,
+    options: (data.options as string[]) ?? [],
     imageUrl: (data.image_url as string | null) ?? null,
     language: (data.language as "en" | "ta" | null) ?? null,
   };
