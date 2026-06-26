@@ -72,16 +72,20 @@ export function ClimbRunner({
   /** Fetch the next question for a rung. Returns false if the pool is exhausted. */
   async function load(forRung: number): Promise<boolean> {
     setPhase("loading");
-    const next = await nextClimbQuestion(subject, chapter, forRung, seenRef.current, source, locale);
-    if (!next) return false;
-    seenRef.current = [...seenRef.current, next.id];
-    setQ(next as Q);
-    setPicked(null);
-    setCorrectIdx(-1);
-    setReported(false);
-    startedAt.current = Date.now();
-    setPhase("answering");
-    return true;
+    try {
+      const next = await nextClimbQuestion(subject, chapter, forRung, seenRef.current, source, locale);
+      if (!next || !next.text) return false;
+      seenRef.current = [...seenRef.current, next.id];
+      setQ(next as Q);
+      setPicked(null);
+      setCorrectIdx(-1);
+      setReported(false);
+      startedAt.current = Date.now();
+      setPhase("answering");
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async function finishAndGo() {
