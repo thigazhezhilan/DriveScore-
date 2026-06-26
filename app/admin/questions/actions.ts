@@ -32,19 +32,24 @@ async function teacherCentreId(): Promise<string> {
   return me.profile.centreId;
 }
 
+function parseLanguage(fd: FormData): "en" | "ta" | null {
+  const v = String(fd.get("language") ?? "").trim();
+  return v === "en" || v === "ta" ? v : null;
+}
+
 /** Build a RawRow from the single-question form (mirrors the CSV columns). */
 function rowFromForm(fd: FormData): RawRow {
   return {
-    subject: fd.get("subject"),
-    chapter: fd.get("chapter"),
-    concept: fd.get("concept"),
-    difficulty: fd.get("difficulty"),
-    par_time_sec: fd.get("par_time_sec"),
+    subject:       fd.get("subject"),
+    chapter:       fd.get("chapter"),
+    concept:       fd.get("concept"),
+    difficulty:    fd.get("difficulty"),
+    par_time_sec:  fd.get("par_time_sec"),
     question_text: fd.get("question_text"),
-    option_a: fd.get("option_a"),
-    option_b: fd.get("option_b"),
-    option_c: fd.get("option_c"),
-    option_d: fd.get("option_d"),
+    option_a:      fd.get("option_a"),
+    option_b:      fd.get("option_b"),
+    option_c:      fd.get("option_c"),
+    option_d:      fd.get("option_d"),
     correct_option: fd.get("correct_option"),
   };
 }
@@ -60,11 +65,14 @@ export async function createQuestionAction(
     return { error: (e as Error).message, ok: false };
   }
 
+  const language = parseLanguage(fd);
+  if (!language) return { error: "Select a language (English or Tamil).", ok: false };
+
   const result = validateRow(rowFromForm(fd));
   if (!result.ok) return { error: result.errors.join(" · "), ok: false };
 
   try {
-    await createQuestion(centreId, result.value);
+    await createQuestion(centreId, result.value, language);
   } catch (e) {
     return { error: (e as Error).message, ok: false };
   }
@@ -125,7 +133,10 @@ export type ImportResult = {
   error?: string;
 };
 
-export async function importQuestions(rawRows: RawRow[]): Promise<ImportResult> {
+export async function importQuestions(
+  rawRows: RawRow[],
+  language: "en" | "ta",
+): Promise<ImportResult> {
   let centreId: string;
   try {
     centreId = await teacherCentreId();
@@ -155,11 +166,46 @@ export async function importQuestions(rawRows: RawRow[]): Promise<ImportResult> 
 
   let imported = 0;
   try {
-    imported = await insertQuestionsBulk(centreId, valid);
+    imported = await insertQuestionsBulk(centreId, valid, language);
   } catch (e) {
     return { imported: 0, total: rawRows.length, skipped, error: (e as Error).message };
   }
 
   revalidatePath("/teacher/questions");
   return { imported, total: rawRows.length, skipped };
+}
+
+// ─────────────────────────── Un-flag (crowd-QA) ──────────────────────────────
+
+export type UnflagResult = { error: string | null };
+
+/**
+ * Move a flagged centre-scoped question to 'live' (approve) or 'rejected'.
+ * Teacher-only; scoped to the teacher's own centre.
+ */
+export async function unflagQuestionAction(
+  id: string,
+  resolution: "live" | "rejected",
+): Promise<UnflagResult> {
+  let centreId: string;
+  try {
+    centreId = await teacherCentreId();
+  } catch (e) {
+    return { error: (e as Error).message };
+  }
+  try {
+    const { createSupabaseServerClient } = await import("@/lib/supabase/server");
+    const supabase = createSupabaseServerClient();
+    const { error } = await supabase
+      .from("questions")
+      .update({ status: resolution })
+      .eq("centre_id", centreId)
+      .eq("id", id)
+      .eq("status", "flagged");
+    if (error) throw error;
+  } catch (e) {
+    return { error: (e as Error).message };
+  }
+  revalidatePath("/teacher/questions");
+  return { error: null };
 }

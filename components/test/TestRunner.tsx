@@ -113,14 +113,7 @@ export function TestRunner({
   const overPar = elapsed > question.parTimeSec;
 
   const localised = getTamilContent(
-    {
-      text: question.text,
-      options: question.options,
-      explanation: null,
-      bodyTa: question.bodyTa,
-      optionsTa: question.optionsTa,
-      explanationTa: question.explanationTa,
-    },
+    { text: question.text, options: question.options, explanation: null },
     locale,
   );
 

@@ -109,13 +109,16 @@ for (const r of rows) {
       || (r.chapter && !["General", "Diagram"].includes(r.chapter) ? r.chapter : "Unclassified");
     const ins = await supabase.from("questions").insert({
       centre_id: null,
-      subject: r.subject,
-      chapter: chap,
-      concept: chap,
+      language:  "en",
+      source:    "pyq",
+      status:    "live",
+      subject:   r.subject,
+      chapter:   chap,
+      concept:   chap,
       difficulty: r.difficulty || "Medium",
       par_time_sec: Number(r.par_time_sec) || 90,
-      text: "",
-      options: ["", "", "", ""],
+      body:      "",
+      options:   ["", "", "", ""],
       answer_index: ANSWER_INDEX[r.correct_option.toUpperCase()] ?? 0,
       image_url: imageUrl,
     });

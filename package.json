@@ -14,12 +14,9 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:seed-glossary": "tsx scripts/seed-tamil-glossary.ts",
     "db:seed-knowledge": "tsx scripts/seed-tamil-knowledge.ts",
-    "translate:tamil": "tsx scripts/tamil-translate.ts",
-    "test:tamil": "tsx lib/tamil/agent.test.ts",
-    "translate:fetch": "tsx scripts/pipeline-chat-fetch.ts",
-    "translate:store": "tsx scripts/pipeline-chat-store.ts",
-    "ingest:pdf": "tsx scripts/ingest-tamil-pdf.ts",
-    "db:seed-language-demo": "tsx scripts/seed-language-demo.ts"
+"ingest:pdf": "tsx scripts/ingest-tamil-pdf.ts",
+    "db:seed-language-demo": "tsx scripts/seed-language-demo.ts",
+    "generate:questions": "tsx scripts/generate.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

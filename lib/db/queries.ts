@@ -30,7 +30,7 @@ function getUserClient() {
   return createSupabaseServerClient();
 }
 
-/** Shape of a `questions` row as returned by Supabase (post-migration 0019 column names). */
+/** Shape of a `questions` row as returned by Supabase (post-migration 0020 column names). */
 type QuestionRow = {
   id: string;
   subject: string;
@@ -38,14 +38,11 @@ type QuestionRow = {
   concept: string;
   difficulty: string;
   par_time_sec: number;
-  body_en: string;
-  options_en: unknown;
+  body: string;
+  options: unknown;
   answer_index: number;
   image_url?: string | null;
-  body_ta?: string | null;
-  options_ta?: unknown;
-  explanation_ta?: string | null;
-  tamil_status?: string | null;
+  language?: string | null;
 };
 
 /** Map a DB question row onto the domain `Question` type. */
@@ -57,14 +54,11 @@ function toQuestion(row: QuestionRow): Question {
     concept: row.concept,
     difficulty: row.difficulty as Difficulty,
     parTimeSec: row.par_time_sec,
-    text: row.body_en,
-    options: (row.options_en as string[]) ?? [],
+    text: row.body,
+    options: (row.options as string[]) ?? [],
     answerIndex: row.answer_index,
     imageUrl: (row.image_url as string | null) ?? null,
-    bodyTa: row.body_ta ?? null,
-    optionsTa: (row.options_ta as string[] | null) ?? null,
-    explanationTa: row.explanation_ta ?? null,
-    tamilStatus: row.tamil_status ?? "none",
+    language: (row.language as "en" | "ta" | null) ?? null,
   };
 }
 
@@ -83,7 +77,7 @@ export async function getMockWithQuestions(
   const { data: mock, error } = await supabase
     .from("mocks")
     .select(
-      "id, title, mock_questions(position, questions(id,subject,chapter,concept,difficulty,par_time_sec,body_en,options_en,answer_index,image_url,body_ta,options_ta,explanation_ta,tamil_status))",
+      "id, title, mock_questions(position, questions(id,subject,chapter,concept,difficulty,par_time_sec,body,options,answer_index,image_url,language))",
     )
     .eq("id", mockId)
     .single();

@@ -1,3 +1,5 @@
+// Currently unused: embeddings are stored as null; chapter-filter retrieval is used instead.
+// Kept so vector/semantic retrieval can be re-enabled here without a schema change.
 import OpenAI from "openai";
 import { EMBEDDING_MODEL, EMBEDDING_DIMS } from "./validation-config";
 

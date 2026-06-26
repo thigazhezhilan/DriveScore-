@@ -31,6 +31,7 @@ export type BankQuestion = {
   text: string;
   options: string[];
   answerIndex: number;
+  language: "en" | "ta";
 };
 
 type Row = {
@@ -40,13 +41,14 @@ type Row = {
   concept: string;
   difficulty: string;
   par_time_sec: number;
-  text: string;
+  body: string;
   options: unknown;
   answer_index: number;
+  language: string;
 };
 
 const SELECT =
-  "id, subject, chapter, concept, difficulty, par_time_sec, text, options, answer_index";
+  "id, subject, chapter, concept, difficulty, par_time_sec, body, options, answer_index, language";
 
 function toBank(r: Row): BankQuestion {
   return {
@@ -56,22 +58,40 @@ function toBank(r: Row): BankQuestion {
     concept: r.concept,
     difficulty: r.difficulty as Difficulty,
     parTimeSec: r.par_time_sec,
-    text: r.text,
+    text: r.body,
     options: (r.options as string[]) ?? [],
     answerIndex: r.answer_index,
+    language: (r.language as "en" | "ta") ?? "en",
   };
 }
 
-function toInsert(centreId: string, v: ValidQuestion) {
+function toInsertNew(centreId: string, v: ValidQuestion, language: "en" | "ta") {
   return {
-    centre_id: centreId, // always from session — never from the client
-    subject: v.subject,
-    chapter: v.chapter,
-    concept: v.concept,
-    difficulty: v.difficulty,
+    centre_id:    centreId, // always from session — never from the client
+    language,
+    source:       "pyq",
+    status:       language === "en" ? "live" : "verified", // TA PYQs held for human OCR check
+    subject:      v.subject,
+    chapter:      v.chapter,
+    concept:      v.concept,
+    difficulty:   v.difficulty,
     par_time_sec: v.parTimeSec,
-    text: v.text,
-    options: v.options,
+    body:         v.text,
+    options:      v.options,
+    answer_index: v.answerIndex,
+  };
+}
+
+function toUpdate(centreId: string, v: ValidQuestion) {
+  return {
+    centre_id:    centreId,
+    subject:      v.subject,
+    chapter:      v.chapter,
+    concept:      v.concept,
+    difficulty:   v.difficulty,
+    par_time_sec: v.parTimeSec,
+    body:         v.text,
+    options:      v.options,
     answer_index: v.answerIndex,
   };
 }
@@ -93,7 +113,7 @@ export async function listQuestions(
   if (f.subject) query = query.eq("subject", f.subject);
   if (f.difficulty) query = query.eq("difficulty", f.difficulty);
   if (f.chapter) query = query.eq("chapter", f.chapter);
-  if (f.q) query = query.ilike("text", `%${f.q}%`);
+  if (f.q) query = query.ilike("body", `%${f.q}%`);
 
   const { data, error } = await query.order("created_at", { ascending: false });
   if (error) throw error;
@@ -118,9 +138,10 @@ export async function getQuestion(
 export async function createQuestion(
   centreId: string,
   v: ValidQuestion,
+  language: "en" | "ta",
 ): Promise<void> {
   const supabase = client();
-  const { error } = await supabase.from("questions").insert(toInsert(centreId, v));
+  const { error } = await supabase.from("questions").insert(toInsertNew(centreId, v, language));
   if (error) throw error;
 }
 
@@ -132,7 +153,7 @@ export async function updateQuestion(
   const supabase = client();
   const { error } = await supabase
     .from("questions")
-    .update(toInsert(centreId, v))
+    .update(toUpdate(centreId, v))
     .eq("centre_id", centreId)
     .eq("id", id);
   if (error) throw error;
@@ -152,12 +173,13 @@ export async function deleteQuestion(centreId: string, id: string): Promise<void
 export async function insertQuestionsBulk(
   centreId: string,
   rows: ValidQuestion[],
+  language: "en" | "ta",
 ): Promise<number> {
   if (rows.length === 0) return 0;
   const supabase = client();
   const { data, error } = await supabase
     .from("questions")
-    .insert(rows.map((v) => toInsert(centreId, v)))
+    .insert(rows.map((v) => toInsertNew(centreId, v, language)))
     .select("id");
   if (error) throw error;
   return data?.length ?? 0;

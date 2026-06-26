@@ -26,38 +26,72 @@ const hasFlag = (f: string) => process.argv.includes(f);
 const PDF_PATH =
   getArg("--file") ??
   "11th_tamil_medium_book/Class_11_Physics_Tamil_Volume_1_2024_Edition-www.tntextbooks.in.pdf";
-const SUBJECT       = (getArg("--subject") ?? "physics").toLowerCase() as "physics" | "chemistry" | "biology";
-const CLASS_LEVEL   = getArg("--class") ?? "11";
+
+const SUBJECT_RAW = (getArg("--subject") ?? "physics").toLowerCase();
+if (!["physics", "chemistry", "biology"].includes(SUBJECT_RAW)) {
+  console.error(`✗ --subject must be physics, chemistry, or biology (got "${SUBJECT_RAW}")`);
+  process.exit(1);
+}
+const SUBJECT = SUBJECT_RAW as "physics" | "chemistry" | "biology";
+
+const CLASS_RAW = getArg("--class") ?? "11";
+if (CLASS_RAW !== "11" && CLASS_RAW !== "12") {
+  console.error(`✗ --class must be 11 or 12 (got "${CLASS_RAW}")`);
+  process.exit(1);
+}
+const CLASS_LEVEL = CLASS_RAW as "11" | "12";
+
 const DRY_RUN       = hasFlag("--dry-run");
 const CLEAR_FIRST   = hasFlag("--clear");
 const MAX_CHUNK_LEN = 800;   // chars — target passage length
 
-// ─── Chapter map: Samacheer chapter number → DB chapter name(s) ───────────────
-// The DB uses NCERT-style English names. Each entry maps one Tamil chapter to
-// one or more DB chapter names so questions from any matching chapter get context.
-const CHAPTER_MAP: Record<number, { db_chapters: string[]; tamil_name: string }> = {
-  1: {
-    tamil_name: "இயல் உலகத்தின் தன்மையும் அளவீட்டியலும்",
-    db_chapters: ["Units and Measurements", "Nature of Physical World and Measurement"],
+// ─── Chapter maps: subject → class → Samacheer chapter number → DB chapter names ─
+// Keyed by subject + class level so Physics ch.1 and Chemistry ch.1 never collide.
+// The DB uses NCERT-style English names. Add new subject/class branches only when
+// you have the actual PDF — do NOT fill in chapter names you have not verified.
+type ChapterEntry = { tamil_name: string; db_chapters: string[] };
+type SubjectMap   = Partial<Record<"11" | "12", Record<number, ChapterEntry>>>;
+
+const CHAPTER_MAPS: Partial<Record<"physics" | "chemistry" | "biology", SubjectMap>> = {
+  physics: {
+    "11": {
+      1: {
+        tamil_name: "இயல் உலகத்தின் தன்மையும் அளவீட்டியலும்",
+        db_chapters: ["Units and Measurements", "Nature of Physical World and Measurement"],
+      },
+      2: {
+        tamil_name: "இயக்கவியல்",
+        db_chapters: ["Kinematics", "Motion in a Straight Line", "Motion in a Plane"],
+      },
+      3: {
+        tamil_name: "இயக்க விதிகள்",
+        db_chapters: ["Laws of Motion"],
+      },
+      4: {
+        tamil_name: "வேலை, ஆற்றல் மற்றும் திறன்",
+        db_chapters: ["Work, Energy and Power"],
+      },
+      5: {
+        tamil_name: "துகள்களாலான அமைப்பு மற்றும் திணிப்பொருட்களின் இயக்கம்",
+        db_chapters: ["System of Particles and Rotational Motion", "Rotational Motion"],
+      },
+      // Add chapters 6–11 when Volume 2 PDF is available
+    },
+    // Add "12": { ... } when Physics 12th book is available
   },
-  2: {
-    tamil_name: "இயக்கவியல்",
-    db_chapters: ["Kinematics", "Motion in a Straight Line", "Motion in a Plane"],
-  },
-  3: {
-    tamil_name: "இயக்க விதிகள்",
-    db_chapters: ["Laws of Motion"],
-  },
-  4: {
-    tamil_name: "வேலை, ஆற்றல் மற்றும் திறன்",
-    db_chapters: ["Work, Energy and Power"],
-  },
-  5: {
-    tamil_name: "துகள்களாலான அமைப்பு மற்றும் திணிப்பொருட்களின் இயக்கம்",
-    db_chapters: ["System of Particles and Rotational Motion", "Rotational Motion"],
-  },
-  // Add more when other volumes are ingested
+  chemistry: {},
+  biology:   {},
 };
+
+// Derive the active map for this run — exit loudly if subject+class not yet mapped
+const activeMap: Record<number, ChapterEntry> = CHAPTER_MAPS[SUBJECT]?.[CLASS_LEVEL] ?? {};
+if (Object.keys(activeMap).length === 0) {
+  console.error(
+    `✗ No chapter map found for ${SUBJECT} class ${CLASS_LEVEL}. ` +
+    `Add entries to CHAPTER_MAPS in this script before ingesting this textbook.`,
+  );
+  process.exit(1);
+}
 
 // ─── Text cleaning ────────────────────────────────────────────────────────────
 function cleanText(raw: string): string {
@@ -115,6 +149,42 @@ function splitIntoPassages(text: string): string[] {
   return passages;
 }
 
+// ─── End-of-run summary ───────────────────────────────────────────────────────
+function printSummary(
+  totalPages: number,
+  chapterTexts: Record<number, string>,
+  skippedUnmapped: number,
+  frontMatter: number,
+  tooShort: number,
+  unmappedChapters: Set<number>,
+): void {
+  const ingestedChapters = Object.keys(chapterTexts).length;
+  const ingestedPassages = Object.values(chapterTexts).reduce(
+    (s, t) => s + splitIntoPassages(t).length,
+    0,
+  );
+
+  console.log("\n── Ingest summary ─────────────────────────────────────");
+  console.log(`  Subject                 : ${SUBJECT}  class ${CLASS_LEVEL}`);
+  console.log(`  Total pages in PDF      : ${totalPages}`);
+  console.log(`  Chapters ingested       : ${ingestedChapters}  (${ingestedPassages} passages)`);
+  console.log(`  Pages skipped`);
+  console.log(
+    `    unmapped chapter      : ${skippedUnmapped}` +
+    (unmappedChapters.size > 0 ? `  (chapters: ${[...unmappedChapters].sort((a, b) => a - b).join(", ")})` : ""),
+  );
+  console.log(`    front matter          : ${frontMatter}`);
+  console.log(`    too short (< 30 chars): ${tooShort}`);
+
+  if (ingestedChapters === 0) {
+    process.stderr.write(
+      `\n✗ WARNING: Zero chapters were ingested. ` +
+      `Check that --subject and --class match the PDF content ` +
+      `and that CHAPTER_MAPS has entries for ${SUBJECT} class ${CLASS_LEVEL}.\n`,
+    );
+  }
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -123,8 +193,12 @@ async function main() {
 
   const supabase = createClient(url, key);
 
+  console.log(`\nSubject : ${SUBJECT}  Class : ${CLASS_LEVEL}`);
+  console.log(`PDF     : ${PDF_PATH}`);
+  console.log(`Mapped chapters: ${Object.keys(activeMap).join(", ")}\n`);
+
   // ── Load PDF ────────────────────────────────────────────────────────────────
-  console.log(`\nLoading PDF: ${PDF_PATH}`);
+  console.log(`Loading PDF…`);
   const buf = readFileSync(PDF_PATH);
   const parser = new PDFParse({ data: buf });
 
@@ -137,20 +211,50 @@ async function main() {
   let currentChapter: number | null = null;
   const chapterTexts: Record<number, string> = {};
 
+  const warnedUnmapped     = new Set<number>();
+  let skippedUnmappedPages = 0;
+  let frontMatterPages     = 0;
+  let tooShortPages        = 0;
+
   for (const page of textResult.pages) {
     const raw = page.text ?? "";
 
     // Detect chapter from running header
     const detected = detectChapter(raw);
-    if (detected !== null && detected in CHAPTER_MAP) {
-      currentChapter = detected;
+    if (detected !== null) {
+      if (detected in activeMap) {
+        // Mapped chapter — start accumulating under it
+        currentChapter = detected;
+      } else {
+        // Detected chapter not in map for this subject+class — warn once per chapter number
+        if (!warnedUnmapped.has(detected)) {
+          warnedUnmapped.add(detected);
+          process.stderr.write(
+            `⚠ SKIPPED page — chapter ${detected} not in map for ${SUBJECT} class ${CLASS_LEVEL}\n`,
+          );
+        }
+        // Update currentChapter so pages aren't misattributed to the previous mapped chapter
+        currentChapter = detected;
+      }
     }
 
-    // Skip front matter and appendix pages (no recognized chapter)
-    if (currentChapter === null || !(currentChapter in CHAPTER_MAP)) continue;
+    // Skip: no chapter detected yet (front matter, TOC, etc.)
+    if (currentChapter === null) {
+      frontMatterPages++;
+      continue;
+    }
+
+    // Skip: we're inside a chapter not in the map
+    if (!(currentChapter in activeMap)) {
+      skippedUnmappedPages++;
+      continue;
+    }
 
     const cleaned = cleanText(raw);
-    if (cleaned.length < 30) continue;   // skip mostly-empty pages
+    if (cleaned.length < 30) {
+      tooShortPages++;
+      continue;   // skip mostly-empty pages
+    }
 
     chapterTexts[currentChapter] = (chapterTexts[currentChapter] ?? "") + "\n\n" + cleaned;
   }
@@ -158,8 +262,8 @@ async function main() {
   // ── Report what we found ────────────────────────────────────────────────────
   console.log("\n── Chapter text extracted ─────────────────────────────");
   for (const [num, text] of Object.entries(chapterTexts)) {
-    const n = parseInt(num);
-    const map = CHAPTER_MAP[n];
+    const n   = parseInt(num);
+    const map = activeMap[n];
     const passages = splitIntoPassages(text);
     console.log(`  Chapter ${n} (${map.tamil_name})`);
     console.log(`    DB chapters : ${map.db_chapters.join(", ")}`);
@@ -171,18 +275,20 @@ async function main() {
     const ch3 = chapterTexts[3] ?? "";
     const sample = splitIntoPassages(ch3).slice(0, 3);
     sample.forEach((p, i) => console.log(`\n  [${i + 1}] ${p.slice(0, 300)}…`));
+    printSummary(totalPages, chapterTexts, skippedUnmappedPages, frontMatterPages, tooShortPages, warnedUnmapped);
     console.log("\n✓ Dry run complete — nothing written to DB");
     return;
   }
 
-  // ── Optional: clear existing samacheer chunks for this subject ──────────────
+  // ── Optional: clear existing samacheer chunks for this subject+class ────────
   if (CLEAR_FIRST) {
     console.log("\nClearing existing samacheer_textbook chunks…");
     const { error } = await supabase
       .from("tamil_knowledge_chunks")
       .delete()
       .eq("source_type", "samacheer_textbook")
-      .eq("subject", SUBJECT);
+      .eq("subject", SUBJECT)
+      .eq("class_level", CLASS_LEVEL);
     if (error) throw new Error("Clear failed: " + error.message);
     console.log("✓ Cleared");
   }
@@ -192,8 +298,8 @@ async function main() {
   let totalInserted = 0;
 
   for (const [num, text] of Object.entries(chapterTexts)) {
-    const n = parseInt(num);
-    const map = CHAPTER_MAP[n];
+    const n   = parseInt(num);
+    const map = activeMap[n];
     const passages = splitIntoPassages(text);
 
     // Insert one set of chunks per DB chapter name so retrieval matches exactly
@@ -221,14 +327,9 @@ async function main() {
     }
   }
 
+  printSummary(totalPages, chapterTexts, skippedUnmappedPages, frontMatterPages, tooShortPages, warnedUnmapped);
   console.log(`\n✓ Done — ${totalInserted} passages stored in tamil_knowledge_chunks`);
-  console.log("  source_type : samacheer_textbook");
-  console.log(`  subject     : ${SUBJECT}`);
-  console.log(`  class_level : ${CLASS_LEVEL}`);
-  console.log("\nNext steps:");
-  console.log("  1. npm run db:seed-glossary     (seeds 100 forced terms — free)");
-  console.log("  2. npm run translate:fetch -- --subject Physics --limit 1");
-  console.log("     → should now show real textbook passages in STEP 3");
+  console.log(`  source_type : samacheer_textbook  subject : ${SUBJECT}  class_level : ${CLASS_LEVEL}`);
   await parser.destroy();
 }
 

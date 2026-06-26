@@ -121,14 +121,14 @@ async function findCohort(): Promise<{ students: Stu[]; anchorId: string | null 
 // ── global question pool grouped by subject → chapter ──────────────────────
 type Pool = Record<Subject, Map<string, Question[]>>;
 async function loadPool(): Promise<Pool> {
-  const cols = "id, subject, chapter, concept, difficulty, par_time_sec, text, options, answer_index";
+  const cols = "id, subject, chapter, concept, difficulty, par_time_sec, body, options, answer_index";
   const rows: any[] = [];
   for (let from = 0; ; from += 1000) {
     const { data, error } = await sb
       .from("questions")
       .select(cols)
       .is("centre_id", null)
-      .eq("hidden", false)
+      .eq("status", "live")
       .range(from, from + 999);
     if (error) throw error;
     rows.push(...(data ?? []));
@@ -145,7 +145,7 @@ async function loadPool(): Promise<Pool> {
       concept: r.concept,
       difficulty: r.difficulty as Difficulty,
       parTimeSec: r.par_time_sec,
-      text: r.text,
+      text: r.body,
       options: (r.options as string[]) ?? [],
       answerIndex: r.answer_index,
     };

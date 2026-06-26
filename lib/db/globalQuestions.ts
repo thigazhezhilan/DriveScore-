@@ -37,6 +37,7 @@ export type BankQuestion = {
   options: string[];
   answerIndex: number;
   imageUrl: string | null;
+  language: "en" | "ta";
 };
 
 type Row = {
@@ -46,14 +47,15 @@ type Row = {
   concept: string;
   difficulty: string;
   par_time_sec: number;
-  text: string;
+  body: string;
   options: unknown;
   answer_index: number;
   image_url?: string | null;
+  language: string;
 };
 
 const SELECT =
-  "id, subject, chapter, concept, difficulty, par_time_sec, text, options, answer_index, image_url";
+  "id, subject, chapter, concept, difficulty, par_time_sec, body, options, answer_index, image_url, language";
 
 function toBank(r: Row): BankQuestion {
   return {
@@ -63,24 +65,28 @@ function toBank(r: Row): BankQuestion {
     concept: r.concept,
     difficulty: r.difficulty as Difficulty,
     parTimeSec: r.par_time_sec,
-    text: r.text,
+    text: r.body,
     options: (r.options as string[]) ?? [],
     answerIndex: r.answer_index,
     imageUrl: (r.image_url as string | null) ?? null,
+    language: (r.language as "en" | "ta") ?? "en",
   };
 }
 
 /** Map a validated question to an insert row — always centre_id: null (global). */
-function toInsert(v: ValidQuestion) {
+function toInsert(v: ValidQuestion, language: "en" | "ta") {
   return {
-    centre_id: null,
-    subject: v.subject,
-    chapter: v.chapter,
-    concept: v.concept,
-    difficulty: v.difficulty,
+    centre_id:    null,
+    language,
+    source:       "pyq",
+    status:       language === "en" ? "live" : "verified", // TA PYQs held for human OCR check
+    subject:      v.subject,
+    chapter:      v.chapter,
+    concept:      v.concept,
+    difficulty:   v.difficulty,
     par_time_sec: v.parTimeSec,
-    text: v.text,
-    options: v.options,
+    body:         v.text,
+    options:      v.options,
     answer_index: v.answerIndex,
   };
 }
@@ -102,7 +108,7 @@ export async function listGlobalQuestions(
   if (f.subject) query = query.eq("subject", f.subject);
   if (f.difficulty) query = query.eq("difficulty", f.difficulty);
   if (f.chapter) query = query.eq("chapter", f.chapter);
-  if (f.q) query = query.ilike("text", `%${f.q}%`);
+  if (f.q) query = query.ilike("body", `%${f.q}%`);
 
   const { data, error } = await query
     .order("created_at", { ascending: false })
@@ -123,20 +129,21 @@ export async function getGlobalQuestion(id: string): Promise<BankQuestion | null
   return data ? toBank(data as Row) : null;
 }
 
-export async function createGlobalQuestion(v: ValidQuestion): Promise<void> {
+export async function createGlobalQuestion(v: ValidQuestion, language: "en" | "ta"): Promise<void> {
   const supabase = client();
-  const { error } = await supabase.from("questions").insert(toInsert(v));
+  const { error } = await supabase.from("questions").insert(toInsert(v, language));
   if (error) throw error;
 }
 
 export async function updateGlobalQuestion(
   id: string,
   v: ValidQuestion,
+  language: "en" | "ta",
 ): Promise<void> {
   const supabase = client();
   const { error } = await supabase
     .from("questions")
-    .update(toInsert(v))
+    .update(toInsert(v, language))
     .is("centre_id", null)
     .eq("id", id);
   if (error) throw error;
@@ -155,12 +162,13 @@ export async function deleteGlobalQuestion(id: string): Promise<void> {
 /** Bulk insert pre-validated GLOBAL rows; returns how many were written. */
 export async function insertGlobalQuestionsBulk(
   rows: ValidQuestion[],
+  language: "en" | "ta",
 ): Promise<number> {
   if (rows.length === 0) return 0;
   const supabase = client();
   const { data, error } = await supabase
     .from("questions")
-    .insert(rows.map(toInsert))
+    .insert(rows.map((v) => toInsert(v, language)))
     .select("id");
   if (error) throw error;
   return data?.length ?? 0;
@@ -215,23 +223,35 @@ export type ImageQuestionInput = {
   text: string; // may be empty for image-only questions
   options: [string, string, string, string]; // may contain blanks
   answerIndex: number; // 0..3
-  imageUrl: string;
+  imageUrl: string | null; // null for draft questions awaiting image confirmation
+  language: "en" | "ta";
+  status?: "draft" | "live"; // omit to use the default per-language rule
 };
 
 /** Insert a global image/diagram question (uses the service client). */
 export async function createGlobalImageQuestion(v: ImageQuestionInput): Promise<void> {
+  // Explicit status takes priority; otherwise: null imageUrl forces draft, else
+  // fall back to the per-language default (en=live, ta=verified).
+  const status =
+    v.status ?? (v.imageUrl === null ? "draft" : v.language === "en" ? "live" : "verified");
+  if (status !== "draft" && v.imageUrl === null) {
+    throw new Error("image_url is required when status is not 'draft'");
+  }
   const supabase = getServiceClient();
   const { error } = await supabase.from("questions").insert({
-    centre_id: null,
-    subject: v.subject,
-    chapter: v.chapter,
-    concept: v.concept,
-    difficulty: v.difficulty,
+    centre_id:    null,
+    language:     v.language,
+    source:       "pyq",
+    status,
+    subject:      v.subject,
+    chapter:      v.chapter,
+    concept:      v.concept,
+    difficulty:   v.difficulty,
     par_time_sec: v.parTimeSec,
-    text: v.text,
-    options: v.options,
+    body:         v.text,
+    options:      v.options,
     answer_index: v.answerIndex,
-    image_url: v.imageUrl,
+    image_url:    v.imageUrl,
   });
   if (error) throw error;
 }

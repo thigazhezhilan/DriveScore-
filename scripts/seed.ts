@@ -160,22 +160,24 @@ async function main() {
     .insert(
       QUESTION_BANK.map((q) => ({
         centre_id: centre.id,
+        language: "en",
+        status: "live",
         subject: q.subject,
         chapter: q.chapter,
         concept: q.concept,
         difficulty: q.difficulty,
         par_time_sec: q.parTimeSec,
-        text: q.text,
+        body: q.text,
         options: q.options,
         answer_index: q.answerIndex,
       })),
     )
-    .select("id, text");
+    .select("id, body");
   if (qErr) throw qErr;
   console.log(`  • ${insertedQuestions.length} questions created`);
 
-  // Map question text -> new UUID so we can link the mock in the right order.
-  const idByText = new Map(insertedQuestions.map((r) => [r.text, r.id]));
+  // Map question body -> new UUID so we can link the mock in the right order.
+  const idByText = new Map(insertedQuestions.map((r) => [r.body, r.id]));
 
   // 6. Mock — published to Batch A so the demo student sees + can take it.
   const { data: mock, error: mErr } = await supabase

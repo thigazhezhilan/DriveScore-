@@ -39,6 +39,7 @@ export default async function TeacherEditMockPage({
     parTimeSec: q.parTimeSec,
     text: q.text,
     options: q.options,
+    language: q.language,
   }));
 
   return (

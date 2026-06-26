@@ -38,6 +38,7 @@ type Preview = {
 export function CsvImport() {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
+  const [language, setLanguage] = useState<"en" | "ta">("en");
   const [fileName, setFileName] = useState<string | null>(null);
   const [preview, setPreview] = useState<Preview | null>(null);
   const [parseError, setParseError] = useState<string | null>(null);
@@ -108,7 +109,7 @@ export function CsvImport() {
   const confirmImport = () => {
     if (!preview) return;
     startTransition(async () => {
-      const res = await importQuestions(preview.rawRows);
+      const res = await importQuestions(preview.rawRows, language);
       setResult(res);
       setPreview(null);
       setFileName(null);
@@ -132,7 +133,23 @@ export function CsvImport() {
         </button>
       </div>
 
-      <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-black/15 bg-black/[0.02] px-4 py-3 text-sm text-ink/70 transition hover:border-teal/50 hover:bg-teal/[0.03]">
+      <div className="mt-4 flex items-center gap-3">
+        <span className="text-xs font-semibold text-ink/60">Language:</span>
+        {(["en", "ta"] as const).map((l) => (
+          <label key={l} className="flex cursor-pointer items-center gap-1.5 text-sm text-ink/80">
+            <input
+              type="radio"
+              name="csv-language"
+              value={l}
+              checked={language === l}
+              onChange={() => setLanguage(l)}
+            />
+            {l === "en" ? "English" : "Tamil"}
+          </label>
+        ))}
+      </div>
+
+      <label className="mt-3 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-black/15 bg-black/[0.02] px-4 py-3 text-sm text-ink/70 transition hover:border-teal/50 hover:bg-teal/[0.03]">
         <FileUp className="h-5 w-5 text-teal-deep" />
         <span className="flex-1 truncate">
           {fileName ?? "Choose a .csv file…"}

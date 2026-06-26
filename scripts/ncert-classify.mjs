@@ -212,8 +212,21 @@ for (const subj of Object.keys(EXTRA)) {
 
 /** Best NCERT chapter for a question within its subject, or null if no match. */
 export function classifyChapter(subject, text) {
+  return classifyChapterWithScore(subject, text).chapter;
+}
+
+/**
+ * Like classifyChapter but also returns the raw keyword score.
+ * score === 0: no keyword hit at all (unclassified).
+ * score === 1: exactly one single-word keyword hit (low confidence).
+ * score >= 2:  multi-word hit or ≥2 single-word hits (confident).
+ *
+ * Callers that need to flag low-confidence rows (e.g. extract-neet) should
+ * treat score < 2 as "do not auto-import — human review required".
+ */
+export function classifyChapterWithScore(subject, text) {
   const map = KEYWORDS[subject];
-  if (!map) return null;
+  if (!map) return { chapter: null, score: 0 };
   const hay = " " + String(text || "").toLowerCase() + " ";
   let best = null, bestScore = 0;
   for (const chapter of CHAPTERS[subject]) {
@@ -224,5 +237,5 @@ export function classifyChapter(subject, text) {
     }
     if (score > bestScore) { bestScore = score; best = chapter; }
   }
-  return best;
+  return { chapter: best, score: bestScore };
 }

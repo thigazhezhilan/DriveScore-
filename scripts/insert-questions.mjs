@@ -1,6 +1,6 @@
 /**
  * Insert hand-authored AI-practice questions from a JSON file into the global
- * bank (centre_id=null, source='ai', hidden=false) — the live AI-Practice pool.
+ * bank (centre_id=null, source='ai', status='live') — the AI-Practice pool.
  *
  * Each JSON item: {
  *   subject?: "Physics"|"Chemistry"|"Biology"   (default "Physics")
@@ -17,14 +17,20 @@
  * (any source), then bulk-inserts the survivors. Skipped rows are reported with a
  * reason. Idempotent: re-running the same file inserts nothing new (dedupe).
  *
- * Usage: node scripts/insert-questions.mjs <file.json>
+ * Usage:
+ *   node scripts/insert-questions.mjs <file.json>
+ *   node scripts/insert-questions.mjs <file.json> --language=ta
  */
 
 import fs from "node:fs";
 import { CHAPTERS } from "./ncert-classify.mjs";
 
-const file = process.argv[2];
-if (!file) { console.error("usage: node scripts/insert-questions.mjs <file.json>"); process.exit(1); }
+const file = process.argv.find((a) => !a.startsWith("--") && !a.endsWith(".mjs") && !a.includes("node") && a.endsWith(".json"));
+if (!file) { console.error("usage: node scripts/insert-questions.mjs <file.json> [--language=en|ta]"); process.exit(1); }
+
+const langArg = process.argv.find((a) => a.startsWith("--language="))?.split("=")[1] ?? "en";
+const language = langArg === "en" || langArg === "ta" ? langArg : "en";
+const status = language === "en" ? "live" : "verified";
 
 const SUBJECTS = ["Physics", "Chemistry", "Biology"];
 const DIFFS = ["Easy", "Medium", "Hard"];
@@ -49,13 +55,13 @@ try { items = JSON.parse(fs.readFileSync(file, "utf8")); }
 catch (e) { console.error(`Bad JSON in ${file}: ${e.message}`); process.exit(1); }
 if (!Array.isArray(items)) { console.error("JSON root must be an array."); process.exit(1); }
 
-// Pre-fetch existing texts per chapter touched by this file (for dedupe).
+// Pre-fetch existing body text per chapter touched by this file (for dedupe).
 const chaptersInFile = [...new Set(items.map((i) => i.chapter))];
 const seenByChapter = new Map();
 for (const ch of chaptersInFile) {
-  const { data } = await sb.from("questions").select("text")
+  const { data } = await sb.from("questions").select("body")
     .is("centre_id", null).eq("chapter", ch);
-  seenByChapter.set(ch, new Set((data || []).map((r) => norm(r.text))));
+  seenByChapter.set(ch, new Set((data || []).map((r) => norm(r.body))));
 }
 
 const rows = [];
@@ -81,10 +87,10 @@ items.forEach((q, idx) => {
   seen.add(norm(q.text)); // also dedupe within this file
 
   rows.push({
-    centre_id: null, source: "ai", hidden: false,
+    centre_id: null, language, source: "ai", status,
     subject, chapter: q.chapter, concept: String(q.concept || q.chapter).slice(0, 120),
     difficulty, par_time_sec: PAR[difficulty],
-    text: q.text, options: opts, answer_index: ans,
+    body: q.text, options: opts, answer_index: ans,
   });
 });
 
@@ -96,5 +102,5 @@ if (rows.length) {
   inserted = data?.length ?? 0;
 }
 
-console.log(`Loaded ${items.length} · inserted ${inserted} · skipped ${skipped.length}`);
+console.log(`Language=${language} status=${status} · loaded ${items.length} · inserted ${inserted} · skipped ${skipped.length}`);
 if (skipped.length) { console.log("Skipped:"); skipped.forEach((s) => console.log("  - " + s)); }

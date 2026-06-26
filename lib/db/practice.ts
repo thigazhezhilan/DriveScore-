@@ -61,16 +61,14 @@ export async function listGlobalSyllabus(
   // exceeds 1000, so a single query would truncate and undercount later chapters.
   const rows: { subject: string; chapter: string }[] = [];
   for (let from = 0; ; from += 1000) {
-    let query = supabase
+    const { data, error } = await supabase
       .from("questions")
       .select("subject, chapter")
       .is("centre_id", null)
       .eq("source", source)
-      .eq("hidden", false)
+      .eq("status", "live")
+      .eq("language", locale)
       .range(from, from + 999);
-    // Tamil students only see chapters/counts for questions with Tamil content.
-    if (locale === "ta") query = query.not("body_ta", "is", null);
-    const { data, error } = await query;
     if (error) throw error;
     rows.push(...((data ?? []) as { subject: string; chapter: string }[]));
     if (!data || data.length < 1000) break;
@@ -107,13 +105,11 @@ async function sampleGlobalIds(
       .select("id")
       .is("centre_id", null)
       .eq("source", "pyq") // the full NEET mock uses real past-paper questions only
-      .eq("hidden", false)
+      .eq("status", "live")
+      .eq("language", locale)
       .eq("subject", subject)
       .range(from, from + 999);
     if (chapter) query = query.eq("chapter", chapter);
-    // Strict language filter: Tamil students only receive questions that have
-    // Tamil content (body_ta IS NOT NULL). English students always have content.
-    if (locale === "ta") query = query.not("body_ta", "is", null);
 
     const { data, error } = await query;
     if (error) throw error;
@@ -180,9 +176,12 @@ export async function generateLessonMock(
  * Generate a full NEET-pattern mock (45 Phy + 45 Chem + 90 Bio), shuffled from
  * the global pool. Returns null if the pool can't supply at least one question.
  */
-export async function generateFullMock(studentId: string): Promise<string | null> {
+export async function generateFullMock(
+  studentId: string,
+  locale: "en" | "ta" = "en",
+): Promise<string | null> {
   const perSubject = await Promise.all(
-    NEET_PATTERN.map((p) => sampleGlobalIds(p.subject, null, p.count)),
+    NEET_PATTERN.map((p) => sampleGlobalIds(p.subject, null, p.count, locale)),
   );
   // Interleave by subject block but keep subject grouping (Phy, Chem, Bio).
   const ordered = perSubject.flat();
@@ -200,6 +199,7 @@ async function sampleChapterIdsByDifficulty(
   chapter: string,
   difficulties: Difficulty[] | null,
   count: number,
+  locale: "en" | "ta" = "en",
 ): Promise<string[]> {
   const supabase = getServiceClient();
   const ids: string[] = [];
@@ -208,7 +208,8 @@ async function sampleChapterIdsByDifficulty(
       .from("questions")
       .select("id")
       .is("centre_id", null)
-      .eq("hidden", false)
+      .eq("status", "live")
+      .eq("language", locale)
       .eq("subject", subject)
       .eq("chapter", chapter)
       .range(from, from + 999);
@@ -228,13 +229,15 @@ export async function countGateQuestions(
   subject: Subject,
   chapter: string,
   difficulties: Difficulty[],
+  locale: "en" | "ta" = "en",
 ): Promise<number> {
   const supabase = getServiceClient();
   const { count } = await supabase
     .from("questions")
     .select("*", { count: "exact", head: true })
     .is("centre_id", null)
-    .eq("hidden", false)
+    .eq("status", "live")
+    .eq("language", locale)
     .eq("subject", subject)
     .eq("chapter", chapter)
     .in("difficulty", difficulties);
@@ -254,10 +257,11 @@ export async function generateGateMock(
   difficulties: Difficulty[],
   title: string,
   count: number,
+  locale: "en" | "ta" = "en",
 ): Promise<string | null> {
-  let ids = await sampleChapterIdsByDifficulty(subject, chapter, difficulties, count);
+  let ids = await sampleChapterIdsByDifficulty(subject, chapter, difficulties, count, locale);
   if (ids.length === 0) {
-    ids = await sampleChapterIdsByDifficulty(subject, chapter, null, count);
+    ids = await sampleChapterIdsByDifficulty(subject, chapter, null, count, locale);
   }
   if (ids.length === 0) return null;
   return createMockFromQuestionIds(studentId, title, ids);
@@ -284,11 +288,10 @@ export async function sampleClimbQuestion(
   const ex = new Set(excludeIds);
   const idsFor = async (diff: Difficulty | null) => {
     let q = supabase.from("questions").select("id").is("centre_id", null)
-      .eq("source", source).eq("hidden", false)
+      .eq("source", source).eq("status", "live")
+      .eq("language", locale)
       .eq("subject", subject).eq("chapter", chapter);
     if (diff) q = q.eq("difficulty", diff);
-    // Strict language filter: Tamil students must only receive questions with Tamil content.
-    if (locale === "ta") q = q.not("body_ta", "is", null);
     const { data } = await q;
     return (data ?? []).map((r) => r.id as string).filter((id) => !ex.has(id));
   };
@@ -299,7 +302,7 @@ export async function sampleClimbQuestion(
   const pick = ids[Math.floor(Math.random() * ids.length)];
   const { data, error } = await supabase
     .from("questions")
-    .select("id, subject, chapter, concept, difficulty, par_time_sec, body_en, options_en, image_url, body_ta, options_ta, tamil_status")
+    .select("id, subject, chapter, concept, difficulty, par_time_sec, body, options, image_url, language")
     .eq("id", pick).single();
   if (error || !data) return null;
   return {
@@ -309,12 +312,10 @@ export async function sampleClimbQuestion(
     concept: data.concept,
     difficulty: data.difficulty as Difficulty,
     parTimeSec: data.par_time_sec,
-    text: data.body_en,
-    options: (data.options_en as string[]) ?? [],
+    text: data.body,
+    options: (data.options as string[]) ?? [],
     imageUrl: (data.image_url as string | null) ?? null,
-    bodyTa: (data.body_ta as string | null) ?? null,
-    optionsTa: (data.options_ta as string[] | null) ?? null,
-    tamilStatus: (data.tamil_status as string | null) ?? null,
+    language: (data.language as "en" | "ta" | null) ?? null,
   };
 }
 
@@ -357,19 +358,24 @@ export async function getQuestionAnswerIndex(id: string): Promise<number | null>
 
 /** How many global questions a chapter has (to size the run / show on entry). */
 export async function chapterQuestionCount(
-  subject: Subject, chapter: string, source: "pyq" | "ai" = "pyq",
+  subject: Subject,
+  chapter: string,
+  source: "pyq" | "ai" = "pyq",
+  locale: "en" | "ta" = "en",
 ): Promise<number> {
   const supabase = getServiceClient();
   const { count } = await supabase
     .from("questions").select("*", { count: "exact", head: true })
-    .is("centre_id", null).eq("source", source).eq("hidden", false)
+    .is("centre_id", null).eq("source", source).eq("status", "live")
+    .eq("language", locale)
     .eq("subject", subject).eq("chapter", chapter);
   return count ?? 0;
 }
 
 /**
- * Flag a question as wrong (crowd QA for the auto-published AI track). After a
- * couple of distinct students report it, the question is auto-hidden.
+ * Flag a question as wrong (crowd QA). After ≥2 distinct students report it,
+ * status moves to 'flagged' and the question is removed from the live pool.
+ * An admin/teacher must explicitly promote to 'live' or set 'rejected'.
  */
 export async function reportQuestion(questionId: string, studentId: string): Promise<void> {
   const supabase = getServiceClient();
@@ -378,7 +384,7 @@ export async function reportQuestion(questionId: string, studentId: string): Pro
   const { count } = await supabase.from("question_reports")
     .select("*", { count: "exact", head: true }).eq("question_id", questionId);
   if ((count ?? 0) >= 2) {
-    await supabase.from("questions").update({ hidden: true }).eq("id", questionId);
+    await supabase.from("questions").update({ status: "flagged" }).eq("id", questionId);
   }
 }
 

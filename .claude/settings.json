@@ -5,7 +5,10 @@
       "PowerShell(cd \"C:\\\\Users\\\\91995\\\\Desktop\\\\thigal\\\\project2\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -match \"error TS\" -and \\($_ -match \"ClimbRunner|practice|climb/actions|practice/actions\"\\) })",
       "PowerShell(cd \"C:\\\\Users\\\\91995\\\\Desktop\\\\thigal\\\\project2\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"scripts/\" })",
       "PowerShell(cd \"C:\\\\Users\\\\91995\\\\Desktop\\\\thigal\\\\project2\"; npx tsc --noEmit 2>&1 | Select-String \"\\\\.ts\\\\\\(\" | Where-Object { $_ -notmatch \"scripts/\" })",
-      "PowerShell(cd \"c:\\\\Users\\\\91995\\\\Desktop\\\\thigal\\\\project2\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"scripts/\" } | Select-Object -First 20)"
+      "PowerShell(cd \"c:\\\\Users\\\\91995\\\\Desktop\\\\thigal\\\\project2\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"scripts/\" } | Select-Object -First 20)",
+      "Bash(claude --version)",
+      "PowerShell(claude --version 2>&1)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

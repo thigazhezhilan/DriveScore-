@@ -1,11 +1,12 @@
 /**
- * Import an AI-question CSV into the bank as source='ai' (no Anthropic API).
+ * Import an AI-question CSV into the global bank as source='ai'.
  *
  * Use this for in-chat-generated batches (the assistant writes the questions,
  * you inject them) — same CSV columns as the past-paper template. Validates
  * each row with the shared validator, dedupes against the chapter, inserts.
  *
  *   node scripts/import-ai-csv.mjs docs/ai-physics-current-electricity.csv
+ *   node scripts/import-ai-csv.mjs docs/ta-optics.csv --language=ta
  */
 
 import fs from "node:fs";
@@ -13,6 +14,10 @@ import fs from "node:fs";
 const SUBJECTS = ["Physics", "Chemistry", "Biology"];
 const DIFFS = ["Easy", "Medium", "Hard"];
 const LETTER = { A: 0, B: 1, C: 2, D: 3 };
+
+const langArg = process.argv.find((a) => a.startsWith("--language="))?.split("=")[1] ?? "en";
+const language = langArg === "en" || langArg === "ta" ? langArg : "en";
+const status = language === "en" ? "live" : "verified";
 
 /** Light validator (same rules as the app's validateRow, inlined for node). */
 function validateRow(raw) {
@@ -35,8 +40,8 @@ function validateRow(raw) {
   return { ok: true, value: { subject, chapter, concept, difficulty, parTimeSec, text, options, answerIndex } };
 }
 
-const file = process.argv[2];
-if (!file) { console.error("usage: node scripts/import-ai-csv.mjs <file.csv>"); process.exit(1); }
+const file = process.argv.find((a) => !a.startsWith("--") && !a.endsWith(".mjs") && !a.includes("node"));
+if (!file) { console.error("usage: node scripts/import-ai-csv.mjs <file.csv> [--language=en|ta]"); process.exit(1); }
 
 const Papa = (await import("papaparse")).default;
 const { createClient } = await import("@supabase/supabase-js");
@@ -67,9 +72,9 @@ const chapters = [...new Set(valid.map((v) => `${v.subject}|${v.chapter}`))];
 const seen = new Set();
 for (const ck of chapters) {
   const [subject, chapter] = ck.split("|");
-  const { data } = await sb.from("questions").select("text")
+  const { data } = await sb.from("questions").select("body")
     .is("centre_id", null).eq("subject", subject).eq("chapter", chapter);
-  (data || []).forEach((e) => seen.add(norm(e.text)));
+  (data || []).forEach((e) => seen.add(norm(e.body)));
 }
 
 const toInsert = [];
@@ -78,10 +83,10 @@ for (const v of valid) {
   if (seen.has(norm(v.text))) { dupes.push(v.text.slice(0, 45)); continue; }
   seen.add(norm(v.text));
   toInsert.push({
-    centre_id: null, source: "ai", hidden: false,
+    centre_id: null, language, source: "ai", status,
     subject: v.subject, chapter: v.chapter, concept: v.concept,
     difficulty: v.difficulty, par_time_sec: v.parTimeSec || PAR[v.difficulty] || 60,
-    text: v.text, options: v.options, answer_index: v.answerIndex,
+    body: v.text, options: v.options, answer_index: v.answerIndex,
   });
 }
 
@@ -92,6 +97,6 @@ if (toInsert.length) {
   inserted = data?.length ?? 0;
 }
 
-console.log(`Valid ${valid.length} · inserted ${inserted} (source=ai) · dupes ${dupes.length} · invalid ${skipped.length}`);
+console.log(`Language=${language} status=${status} · valid ${valid.length} · inserted ${inserted} (source=ai) · dupes ${dupes.length} · invalid ${skipped.length}`);
 if (skipped.length) skipped.forEach((s) => console.log("  invalid " + s));
 if (dupes.length) dupes.forEach((d) => console.log("  dupe " + d));

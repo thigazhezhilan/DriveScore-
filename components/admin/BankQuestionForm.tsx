@@ -65,7 +65,7 @@ export function BankQuestionForm({
         <input type="hidden" name="id" value={question.id} />
       )}
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3 gap-3">
         <div>
           <label className={labelCls}>Subject</label>
           <select
@@ -100,6 +100,18 @@ export function BankQuestionForm({
                 {d}
               </option>
             ))}
+          </select>
+        </div>
+        <div>
+          <label className={labelCls}>Language</label>
+          <select
+            name="language"
+            required
+            defaultValue={question?.language ?? "en"}
+            className="field-dark [&>option]:bg-[#0c2b24] [&>option]:text-paper"
+          >
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
           </select>
         </div>
       </div>

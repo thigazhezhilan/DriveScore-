@@ -1,13 +1,22 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { selectFirstLanguage, type SelectLanguageState } from "./actions";
 import { Languages, Loader2, Lock } from "lucide-react";
 
 const INITIAL: SelectLanguageState = { error: null };
 
+function ChooseButton({ label }: { label: string }) {
+  const { pending } = useFormStatus();
+  return (
+    <span className="mt-4 inline-block rounded-lg bg-energy/15 px-3 py-1.5 text-xs font-semibold text-energy transition group-hover:bg-energy group-hover:text-focusink">
+      {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : label}
+    </span>
+  );
+}
+
 export function LanguageSelectClient({ role }: { role: string }) {
-  const [state, formAction, isPending] = useActionState(selectFirstLanguage, INITIAL);
+  const [state, formAction] = useFormState(selectFirstLanguage, INITIAL);
 
   return (
     <main className="student-skin flex min-h-dvh flex-col items-center justify-center bg-focusink px-5 py-12">
@@ -44,20 +53,13 @@ export function LanguageSelectClient({ role }: { role: string }) {
           <input type="hidden" name="locale" value="en" />
           <button
             type="submit"
-            disabled={isPending}
             className="group w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left transition hover:border-energy/60 hover:bg-energy/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <p className="font-display text-xl font-bold text-paper">English</p>
             <p className="mt-1 text-sm text-paper/55">
               All questions and the interface in English
             </p>
-            <span className="mt-4 inline-block rounded-lg bg-energy/15 px-3 py-1.5 text-xs font-semibold text-energy transition group-hover:bg-energy group-hover:text-focusink">
-              {isPending ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              ) : (
-                "Choose English →"
-              )}
-            </span>
+            <ChooseButton label="Choose English →" />
           </button>
         </form>
 
@@ -66,7 +68,6 @@ export function LanguageSelectClient({ role }: { role: string }) {
           <input type="hidden" name="locale" value="ta" />
           <button
             type="submit"
-            disabled={isPending}
             className="group w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left transition hover:border-energy/60 hover:bg-energy/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <p className="font-tamil font-display text-xl font-bold text-paper">
@@ -75,13 +76,7 @@ export function LanguageSelectClient({ role }: { role: string }) {
             <p className="font-tamil mt-1 text-sm text-paper/55">
               கேள்விகளும் செயலியும் தமிழில்
             </p>
-            <span className="font-tamil mt-4 inline-block rounded-lg bg-energy/15 px-3 py-1.5 text-xs font-semibold text-energy transition group-hover:bg-energy group-hover:text-focusink">
-              {isPending ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              ) : (
-                "தமிழ் தேர்வு செய் →"
-              )}
-            </span>
+            <ChooseButton label="தமிழ் தேர்வு செய் →" />
           </button>
         </form>
       </div>

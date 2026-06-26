@@ -153,11 +153,11 @@ const diffAdj = (d: Difficulty) => (d === "Easy" ? 0.15 : d === "Hard" ? -0.18 :
 // ── global question pool grouped by subject → chapter ──────────────────────
 type Pool = Record<Subject, Map<string, Question[]>>;
 async function loadPool(): Promise<Pool> {
-  const cols = "id, subject, chapter, concept, difficulty, par_time_sec, text, options, answer_index";
+  const cols = "id, subject, chapter, concept, difficulty, par_time_sec, body, options, answer_index";
   const rows: any[] = [];
   for (let from = 0; ; from += 1000) {
     const { data, error } = await sb
-      .from("questions").select(cols).is("centre_id", null).eq("hidden", false)
+      .from("questions").select(cols).is("centre_id", null).eq("status", "live")
       .range(from, from + 999);
     if (error) throw error;
     rows.push(...(data ?? []));
@@ -170,7 +170,7 @@ async function loadPool(): Promise<Pool> {
     const q: Question = {
       id: r.id, subject: subj, chapter: r.chapter, concept: r.concept,
       difficulty: r.difficulty as Difficulty, parTimeSec: r.par_time_sec,
-      text: r.text, options: (r.options as string[]) ?? [], answerIndex: r.answer_index,
+      text: r.body, options: (r.options as string[]) ?? [], answerIndex: r.answer_index,
     };
     if (!pool[subj].has(q.chapter)) pool[subj].set(q.chapter, []);
     pool[subj].get(q.chapter)!.push(q);

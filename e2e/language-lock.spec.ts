@@ -69,6 +69,8 @@ test.describe("First-use language gate", () => {
       process.env.SEED_LANG_NULL_EMAIL!,
       process.env.SEED_LANG_NULL_PASSWORD!,
     );
+    // Wait for the post-login redirect so the session cookie is applied before we navigate away.
+    await page.waitForURL(/\/language-select/, { timeout: 10_000 });
     // Even if they somehow skip the redirect and try to open home directly:
     await page.goto("/");
     await expect(page).toHaveURL(/\/language-select/, { timeout: 10_000 });
@@ -81,8 +83,8 @@ test.describe("First-use language gate", () => {
       process.env.SEED_LANG_NULL_PASSWORD!,
     );
     await page.waitForURL(/\/language-select/);
-    await expect(page.getByText("English")).toBeVisible();
-    await expect(page.getByText("தமிழ்")).toBeVisible();
+    await expect(page.getByText("English", { exact: true })).toBeVisible();
+    await expect(page.getByText("தமிழ்", { exact: true })).toBeVisible();
     // No skip / continue-without-picking button exists
     await expect(page.getByRole("button", { name: /skip/i })).toHaveCount(0);
     await expect(page.getByRole("link", { name: /skip/i })).toHaveCount(0);
@@ -136,8 +138,8 @@ test.describe("English student experience", () => {
   });
 
   test("Tamil-only seed question does not appear in English practice pool", async ({ page }) => {
-    // The Tamil-only question has body_en = NULL. We verify the English student
-    // is never shown a question with only Tamil text in the practice flow.
+    // The Tamil-only seed question has language='ta'. We verify the English student
+    // is never shown a Tamil question — the query filters by language='en'.
     // This is validated at query level; we confirm the page loads without error.
     await page.goto("/practice");
     await expect(page.getByText(/Sharpen your prep/i)).toBeVisible({ timeout: 10_000 });
@@ -170,8 +172,8 @@ test.describe("Tamil student experience", () => {
   });
 
   test("English-only seed question does not appear in Tamil practice pool", async ({ page }) => {
-    // The English-only question has body_ta = NULL. sampleGlobalIds filters it out
-    // for locale='ta'. We confirm the practice page loads without error.
+    // The English-only seed question has language='en'. sampleGlobalIds filters it out
+    // for locale='ta' by querying language='ta'. We confirm the practice page loads without error.
     await page.goto("/practice");
     // Tamil translation for 'Sharpen your prep' is 'தயாரிப்பை மேம்படுத்துங்கள்'
     await expect(page.getByText(/தயாரிப்பை மேம்படுத்துங்கள்/)).toBeVisible({ timeout: 10_000 });

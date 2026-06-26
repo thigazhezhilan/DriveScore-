@@ -22,7 +22,7 @@ const sb = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_
 const data = [];
 for (let from = 0; ; from += 1000) {
   const { data: page, error } = await sb.from("questions").select("chapter, difficulty")
-    .is("centre_id", null).eq("source", "ai").eq("hidden", false).eq("subject", SUBJECT)
+    .is("centre_id", null).eq("source", "ai").eq("status", "live").eq("subject", SUBJECT)
     .range(from, from + 999);
   if (error) { console.error("Fetch failed:", error.message); process.exit(1); }
   data.push(...(page || []));

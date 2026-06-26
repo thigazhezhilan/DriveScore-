@@ -27,9 +27,6 @@ type Q = {
   id: string; subject: string; chapter: string; concept: string;
   difficulty: Difficulty; parTimeSec: number; text: string;
   options: string[]; imageUrl: string | null;
-  bodyTa?: string | null;
-  optionsTa?: string[] | null;
-  tamilStatus?: string | null;
 };
 
 const DIFF_MULT: Record<Difficulty, number> = { Easy: 1, Medium: 1.5, Hard: 2 };
@@ -157,17 +154,7 @@ export function ClimbRunner({
 
   const hpColor = hp > 50 ? "bg-energy" : hp > 20 ? "bg-reward" : "bg-pop";
   const localised = q
-    ? getTamilContent(
-        {
-          text: q.text,
-          options: q.options,
-          explanation: null,
-          bodyTa: q.bodyTa,
-          optionsTa: q.optionsTa,
-          explanationTa: null,
-        },
-        locale,
-      )
+    ? getTamilContent({ text: q.text, options: q.options, explanation: null }, locale)
     : null;
 
   if (phase === "empty") {

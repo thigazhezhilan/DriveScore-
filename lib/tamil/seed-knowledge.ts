@@ -1,5 +1,4 @@
 import { getServiceClient } from "@/lib/db/client";
-import { generateEmbedding } from "./embed";
 
 export type ChunkSource =
   | "samacheer_textbook"
@@ -16,10 +15,6 @@ export async function addTamilChunk(params: {
   tamil_text: string;
   english_reference?: string;
 }): Promise<string> {
-  const embedding = await generateEmbedding(
-    params.english_reference ?? params.tamil_text,
-  );
-
   const supabase = getServiceClient();
   const { data, error } = await supabase
     .from("tamil_knowledge_chunks")
@@ -30,7 +25,7 @@ export async function addTamilChunk(params: {
       class_level:       params.class_level ?? null,
       tamil_text:        params.tamil_text,
       english_reference: params.english_reference ?? null,
-      embedding,
+      embedding:         null,
     })
     .select("id")
     .single();
