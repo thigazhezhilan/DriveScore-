@@ -85,13 +85,13 @@ export function SignupForm({ centres }: { centres: { id: string; name: string }[
               >
                 English
               </button>
-              <button
-                type="button"
-                onClick={() => setLang("ta")}
-                className={`rounded-lg px-3 py-2 text-sm font-bold transition ${lang === "ta" ? "bg-white text-ink shadow-sm" : "text-ink/55 hover:text-ink"}`}
-              >
-                தமிழ்
-              </button>
+              {/* Tamil — Coming Soon (pipeline paused 2026-06-27) */}
+              <div className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-ink/35 cursor-not-allowed select-none">
+                <span className="font-tamil">தமிழ்</span>
+                <span className="rounded-full bg-black/[0.07] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-ink/35">
+                  Coming Soon
+                </span>
+              </div>
             </div>
             <p className="mt-1 text-[11px] text-ink/40">
               {lang === "en"

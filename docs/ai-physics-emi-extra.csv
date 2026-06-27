@@ -1,3 +1,0 @@
-subject,chapter,concept,difficulty,par_time_sec,question_text,option_a,option_b,option_c,option_d,correct_option
-Physics,Electromagnetic Induction,Zero Flux Condition,Easy,45,The magnetic flux through a coil is zero when the magnetic field is:,Perpendicular to the plane of the coil,Parallel to the plane of the coil,At 45 degrees to the plane of the coil,Equal to zero everywhere in space,B
-Physics,Electromagnetic Induction,Faraday's Second Law,Easy,45,Faraday's second law of electromagnetic induction states that the induced EMF in a coil is directly proportional to:,The magnetic flux linked with the coil,The rate of change of magnetic flux linked with the coil,The resistance of the coil,The area of the coil only,B

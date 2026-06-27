@@ -63,22 +63,23 @@ export function LanguageSelectClient({ role }: { role: string }) {
           </button>
         </form>
 
-        {/* Tamil */}
-        <form action={formAction}>
-          <input type="hidden" name="locale" value="ta" />
-          <button
-            type="submit"
-            className="group w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left transition hover:border-energy/60 hover:bg-energy/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-          >
+        {/* Tamil — Coming Soon (pipeline paused 2026-06-27) */}
+        <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left opacity-50 cursor-not-allowed select-none">
+          <div className="flex items-start justify-between">
             <p className="font-tamil font-display text-xl font-bold text-paper">
               தமிழ்
             </p>
-            <p className="font-tamil mt-1 text-sm text-paper/55">
-              கேள்விகளும் செயலியும் தமிழில்
-            </p>
-            <ChooseButton label="தமிழ் தேர்வு செய் →" />
-          </button>
-        </form>
+            <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-paper/60">
+              Coming Soon
+            </span>
+          </div>
+          <p className="font-tamil mt-1 text-sm text-paper/55">
+            கேள்விகளும் செயலியும் தமிழில்
+          </p>
+          <span className="mt-4 inline-block rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-paper/40">
+            Not yet available
+          </span>
+        </div>
       </div>
 
       {/* Error */}
