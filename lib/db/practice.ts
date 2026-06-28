@@ -128,7 +128,7 @@ async function createGeneratedMock(
 ): Promise<string> {
   const supabase = getServiceClient();
 
-  const { data: mock, error: mErr } = await supabase
+  const { data: mocks, error: mErr } = await supabase
     .from("mocks")
     .insert({
       centre_id: null,
@@ -139,11 +139,11 @@ async function createGeneratedMock(
       status: "published", // generated sessions are immediately takeable
       max_attempts: 1, // each "start" makes a fresh mock → practice stays unlimited
     })
-    .select("id")
-    .single();
+    .select("id");
   if (mErr) throw mErr;
+  if (!mocks?.length) throw new Error("Mock insert returned no rows — check mocks table constraints.");
 
-  const mockId = mock.id as string;
+  const mockId = mocks[0].id as string;
   const links = questionIds.map((question_id, position) => ({
     mock_id: mockId,
     question_id,
@@ -330,15 +330,16 @@ export async function createMockFromQuestionIds(
   questionIds: string[],
 ): Promise<string> {
   const supabase = getServiceClient();
-  const { data: mock, error } = await supabase
+  const { data: mocks, error } = await supabase
     .from("mocks")
     .insert({
       centre_id: null, batch_id: null, owner_student_id: studentId,
       kind: "lesson", title, status: "published", max_attempts: 1,
     })
-    .select("id").single();
+    .select("id");
   if (error) throw error;
-  const mockId = mock.id as string;
+  if (!mocks?.length) throw new Error("Mock insert returned no rows — check mocks table constraints.");
+  const mockId = mocks[0].id as string;
   if (questionIds.length) {
     const links = questionIds.map((question_id, position) => ({ mock_id: mockId, question_id, position }));
     const { error: e2 } = await supabase.from("mock_questions").insert(links);

@@ -166,10 +166,10 @@ export async function createAttempt(
   const { data, error } = await supabase
     .from("attempts")
     .insert({ mock_id: mockId, student_id: studentId })
-    .select("id")
-    .single();
+    .select("id");
   if (error) throw error;
-  return data.id as string;
+  if (!data?.length) throw new Error("Attempt insert returned no rows — check attempts table constraints.");
+  return data[0].id as string;
 }
 
 /**
