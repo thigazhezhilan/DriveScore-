@@ -66,11 +66,12 @@ export async function finishClimbRun(
   chapter: string,
   answers: Attempt[],
 ): Promise<{ attemptId: string } | { error: string }> {
-  const student = await getCurrentStudent();
-  if (!student) return { error: "No student account." };
   if (!answers || answers.length === 0) return { error: "Nothing answered." };
 
   try {
+    const student = await getCurrentStudent();
+    if (!student) return { error: "No student account." };
+
     const mockId = await createMockFromQuestionIds(
       student.id,
       `${chapter} — practice`,

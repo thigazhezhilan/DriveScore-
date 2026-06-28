@@ -91,11 +91,16 @@ export function ClimbRunner({
   async function finishAndGo() {
     setPhase("finishing");
     if (answersRef.current.length === 0) { router.push("/practice"); return; }
-    const res = await finishClimbRun(chapter, answersRef.current);
-    if ("attemptId" in res) {
-      router.push(`/report?attempt=${res.attemptId}&xp=${xp}&streak=${maxStreak}`);
-    } else {
-      setErr(res.error);
+    try {
+      const res = await finishClimbRun(chapter, answersRef.current);
+      if ("attemptId" in res) {
+        router.push(`/report?attempt=${res.attemptId}&xp=${xp}&streak=${maxStreak}`);
+      } else {
+        setErr(res.error);
+        setPhase("error");
+      }
+    } catch (e) {
+      setErr((e as Error).message ?? "Something went wrong building your report.");
       setPhase("error");
     }
   }
