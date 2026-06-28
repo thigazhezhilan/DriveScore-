@@ -1,15 +1,10 @@
 import { getRequestConfig } from "next-intl/server";
-import { cookies } from "next/headers";
 
-const SUPPORTED = ["en", "ta"] as const;
-type Locale = (typeof SUPPORTED)[number];
-
+// Tamil pipeline paused 2026-06-27 — always serve English until Tamil is re-enabled.
+// To restore: reinstate cookie-based locale reading (read NEXT_LOCALE cookie → "en"|"ta").
 export default getRequestConfig(async () => {
-  const raw = cookies().get("NEXT_LOCALE")?.value;
-  const locale: Locale = SUPPORTED.includes(raw as Locale) ? (raw as Locale) : "en";
-
   return {
-    locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
+    locale: "en",
+    messages: (await import("../messages/en.json")).default,
   };
 });
