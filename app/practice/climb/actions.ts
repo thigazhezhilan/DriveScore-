@@ -72,19 +72,42 @@ export async function finishClimbRun(
     const student = await getCurrentStudent();
     if (!student) return { error: "No student account." };
 
-    const mockId = await createMockFromQuestionIds(
-      student.id,
-      `${chapter} — practice`,
-      answers.map((a) => a.questionId),
-    );
-    const { questions } = await getMockWithQuestions(mockId);
+    let mockId: string;
+    try {
+      mockId = await createMockFromQuestionIds(
+        student.id,
+        `${chapter} — practice`,
+        answers.map((a) => a.questionId),
+      );
+    } catch (e) {
+      return { error: `[create-mock] ${(e as Error).message}` };
+    }
+
+    let questions: Awaited<ReturnType<typeof getMockWithQuestions>>["questions"];
+    try {
+      ({ questions } = await getMockWithQuestions(mockId));
+    } catch (e) {
+      return { error: `[load-mock] ${(e as Error).message}` };
+    }
+
     const report = buildReport(questions, answers);
-    const attemptId = await createAttempt(mockId, student.id);
-    await saveAttempt(attemptId, answers, {
-      totalMarks: report.score,
-      maxMarks: report.maxScore,
-      accuracy: report.accuracyPct,
-    });
+
+    let attemptId: string;
+    try {
+      attemptId = await createAttempt(mockId, student.id);
+    } catch (e) {
+      return { error: `[create-attempt] ${(e as Error).message}` };
+    }
+
+    try {
+      await saveAttempt(attemptId, answers, {
+        totalMarks: report.score,
+        maxMarks: report.maxScore,
+        accuracy: report.accuracyPct,
+      });
+    } catch (e) {
+      return { error: `[save-attempt] ${(e as Error).message}` };
+    }
 
     // Update skill ratings from this run. Best-effort: a rating failure must
     // never fail the run or block the report.

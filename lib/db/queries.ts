@@ -80,8 +80,9 @@ export async function getMockWithQuestions(
       "id, title, mock_questions(position, questions(id,subject,chapter,concept,difficulty,par_time_sec,body,options,answer_index,image_url,language))",
     )
     .eq("id", mockId)
-    .single();
+    .maybeSingle();
   if (error) throw error;
+  if (!mock) throw new Error(`Mock ${mockId} not found after creation`);
 
   const questions = ((mock.mock_questions as unknown as { position: number; questions: QuestionRow }[]) ?? [])
     .sort((a, b) => a.position - b.position)
