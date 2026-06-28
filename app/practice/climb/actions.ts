@@ -51,8 +51,8 @@ export async function gradeClimbAnswer(
   questionId: string,
   pickedIndex: number,
 ): Promise<{ correct: boolean; correctIndex: number }> {
-  const student = await getCurrentStudent();
-  if (!student) return { correct: false, correctIndex: -1 };
+  const user = await getCurrentUser();
+  if (!user || user.profile.role !== "student") return { correct: false, correctIndex: -1 };
   const answer = await getQuestionAnswerIndex(questionId);
   if (answer === null) return { correct: false, correctIndex: -1 };
   return { correct: pickedIndex === answer, correctIndex: answer };

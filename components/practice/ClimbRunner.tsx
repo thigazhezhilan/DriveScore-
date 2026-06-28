@@ -118,36 +118,39 @@ export function ClimbRunner({
   const submit = async () => {
     if (picked === null || !q || busy.current) return;
     busy.current = true;
-    const { correct, correctIndex } = await gradeClimbAnswer(q.id, picked);
-    const timeSec = Math.round((Date.now() - startedAt.current) / 1000);
-    const fast = timeSec <= q.parTimeSec;
-    answersRef.current.push({ questionId: q.id, pickedIndex: picked, timeSec });
-    setCorrectIdx(correctIndex);
-    setLastCorrect(correct);
+    try {
+      const { correct, correctIndex } = await gradeClimbAnswer(q.id, picked);
+      const timeSec = Math.round((Date.now() - startedAt.current) / 1000);
+      const fast = timeSec <= q.parTimeSec;
+      answersRef.current.push({ questionId: q.id, pickedIndex: picked, timeSec });
+      setCorrectIdx(correctIndex);
+      setLastCorrect(correct);
 
-    if (correct) {
-      const ns = streak + 1;
-      setStreak(ns);
-      setMaxStreak((m) => Math.max(m, ns));
-      setXp((x) => x + xpFor(q.difficulty, fast, ns));
-      setLastDelta(xpFor(q.difficulty, fast, ns));
-      setHp((h) => { const v = Math.min(100, h + HEAL); hpRef.current = v; return v; });
-    } else {
-      const dmg = DAMAGE[q.difficulty];
-      setHp((h) => { const v = Math.max(0, h - dmg); hpRef.current = v; return v; });
-      setStreak(0);
-      setLastDelta(-dmg);
+      if (correct) {
+        const ns = streak + 1;
+        setStreak(ns);
+        setMaxStreak((m) => Math.max(m, ns));
+        setXp((x) => x + xpFor(q.difficulty, fast, ns));
+        setLastDelta(xpFor(q.difficulty, fast, ns));
+        setHp((h) => { const v = Math.min(100, h + HEAL); hpRef.current = v; return v; });
+      } else {
+        const dmg = DAMAGE[q.difficulty];
+        setHp((h) => { const v = Math.max(0, h - dmg); hpRef.current = v; return v; });
+        setStreak(0);
+        setLastDelta(-dmg);
+      }
+
+      // CAT-style ability update (Elo-lite): the harder the question relative to
+      // your current ability, the more a correct answer raises θ — and vice-versa.
+      const d = DIFF_VAL[q.difficulty];
+      const expected = 1 / (1 + Math.exp(-(thetaRef.current - d)));
+      thetaRef.current = Math.max(0, Math.min(2, thetaRef.current + THETA_STEP * ((correct ? 1 : 0) - expected)));
+      pendingRung.current = Math.round(thetaRef.current); // serve the best-matched band next
+
+      setPhase("feedback");
+    } finally {
+      busy.current = false;
     }
-
-    // CAT-style ability update (Elo-lite): the harder the question relative to
-    // your current ability, the more a correct answer raises θ — and vice-versa.
-    const d = DIFF_VAL[q.difficulty];
-    const expected = 1 / (1 + Math.exp(-(thetaRef.current - d)));
-    thetaRef.current = Math.max(0, Math.min(2, thetaRef.current + THETA_STEP * ((correct ? 1 : 0) - expected)));
-    pendingRung.current = Math.round(thetaRef.current); // serve the best-matched band next
-
-    setPhase("feedback");
-    busy.current = false;
   };
 
   const next = async () => {
