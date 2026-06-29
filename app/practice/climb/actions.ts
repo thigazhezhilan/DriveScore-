@@ -68,57 +68,63 @@ export async function finishClimbRun(
 ): Promise<{ attemptId: string } | { error: string }> {
   if (!answers || answers.length === 0) return { error: "Nothing answered." };
 
+  let student: Awaited<ReturnType<typeof getCurrentStudent>>;
   try {
-    const student = await getCurrentStudent();
-    if (!student) return { error: "No student account." };
-
-    let mockId: string;
-    try {
-      mockId = await createMockFromQuestionIds(
-        student.id,
-        `${chapter} — practice`,
-        answers.map((a) => a.questionId),
-      );
-    } catch (e) {
-      return { error: `[create-mock] ${(e as Error).message}` };
-    }
-
-    let questions: Awaited<ReturnType<typeof getMockWithQuestions>>["questions"];
-    try {
-      ({ questions } = await getMockWithQuestions(mockId));
-    } catch (e) {
-      return { error: `[load-mock] ${(e as Error).message}` };
-    }
-
-    const report = buildReport(questions, answers);
-
-    let attemptId: string;
-    try {
-      attemptId = await createAttempt(mockId, student.id);
-    } catch (e) {
-      return { error: `[create-attempt] ${(e as Error).message}` };
-    }
-
-    try {
-      await saveAttempt(attemptId, answers, {
-        totalMarks: report.score,
-        maxMarks: report.maxScore,
-        accuracy: report.accuracyPct,
-      });
-    } catch (e) {
-      return { error: `[save-attempt] ${(e as Error).message}` };
-    }
-
-    // Update skill ratings from this run. Best-effort: a rating failure must
-    // never fail the run or block the report.
-    try {
-      await applyRatingUpdates(attemptId, student.id, report.items);
-    } catch (err) {
-      console.error("Rating update failed for climb attempt", attemptId, err);
-    }
-
-    return { attemptId };
+    student = await getCurrentStudent();
   } catch (e) {
-    return { error: (e as Error).message };
+    console.error("[finishClimbRun][get-student]", e);
+    return { error: `[get-student] ${(e as Error).message}` };
   }
+  if (!student) return { error: "No student account." };
+
+  let mockId: string;
+  try {
+    mockId = await createMockFromQuestionIds(
+      student.id,
+      `${chapter} — practice`,
+      answers.map((a) => a.questionId),
+    );
+  } catch (e) {
+    console.error("[finishClimbRun][create-mock]", e);
+    return { error: `[create-mock] ${(e as Error).message}` };
+  }
+
+  let questions: Awaited<ReturnType<typeof getMockWithQuestions>>["questions"];
+  try {
+    ({ questions } = await getMockWithQuestions(mockId));
+  } catch (e) {
+    console.error("[finishClimbRun][load-mock]", mockId, e);
+    return { error: `[load-mock] ${(e as Error).message}` };
+  }
+
+  const report = buildReport(questions, answers);
+
+  let attemptId: string;
+  try {
+    attemptId = await createAttempt(mockId, student.id);
+  } catch (e) {
+    console.error("[finishClimbRun][create-attempt]", mockId, e);
+    return { error: `[create-attempt] ${(e as Error).message}` };
+  }
+
+  try {
+    await saveAttempt(attemptId, answers, {
+      totalMarks: report.score,
+      maxMarks: report.maxScore,
+      accuracy: report.accuracyPct,
+    });
+  } catch (e) {
+    console.error("[finishClimbRun][save-attempt]", attemptId, e);
+    return { error: `[save-attempt] ${(e as Error).message}` };
+  }
+
+  // Update skill ratings from this run. Best-effort: a rating failure must
+  // never fail the run or block the report.
+  try {
+    await applyRatingUpdates(attemptId, student.id, report.items);
+  } catch (err) {
+    console.error("Rating update failed for climb attempt", attemptId, err);
+  }
+
+  return { attemptId };
 }

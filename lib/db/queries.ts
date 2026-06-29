@@ -318,14 +318,17 @@ export async function getStudentByProfileId(
   profileId: string,
 ): Promise<{ id: string; name: string; centreId: string | null } | null> {
   const supabase = getServiceClient();
+  // Use array + limit(1) instead of .maybeSingle() so duplicate rows (data
+  // integrity gap — no unique constraint on profile_id) don't throw PGRST116.
   const { data, error } = await supabase
     .from("students")
     .select("id, name, centre_id")
     .eq("profile_id", profileId)
-    .maybeSingle();
+    .order("created_at", { ascending: true })
+    .limit(1);
   if (error) throw error;
-  if (!data) return null;
-  return { id: data.id, name: data.name, centreId: data.centre_id ?? null };
+  if (!data?.length) return null;
+  return { id: data[0].id, name: data[0].name, centreId: data[0].centre_id ?? null };
 }
 
 /** Batches for a centre (for the admin's batch picker / teacher lookups). */
