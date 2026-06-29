@@ -36,19 +36,6 @@ type MockItem = {
   latestAttemptId: string | null;
 };
 
-/** Lightweight mastery snapshot serialised from the server component. */
-export type MasterySnap = {
-  frontier: {
-    subject: string;
-    chapter: string;
-    gate: string;
-    gateLabel: string;
-    reason: string;
-  } | null;
-  clearedGates: number;
-  totalGates: number;
-};
-
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 const LEVEL_COLORS: Record<string, { text: string; bg: string }> = {
@@ -68,12 +55,10 @@ export function HomeClient({
   studentName,
   mocks,
   rating,
-  mastery,
 }: {
   studentName: string | null;
   mocks: MockItem[];
   rating: RatingSummary | null;
-  mastery: MasterySnap | null;
 }) {
   const reduce = useReducedMotion();
   const t = useTranslations("home");
@@ -268,85 +253,6 @@ export function HomeClient({
             <div className="hidden sm:block" />
           )}
         </div>
-
-        {/* ── Mastery Road preview ───────────────────────────────────── */}
-        {mastery && mastery.totalGates > 0 && (
-          <section className="animate-fade-up mt-4" style={{ animationDelay: "110ms" }}>
-            <div className="card-glass-lg relative overflow-hidden p-5">
-              <div className="pointer-events-none absolute -left-8 -top-8 h-32 w-32 rounded-full bg-reward/20 blur-2xl" />
-
-              <div className="relative flex items-start justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-reward/15 text-reward">
-                    <Mountain className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-paper/40">
-                      {t("masteryTitle")}
-                    </p>
-                    {mastery.frontier ? (
-                      <p className="font-display text-sm font-bold leading-snug text-paper">
-                        {mastery.frontier.chapter}
-                        <span className="ml-1.5 font-normal text-paper/40">·</span>
-                        <span className="ml-1.5 text-reward">{mastery.frontier.gateLabel}</span>
-                      </p>
-                    ) : (
-                      <p className="font-display text-sm font-bold text-paper">
-                        {t("masteryAllCleared")}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <Link
-                  href="/road"
-                  className="shrink-0 cursor-pointer rounded-xl bg-reward/10 px-3 py-1.5 text-xs font-bold text-reward transition hover:bg-reward/20"
-                >
-                  {t("masteryViewRoad")} →
-                </Link>
-              </div>
-
-              {/* Cleared-gates progress bar */}
-              <div className="mt-4">
-                <div className="mb-1.5 flex justify-between text-[10px] text-paper/40">
-                  <span>{t("masteryGatesCleared")}</span>
-                  <span className="tabular-nums">
-                    {mastery.clearedGates} / {mastery.totalGates}
-                  </span>
-                </div>
-                <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
-                  {/* fill — triggers on scroll-into-view */}
-                  <motion.div
-                    className="h-full rounded-full bg-gradient-to-r from-energy via-reward to-[#B7AEFF]"
-                    initial={reduce ? false : { width: 0 }}
-                    whileInView={{
-                      width: `${(mastery.clearedGates / mastery.totalGates) * 100}%`,
-                    }}
-                    viewport={{ once: true, margin: "-30px" }}
-                    transition={{ duration: DUR.fill, ease: "easeOut", delay: 0.4 }}
-                  />
-                  {/* shimmer sweep — rides over the fill after it lands */}
-                  {!reduce && (
-                    <motion.div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-y-0 w-12"
-                      style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)" }}
-                      initial={{ x: "-3rem" }}
-                      whileInView={{ x: "calc(100vw + 3rem)" }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 1.55, duration: 0.75, ease: EASE }}
-                    />
-                  )}
-                </div>
-                {mastery.frontier?.reason && (
-                  <p className="mt-2 text-[11px] italic text-paper/40">
-                    {mastery.frontier.reason}
-                  </p>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* ── Assigned mocks ─────────────────────────────────────────── */}
         <section className="animate-fade-up mt-8" style={{ animationDelay: "150ms" }}>
